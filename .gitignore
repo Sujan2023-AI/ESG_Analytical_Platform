@@ -22,3 +22,5 @@ __pycache__/
 # Exclude all data files
 data/raw/
 data/processed/
+docs/
+Reports/
