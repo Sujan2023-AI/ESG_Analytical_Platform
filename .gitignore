@@ -1,0 +1,21 @@
+# Python environment files
+venv/
+.env
+__pycache__/
+*.pyc
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints
+
+# MacOS specific files
+.DS_Store
+
+# Data files to exclude if sensitive or large
+*.xlsm
+
+# IDE specific files
+.vscode/
+
+# Temporary or cache files
+*.tmp
+*.log
