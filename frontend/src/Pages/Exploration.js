@@ -7,8 +7,9 @@ function Exploration() {
     <div className="App">
       <div className="content">
         <h1>Data Exploration</h1>
-        <p>ESG</p>
-        <p>E - Environemnt</p>
+        <br />
+        <p>E - Environemnt
+        </p>
         <p>S - Social</p>
         <p>G - Governance</p>
       </div>
