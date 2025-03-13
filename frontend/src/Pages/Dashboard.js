@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Link } from 'react-router-dom';
 import '../Css/Dashboard.css';
 import Navigator from './Components/Navigator';
 
