@@ -19,6 +19,8 @@ __pycache__/
 # Temporary or cache files
 *.tmp
 *.log
+*.cache
+
 # Exclude all data files
 data/raw/
 data/processed/
