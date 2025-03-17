@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Css/Dashboard.css';
-import Navigator from './Components/Navigator';
+import Navigator from './Components/DashboardNavigator';
 
 function Exploration() {
   return (

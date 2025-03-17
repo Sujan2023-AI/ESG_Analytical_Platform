@@ -1,14 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';  // Updated import
-import '../Css/Homepage.css';
+import '../Css/Landing.css';
 import LoginModal from './Components/LoginModal';
 
-const Homepage = () => {
+const Landing = () => {
   const navigate = useNavigate();  // Updated usage
-
-  const navigateToLogin = () => {
-    navigate('/login');  // This replaces history.push('/login')
-  };
 
   const doLogin = () => {
     navigate('/dashboard');
@@ -38,4 +34,4 @@ const Homepage = () => {
   );
 };
 
-export default Homepage;
+export default Landing;

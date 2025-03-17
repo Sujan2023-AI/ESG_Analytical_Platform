@@ -1,6 +1,6 @@
 import React from 'react';
 import '../Css/Dashboard.css';
-import Navigator from './Components/Navigator';
+import DashboardNavigator from './Components/DashboardNavigator';
 
 function Dashboard() {
   return (
@@ -9,7 +9,7 @@ function Dashboard() {
         <h1>Welcome</h1>
         <p>From here you can navigte to our features below</p>
       </div>
-      <Navigator />
+      <DashboardNavigator />
     </div>
     
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Navigator() {
+function DashboardNavigator() {
 
   
   const navigate = useNavigate();
@@ -21,4 +21,4 @@ function Navigator() {
   );
 }
 
-export default Navigator;
+export default DashboardNavigator;
