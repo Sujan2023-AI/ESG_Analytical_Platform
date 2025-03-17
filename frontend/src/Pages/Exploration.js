@@ -1,17 +1,21 @@
 import React from 'react';
-import '../Css/Dashboard.css';
-import Navigator from './Components/Navigator';
+import '../Css/Exploration.css';
+import Navigator from './Components/AppNavigator';
 
 function Exploration() {
   return (
     <div className="App">
-      <div className="content">
-        <h1>Data Exploration</h1>
-        <br />
-        <p>E - Environemnt
-        </p>
-        <p>S - Social</p>
-        <p>G - Governance</p>
+      <h1>Data Exploration</h1>
+      <div className="exploration-content">
+        <div className="esg-selection">
+          <button>Environment</button>
+          <button>Social</button>
+          <button>Governance</button>
+        </div>
+        <div className="ro-selection">
+          <button>Risk</button>
+          <button>Opportunity</button>
+        </div>
       </div>
       <Navigator />
     </div>

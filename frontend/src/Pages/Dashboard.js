@@ -1,15 +1,16 @@
 import React from 'react';
 import '../Css/Dashboard.css';
-import Navigator from './Components/Navigator';
+import AppNavigator from './Components/AppNavigator';
+import AppOptions from './Components/AppOptions';
 
 function Dashboard() {
   return (
     <div className="App">
       <div className="content">
-        <h1>Welcome</h1>
-        <p>From here you can navigte to our features below</p>
+        <AppOptions />
+        Welcome Sujan to our app. you can select options below
       </div>
-      <Navigator />
+      <AppNavigator />
     </div>
     
   );

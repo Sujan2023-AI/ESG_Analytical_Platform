@@ -1,3 +1,5 @@
+//JORDNA: this is currently unused in favour of the popup LoginModal on the landing page. Priya can you we move this logic to the modal instead?
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Updated import
 import axios from 'axios';
