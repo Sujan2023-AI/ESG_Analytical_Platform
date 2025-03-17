@@ -5,6 +5,9 @@ import Landing from './Pages/Landing';
 
 import Dashboard from './Pages/Dashboard';
 import Exploration from './Pages/Exploration';
+import Ontology from './Pages/Ontology';
+import PCA from './Pages/PCA';
+import Enhanced from './Pages/Enhanced';
 
 function App() {
   return (
@@ -14,6 +17,9 @@ function App() {
 
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/exploration" element={<Exploration />} />
+        <Route path="/ontology" element={<Ontology />} />
+        <Route path="/pca" element={<PCA />} />
+        <Route path="/enhanced" element={<Enhanced />} />
       </Routes>
     </BrowserRouter>
   );

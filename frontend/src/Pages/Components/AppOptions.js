@@ -23,7 +23,7 @@ function AppOptions() {
         <p>Reporting Framework:</p>
         <select>
           {reportingFrameworks.map((rf) => (
-            <option id={rf} value={rf}>{rf}</option>
+            <option key={rf} value={rf}>{rf}</option>
           ))}
         </select>
       </div>
@@ -33,13 +33,13 @@ function AppOptions() {
 
         <select defaultValue={"2020"}>
           {reportingYears.map((year) => 
-            <option id={year} value={year}>{year}</option>
+            <option key={year} value={year}>{year}</option>
           )}
         </select>
         &nbsp;-&nbsp;
         <select defaultValue={"2024"}>
           {reportingYears.map((year) => 
-            <option id={year} value={year}>{year}</option>
+            <option key={year} value={year}>{year}</option>
           )}
         </select>
         </div>

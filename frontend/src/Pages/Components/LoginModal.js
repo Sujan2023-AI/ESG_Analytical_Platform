@@ -25,7 +25,7 @@ function LoginModal ({ isOpen, onSave, onClose }) {
             <input placeholder='Email'></input>
           </div>
           <div className="modal-row">
-            <input placeholder='Password'></input>
+            <input placeholder='Password' type="password"></input>
           </div>
           <br />
           <div className="modal-row">

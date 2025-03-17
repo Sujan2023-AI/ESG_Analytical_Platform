@@ -18,7 +18,7 @@ const Landing = () => {
     <div className='home-page'>
       <LoginModal isOpen={showLoginModal} onSave={doLogin} onClose={closeLoginModal} />
       <div className='welcome'>
-        <h1>Welcome to Our Website</h1>
+        <h1>Ontology Enhanced PCA Analysis on the Eurofidai Dataset</h1>
         <p>The integration of ontology-driven methodologies with Principal Component Analysis (PCA) 
           can significantly enhance ESG metric interpretation and risk assessment. The Eurofidai ESG dataset, 
           containing 105 raw risk data metrics across global companies, provides an ideal 

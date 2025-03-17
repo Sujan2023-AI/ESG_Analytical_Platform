@@ -7,6 +7,7 @@ body, h1, h2, h3, p, ul, li, button, input, div {
 
 .content {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 100px;
 }
