@@ -80,21 +80,6 @@ button:hover {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.modal-content input, .modal-content button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
-}
-
-.modal-content button {
-  background-color: #FFCC00;
-}
-
-.modal-content button:hover {
-  background-color: #E6B800;
-}
-
 .group-button {
   background-color: #FFCC00;
   color: #000;

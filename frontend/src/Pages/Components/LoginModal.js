@@ -19,11 +19,23 @@ function LoginModal ({ isOpen, onSave, onClose }) {
           <span onClick={onClose} className="exit-button display-top-right">&times;</span>
           <h2>Login</h2>
         </header>
+        <hr />
         <div className="modal-content">
-          Please enter your usename and password
+          <div className="modal-row">
+            <input placeholder='Email'></input>
+          </div>
+          <div className="modal-row">
+            <input placeholder='Password'></input>
+          </div>
+          <br />
+          <div className="modal-row">
+            <button className='login-button' onKeyDown={handleKeyDown} onClick={() => { onSave(); onClose(); }}>Login</button>
+          </div>
+          <div className="modal-row">
+            <p>Forgot your password? | Create an account</p>
+          </div>
         </div>
         <footer className="modal-footer">
-          <button className='save-button' onKeyDown={handleKeyDown} onClick={() => { onSave(); onClose(); }}>Save</button>
         </footer>
       </div>
     </div>
