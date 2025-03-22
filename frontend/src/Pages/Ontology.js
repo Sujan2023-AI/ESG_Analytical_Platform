@@ -12,7 +12,7 @@ function Ontology() {
           <h1>Ontology</h1>
           <p>View our primary ontology</p>
         </div>
-        <img src="/ontologyExample.png" alt="image" height={210} width={370} />
+        <img src="/ontologyExample.png" alt="dummy example ontology" height={210} width={370} />
       </div>
       <AppNavigator />
     </div>

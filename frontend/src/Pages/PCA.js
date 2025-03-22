@@ -11,7 +11,7 @@ function PCA() {
           <h1>Principle Component Analysis</h1>
           <p>Dive into our initial analysis model</p>
         </div>
-        <img src="/pcaExample.png" alt="image" height={210} width={370} />
+        <img src="/pcaExample.png" alt="dummy example pca" height={210} width={370} />
       </div>
       <AppNavigator />
     </div>
