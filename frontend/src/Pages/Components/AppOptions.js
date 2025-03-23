@@ -1,7 +1,18 @@
 import React from 'react';
+import { useState, useEffect } from 'react'
+
 import '../../Css/AppOptions.css';
 
 function AppOptions() {
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+      fetch('http://localhost:3902/api/categories')
+          .then(response => response.json())
+          .then(data => setCategories(data))
+          .catch(error => console.error('Error fetching categories:', error));
+  }, []);
 
   const reportingFrameworks = ["IFRS S1", "IFRS S2"]
   const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
@@ -43,6 +54,16 @@ function AppOptions() {
           )}
         </select>
         </div>
+      </div>
+      <div className="conent-row">
+        <b>Dataset Categories</b>:
+        <ul>
+        {categories.map(category => (
+          <li key={category.id}>
+            {category.category} {category.subCategory}
+          </li>
+        ))}
+        </ul>
       </div>
     </div>
   );
