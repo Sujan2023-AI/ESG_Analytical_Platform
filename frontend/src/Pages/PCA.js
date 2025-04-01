@@ -1,10 +1,12 @@
 import React from 'react';
 import '../Css/Ontology.css';
 import AppNavigator from './Components/AppNavigator';
+import AppHeader from './Components/AppHeader';
 
 function PCA() {
   return (
     <div className="App">
+      <AppHeader />
       <div className="content">
         <div>
 

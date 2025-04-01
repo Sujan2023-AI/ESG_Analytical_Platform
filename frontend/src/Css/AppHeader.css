@@ -1,0 +1,59 @@
+
+.Header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 56px;
+  background: #1C3989;
+  padding: 18px;
+}
+
+.Title {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+}
+.Title:hover {
+  cursor: pointer;
+  color: #bbbbbb;
+  font-size: 24px;
+}
+
+.Options {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.Industry {
+  padding: 5px 10px 5px 10px;
+  height: 20px;
+  background-color: #3A82F5;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.User {
+  max-width: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-height: 32px;
+  border-radius: 50%;
+  background-color: white;
+  color: #1C3989;
+  font-weight: bold;
+
+
+
+  font-size: 15px;
+  padding: 0px;
+}
