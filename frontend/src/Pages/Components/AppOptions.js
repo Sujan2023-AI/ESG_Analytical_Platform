@@ -14,7 +14,7 @@ function AppOptions() {
           .catch(error => console.error('Error fetching categories:', error));
   }, []);
 
-  const reportingFrameworks = ["IFRS S1", "IFRS S2"]
+  const reportingFrameworks = ["SASB", "IFRS S2"]
   const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
   return (  
@@ -39,15 +39,8 @@ function AppOptions() {
         </select>
       </div>
       <div className="content-row">
-        <p>Reporting Year(s):</p>
+        <p>Reporting Year:</p>
         <div className="year-selection">
-
-        <select defaultValue={"2020"}>
-          {reportingYears.map((year) => 
-            <option key={year} value={year}>{year}</option>
-          )}
-        </select>
-        &nbsp;-&nbsp;
         <select defaultValue={"2024"}>
           {reportingYears.map((year) => 
             <option key={year} value={year}>{year}</option>
