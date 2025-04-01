@@ -5,11 +5,30 @@ body, h1, h2, h3, p, ul, li, button, input, div {
   box-sizing: border-box;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100vh;
+}
+.Body {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100%;
+  flex-grow: 100%;
+}
+
 .content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 100px;
+  width: 100%;
 }
 
 
@@ -28,10 +47,3 @@ body {
   min-height: 100vh;
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 90vh;
-}
