@@ -1,36 +1,19 @@
 nav {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
+  height: 100%;
   display: flex;
   justify-content: center;
-  padding: 10px 0;
   background-color: #E5EFD1;
 }
 
 .nav-links {
   color: #000;
   text-decoration: none;
-  padding: 8px 16px;
-  margin: 0 10px;
+  padding: 16px;
   font-weight: bold;
-  border-radius: 20px;
   transition: background-color 0.2s, transform 0.2s;
   display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-
-.nav-links button:first-child{
-  margin-left: 0; /* Ensure the first button is flush to the left */
-  position: absolute; /* Position the first button separately */
-  left: 30px; 
-}
-
-.nav-links button:last-child{
-  margin-right: 0; /* Ensure the first button is flush to the left */
-  position: absolute; /* Position the first button separately */
-  right: 30px; 
+  flex-direction: column;
+  justify-content: start;
 }
 
 button {

@@ -8,12 +8,12 @@ function Dashboard() {
   return (
     <div className="App">
       <AppHeader />
-      <div>
+      <div className="Body">
+        <AppNavigator />
         <div className="content">
           <AppOptions />
         </div>
       </div>
-      <AppNavigator />
     </div>
     
   );
