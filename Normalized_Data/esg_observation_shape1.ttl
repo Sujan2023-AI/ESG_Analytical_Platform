@@ -1,0 +1,34 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix ex: <http://example.org/esg#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:ESGObservationShape
+    a sh:NodeShape ;
+    sh:targetClass ex:ESGObservation ;
+
+    sh:property [
+        sh:path ex:hasCompany ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path ex:hasMetric ;
+        sh:minCount 1 ;
+    ] ;
+
+    sh:property [
+        sh:path ex:hasYear ;
+        sh:minCount 1 ;
+        sh:datatype xsd:gYear ;
+    ] ;
+
+    sh:property [
+        sh:path ex:hasValue ;
+        sh:minCount 1 ;
+        sh:datatype xsd:float ;
+    ] ;
+
+    sh:property [
+        sh:path ex:hasDataType ;
+        sh:minCount 1 ;
+    ] .
