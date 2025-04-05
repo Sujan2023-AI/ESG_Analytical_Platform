@@ -1,0 +1,51 @@
+.allContent{
+    width: 100%;
+    height: 100%;
+}
+
+.mainMetrics{
+    width: 100%;
+    height: 80%;
+    background-color: #d8e0cd;
+    padding-top: 10px;
+    justify-content: space-between;
+    justify-items: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+}
+
+.metricRow1{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.metricRow2{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.metricTitle{
+    border: 1px solid #8a8c90; /* Border with color */
+    border-radius: 4px;
+}
+
+.ERContent, .SRContent, .GRContent, .EOContent, .SOContent, .GOContent{
+    border: 1px solid #8a8c90; /* Border with color */
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;   
+}
+
+.metric1, .metric2, .metric3, .metric4,.metric5,.metric6{
+    width: 30%;
+}
