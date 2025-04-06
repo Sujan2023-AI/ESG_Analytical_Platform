@@ -10,10 +10,24 @@ function Report() {
     const [modelType1, setModelType1] = useState('');
     const [isERContent3Visible, setIsERContent3Visible] = useState(false);
     const [isERContent4Visible, setIsERContent4Visible] = useState(false);
+    // States for checkboxes
+    const [selectedCheckboxesERPCA, setSelectedCheckboxesERPCA] = useState([]);
+    const [selectedCheckboxesEROntology, setSelectedCheckboxesEROntology] = useState([]);
+    // User-defined options for checkboxes
+    const optionsForDivERPCA = ['Scope Emission 1', 'Scope Emission 2', 'Scope Emission 3'];
+    const optionsForDivEROntology = ['Water 1', 'Water Discharge'];
+
+    // States for Metric 2 (Social Risk)
+    const [dropdownValue2, setDropdownValue2] = useState('');
+    const [isSRContent2Visible, setIsSRContent2Visible] = useState(false); // SRContent2 visibility state
+    const [modelType2, setModelType2] = useState(''); // Default model type for Metric 2
+    const [isSRContent3Visible, setIsSRContent3Visible] = useState(false);
+    const [isSRContent4Visible, setIsSRContent4Visible] = useState(false);
+
 
     // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
-        // Fetch the saved dropdown value from localStorage (if any)
+        // Fetch the saved dropdown value from localStorage for ER(if any)
         const savedValue1 = localStorage.getItem('dropdownValue1');
         const savedModel1 = localStorage.getItem('modelType1');
   
@@ -34,19 +48,43 @@ function Report() {
                 setIsERContent3Visible(false);
             }
         }
+
+        const savedCheckboxesERPCA = JSON.parse(localStorage.getItem('selectedCheckboxesERPCA')) || [];
+        const savedCheckboxesEROntology = JSON.parse(localStorage.getItem('selectedCheckboxesEROntology')) || [];
+    
+        setSelectedCheckboxesERPCA(savedCheckboxesERPCA);
+        setSelectedCheckboxesEROntology(savedCheckboxesEROntology);
+
+        // Fetch the saved dropdown value from localStorage for SR(if any)
+        const savedValue2 = localStorage.getItem('dropdownValue2');
+        const savedModel2 = localStorage.getItem('modelType2');
+
+        // If a saved value exists, update the state
+        if (savedValue2) {
+            setDropdownValue2(savedValue2); // Set dropdownValue to the saved value
+            if (savedValue2 === 'GHG Emissions' || savedValue2 === 'Water Management') {
+                setIsSRContent2Visible(true); // If 'show' is selected, make div2 visible
+            }
+        }
+        if (savedModel2) {
+            setModelType2(savedModel2); // Retain the model selection from localStorage
+            if (savedModel2 === 'PCA Model') {
+                setIsSRContent3Visible(true);
+                setIsSRContent4Visible(false);
+            } else if (savedModel2 === 'Ontology Model') {
+                setIsSRContent4Visible(true);
+                setIsSRContent3Visible(false);
+            }
+        }
+        console.log('Loaded SRContent2 visibility:', isSRContent2Visible);
     }, []); // Empty dependency array ensures this runs once when the component mounts
 
     // Step 3: Handle dropdown change and save to localStorage
     const handleDropdownChange1 = (event) => {
         const selectedValue = event.target.value;
         setDropdownValue1(selectedValue); // Update the state with the new value
-
         // Save the selected value to localStorage for persistence
         localStorage.setItem('dropdownValue1', selectedValue);
-
-        // Update visibility of div2 based on the selected value
-        //if (selectedValue === 'GHG Emissions' || selectedValue === 'Water Management') {
-        //setIsERContent2Visible(selectedValue === 'GHG Emissions' || selectedValue === 'Water Management');
         if (selectedValue === 'GHG Emissions' || selectedValue === 'Water Management') {
             setIsERContent2Visible(true);  // Show ERContent2 when valid selection is made
         } else {
@@ -56,10 +94,6 @@ function Report() {
         localStorage.removeItem('modelType1');
         setIsERContent3Visible(false); // Hide div3 (PCA Model)
         setIsERContent4Visible(false);
-        //    setIsERContent2Visible(true);
-        //} else {
-        //    setIsERContent2Visible(false);
-        //}
     };
 
     // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
@@ -79,6 +113,77 @@ function Report() {
             setIsERContent4Visible(false);
         }
     };
+
+    const handleCheckboxChangeERPCA = (event) => {
+        const { value, checked } = event.target;
+        setSelectedCheckboxesERPCA((prevSelected) => {
+          const newSelected = checked ? [...prevSelected, value] : prevSelected.filter((item) => item !== value);
+          localStorage.setItem('selectedCheckboxesERPCA', JSON.stringify(newSelected));
+          return newSelected;
+        });
+    };
+    
+    // Step 5: Handle checkbox change for div4
+    const handleCheckboxChangeEROntology = (event) => {
+    const { value, checked } = event.target;
+    setSelectedCheckboxesEROntology((prevSelected) => {
+        const newSelected = checked ? [...prevSelected, value] : prevSelected.filter((item) => item !== value);
+        localStorage.setItem('selectedCheckboxesEROntology', JSON.stringify(newSelected));
+        return newSelected;
+    });
+    };
+
+    // Step 3: Handle dropdown change and save to localStorage
+    const handleDropdownChange2 = (event) => {
+        const selectedValue = event.target.value;
+        setDropdownValue2(selectedValue); // Update the state with the new value
+        // Save the selected value to localStorage for persistence
+        localStorage.setItem('dropdownValue2', selectedValue);
+        if (selectedValue === 'SocialRisk Metric1' || selectedValue === 'SocialRisk Metric2') {
+            setIsSRContent2Visible(true);  // Show ERContent2 when valid selection is made
+        } else {
+            setIsSRContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
+        }        
+        setModelType2(''); // Reset the model selection
+        localStorage.removeItem('modelType2');
+        setIsSRContent3Visible(false); // Hide div3 (PCA Model)
+        setIsSRContent4Visible(false);
+    };
+
+    // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
+    const handleModelSelection2 = (event) => {
+        const selectedModel = event.target.value;
+        setModelType2(selectedModel);
+        localStorage.setItem('modelType2', selectedModel);
+
+        if (selectedModel === 'PCA Model') {
+            setIsSRContent3Visible(true);
+            setIsSRContent4Visible(false);
+        } else if (selectedModel === 'Ontology Model') {
+            setIsSRContent4Visible(true);
+            setIsSRContent3Visible(false);
+        } else {
+            setIsSRContent3Visible(false);
+            setIsSRContent4Visible(false);
+        }
+    };
+    
+      // Step 6: Render the checkboxes and the "Calculate" button for each div
+      const renderCheckboxes = (divNumber) => {
+        const checkboxes = divNumber === 3 ? ['Option 1', 'Option 2', 'Option 3'] : ['Option A', 'Option B', 'Option C'];
+    
+        return checkboxes.map((option, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              value={option}
+              checked={divNumber === 3 ? selectedCheckboxesERPCA.includes(option) : selectedCheckboxesEROntology.includes(option)}
+              onChange={divNumber === 3 ? handleCheckboxChangeERPCA : handleCheckboxChangeEROntology}
+            />
+            <label>{option}</label>
+          </div>
+        ));
+      };
 
   return (
     <div className="App">
@@ -112,19 +217,52 @@ function Report() {
                             {/* Conditionally render div3 or div4 based on model selection for Metric 1 */}
                             {isERContent3Visible && (
                                 <div className='ERContent3'>
-                                    <p>This is Div 3 - PCA Model for Metric 1.</p>
+                                    {renderCheckboxes(3)}
+                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
                                 </div>
                             )}
                             {isERContent4Visible && (
                                 <div className='ERContent4'>
-                                    <p>This is Div 4 - Ontology Model for Metric 1.</p>
+                                    {renderCheckboxes(4)}
+                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
                                 </div>
                             )}
                             </div>
                         </div>
                     <div className='metric2'>
                         <p className='metricTitle'>Social Risk</p>
-                        <div className='SRContent'>SRContent</div>
+                        <div className='SRContent'>
+                            <div class="SRContent1">
+                                <select id="dropdown" value={dropdownValue2} onChange={handleDropdownChange2}>
+                                    <option value="">Select a Metric</option>
+                                    <option value="SocialRisk Metric1">SocialRisk Metric1</option>
+                                    <option value="SocialRisk Metric2">SocialRisk Metric2</option>
+                                </select>
+                            </div>
+                            {isSRContent2Visible && (
+                                <div className='SRContent2'>
+                                    <select id="modelSelection2" value={modelType2} onChange={handleModelSelection2}>
+                                        <option value="">Select Model</option>
+                                        <option value="PCA Model">PCA Model</option>
+                                        <option value="Ontology Model">Ontology Model</option>
+                                    </select>
+                                </div>
+                            )}
+
+                            {/* Conditionally render div3 or div4 based on model selection for Metric 1 */}
+                            {isSRContent3Visible && (
+                                <div className='SRContent3'>
+                                    {renderCheckboxes(3)}
+                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
+                                </div>
+                            )}
+                            {isSRContent4Visible && (
+                                <div className='SRContent4'>
+                                    {renderCheckboxes(4)}
+                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <div className='metric3'>
                         <p className='metricTitle'>Governance Risk</p>
