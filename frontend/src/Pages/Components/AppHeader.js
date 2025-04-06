@@ -13,6 +13,9 @@ function AppHeader() {
   return (
     <div className="Header">
       <div className="Title" onClick={() => {navigate("/dashboard")}}>
+        <p>Home</p>
+      </div>
+      <div className="Topic">
         <p>ESG Metric Management System</p>
       </div>
       <div className="Options">
