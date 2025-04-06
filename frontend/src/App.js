@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './Pages/Landing';
 
@@ -11,6 +11,10 @@ import Enhanced from './Pages/Enhanced';
 import Report from './Pages/Report';
 
 function App() {
+  useEffect(() => {
+    localStorage.clear();  // Clears the localStorage when the app starts
+    console.log("localStorage has been cleared.");
+  }, []); 
   return (
     <BrowserRouter>
       <Routes>

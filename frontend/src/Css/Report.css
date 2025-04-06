@@ -49,3 +49,13 @@
 .metric1, .metric2, .metric3, .metric4,.metric5,.metric6{
     width: 30%;
 }
+
+.ERContent {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
