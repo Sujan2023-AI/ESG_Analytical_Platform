@@ -48,28 +48,6 @@ function Report() {
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
-
-
-
-    const [isERContent2Visible, setIsERContent2Visible] = useState(false); // Updated variable name
-    const [isERContent3Visible, setIsERContent3Visible] = useState(false);
-    const [isERContent4Visible, setIsERContent4Visible] = useState(false);
-    // States for checkboxes
-    const [selectedCheckboxesERPCA, setSelectedCheckboxesERPCA] = useState([]);
-    const [selectedCheckboxesEROntology, setSelectedCheckboxesEROntology] = useState([]);
-    // User-defined options for checkboxes
-    const optionsForDivERPCA = ['Scope Emission 1', 'Scope Emission 2', 'Scope Emission 3'];
-    const optionsForDivEROntology = ['Water 1', 'Water Discharge'];
-
-    // States for Metric 2 (Social Risk)
-    const [dropdownValue2, setDropdownValue2] = useState('');
-    const [isSRContent2Visible, setIsSRContent2Visible] = useState(false); // SRContent2 visibility state
-    const [modelType2, setModelType2] = useState(''); // Default model type for Metric 2
-    const [isSRContent3Visible, setIsSRContent3Visible] = useState(false);
-    const [isSRContent4Visible, setIsSRContent4Visible] = useState(false);
-
-    
-
     // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
 
@@ -104,55 +82,9 @@ function Report() {
             .catch(error => console.error('Error fetching governance opportunity sub categories:', error));
 
         // Fetch the saved dropdown value from localStorage for ER(if any)
-        const savedValue1 = localStorage.getItem('erSubcategory');
-        const savedModel1 = localStorage.getItem('erModelType');
-  
-        // If a saved value exists, update the state
-        if (savedValue1) {
-            setSelectedErSubcategory(savedValue1); // Set dropdownValue to the saved value
-            if (savedValue1 === 'GHG Emissions' || savedValue1 === 'Water Management') {
-                setIsERContent2Visible(true); // If 'show' is selected, make div2 visible
-            }
-        }
-        if (savedModel1) {
-            setErModelType(savedModel1); // Retain the model selection from localStorage
-            if (savedModel1 === 'PCA Model') {
-                setIsERContent3Visible(true);
-                setIsERContent4Visible(false);
-            } else if (savedModel1 === 'Ontology Model') {
-                setIsERContent4Visible(true);
-                setIsERContent3Visible(false);
-            }
-        }
-
-        const savedCheckboxesERPCA = JSON.parse(localStorage.getItem('selectedCheckboxesERPCA')) || [];
-        const savedCheckboxesEROntology = JSON.parse(localStorage.getItem('selectedCheckboxesEROntology')) || [];
-    
-        setSelectedCheckboxesERPCA(savedCheckboxesERPCA);
-        setSelectedCheckboxesEROntology(savedCheckboxesEROntology);
-
-        // Fetch the saved dropdown value from localStorage for SR(if any)
-        const savedValue2 = localStorage.getItem('dropdownValue2');
-        const savedModel2 = localStorage.getItem('modelType2');
-
-        // If a saved value exists, update the state
-        if (savedValue2) {
-            setDropdownValue2(savedValue2); // Set dropdownValue to the saved value
-            if (savedValue2 === 'GHG Emissions' || savedValue2 === 'Water Management') {
-                setIsSRContent2Visible(true); // If 'show' is selected, make div2 visible
-            }
-        }
-        if (savedModel2) {
-            setModelType2(savedModel2); // Retain the model selection from localStorage
-            if (savedModel2 === 'PCA Model') {
-                setIsSRContent3Visible(true);
-                setIsSRContent4Visible(false);
-            } else if (savedModel2 === 'Ontology Model') {
-                setIsSRContent4Visible(true);
-                setIsSRContent3Visible(false);
-            }
-        }
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+        // const savedValue1 = localStorage.getItem('erSubcategory');
+        // const savedModel1 = localStorage.getItem('erModelType');
+    }, []);
 
     /* PRIYA OLD METHOD */ /*
         // Step 3: Handle dropdown change and save to localStorage
@@ -190,6 +122,7 @@ function Report() {
             }
         }; */
 
+    /* PRIYA CHECKBOX CODE */ /*
     const handleCheckboxChangeERPCA = (event) => {
         const { value, checked } = event.target;
         setSelectedCheckboxesERPCA((prevSelected) => {
@@ -207,38 +140,7 @@ function Report() {
         localStorage.setItem('selectedCheckboxesEROntology', JSON.stringify(newSelected));
         return newSelected;
     });
-    };
-    
-      // Step 6: Render the checkboxes and the "Calculate" button for each div
-      const renderCheckboxes = (metrics) => {
-
-        return metrics.map((sc) => (
-            <div className='metric_checkbox' key={sc}>
-                <input
-                    type="checkbox"
-                    value={sc}
-                />
-                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc.toLowerCase()}</label>
-                <label>1.23</label>
-            </div>
-        ));
-        
-        /*
-        const checkboxes = divNumber === 3 ? ['Option 1', 'Option 2', 'Option 3'] : ['Option A', 'Option B', 'Option C'];
-    
-        return checkboxes.map((option, index) => (
-          <div key={index}>
-            <input
-              type="checkbox"
-              value={option}
-              checked={divNumber === 3 ? selectedCheckboxesERPCA.includes(option) : selectedCheckboxesEROntology.includes(option)}
-              onChange={divNumber === 3 ? handleCheckboxChangeERPCA : handleCheckboxChangeEROntology}
-            />
-            <label>{option}</label>
-          </div>
-        ));
-        */
-      };
+    }; */
 
   return (
     <div className="App">
@@ -254,7 +156,6 @@ function Report() {
                         categoryCode={'E_risk'}
                         categoryShortCode={'Er'}
                         subcategories={erSubcategories}
-                        setSubcategories={setErSubcategories}
                         selectedSubcategory={selectedErSubcategory}
                         setSelectedSubcategory={setSelectedErSubcategory}
                         models={erModels}
@@ -269,7 +170,6 @@ function Report() {
                         categoryCode={'S_risk'}
                         categoryShortCode={'Sr'}
                         subcategories={srSubcategories}
-                        setSubcategories={setSrSubcategories}
                         selectedSubcategory={selectedSrSubcategory}
                         setSelectedSubcategory={setSelectedSrSubcategory}
                         models={srModels}
@@ -284,7 +184,6 @@ function Report() {
                         categoryCode={'G_risk'}
                         categoryShortCode={'Gr'}
                         subcategories={grSubcategories}
-                        setSubcategories={setGrSubcategories}
                         selectedSubcategory={selectedGrSubcategory}
                         setSelectedSubcategory={setSelectedGrSubcategory}
                         models={grModels}
@@ -301,7 +200,6 @@ function Report() {
                         categoryCode={'E_opportunity'}
                         categoryShortCode={'Eo'}
                         subcategories={eoSubcategories}
-                        setSubcategories={setEoSubcategories}
                         selectedSubcategory={selectedEoSubcategory}
                         setSelectedSubcategory={setSelectedEoSubcategory}
                         models={eoModels}
@@ -316,7 +214,6 @@ function Report() {
                         categoryCode={'S_opportunity'}
                         categoryShortCode={'So'}
                         subcategories={soSubcategories}
-                        setSubcategories={setSoSubcategories}
                         selectedSubcategory={selectedSoSubcategory}
                         setSelectedSubcategory={setSelectedSoSubcategory}
                         models={soModels}
@@ -331,7 +228,6 @@ function Report() {
                         categoryCode={'G_opportunity'}
                         categoryShortCode={'Go'}
                         subcategories={goSubcategories}
-                        setSubcategories={setGoSubcategories}
                         selectedSubcategory={selectedGoSubcategory}
                         setSelectedSubcategory={setSelectedGoSubcategory}
                         models={goModels}
@@ -344,7 +240,7 @@ function Report() {
                 </div>
             </div>
             <div className='calculatedPanel'>
-                <p>Calculation comes here</p>
+                <p>(Summed calculations will be shown here in the future)</p>
             </div>
           </div>
         </div>

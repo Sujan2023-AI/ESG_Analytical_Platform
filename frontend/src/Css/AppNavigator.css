@@ -2,7 +2,7 @@ nav {
   height: 100%;
   display: flex;
   justify-content: center;
-  background-color: #E5EFD1;
+  background-color: white;
 }
 
 .nav-links {
@@ -17,9 +17,9 @@ nav {
 }
 
 button {
-  background-color: #C8D1B6;
+  background-color: white;
+  border: solid 2px darkgrey;
   color: #000;
-  border: none;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -28,6 +28,10 @@ button {
 }
 
 button:hover {
-  background-color: #B7BFA6;
+  background-color: #85aff2;
   transform: translateY(-2px);
+}
+button.active {
+  background-color: #3A82F6;
+  color: white;
 }

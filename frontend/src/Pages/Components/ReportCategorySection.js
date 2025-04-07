@@ -1,4 +1,4 @@
-// import '../Css/Enhanced.css';
+import '../../Css/ReportCategorySection.css';
 import React from 'react';
 
 function ReportCategorySection({
@@ -6,7 +6,6 @@ function ReportCategorySection({
     categoryCode,
     categoryShortCode,
     subcategories,
-    setSubcategories,
     selectedSubcategory,
     setSelectedSubcategory,
     models,
@@ -83,35 +82,38 @@ function ReportCategorySection({
     };
 
     return (
-         <div className='metric1'>
-            <p className='metricTitle'>{category}</p>
-            <div className='ERContent'>
-                <div className="ERContent1">
+         <div className='pillar'>
+            <p className='title'>{category}</p>
+            <div className='pillar_body'>
+                <div className="dropdowns">
                     <select id="dropdown" value={selectedSubcategory} onChange={handleDropdownChange}>
                         <option key='' value=''>Select a Metric</option>
                         {subcategories.map((c) => (
                             <option key={c} value={c}>{c}</option>
                         ))}
                     </select>
+                    {(selectedSubcategory !== '') && (
+                        <div className='ERContent2'>
+                            <select id="modelSelection1" value={modelType} onChange={handleModelSelection}>
+                                <option value=''>Select Model</option>
+                                {models.map((m) => (
+                                    <option key={m} value={m}>{m}</option>
+                                ))}
+                            </select>
+                        </div>
+                    )}
+                    {/* Conditionally render metrics based on model selection for er */}
+                    {(modelType !== '') && (
+                        <div className='ERContent3'>
+                            {renderCheckboxes(metrics)}
+                        </div>
+                    )}
                 </div>
-                {(selectedSubcategory !== '') && (
-                    <div className='ERContent2'>
-                        <select id="modelSelection1" value={modelType} onChange={handleModelSelection}>
-                            <option value=''>Select Model</option>
-                            {models.map((m) => (
-                                <option key={m} value={m}>{m}</option>
-                            ))}
-                        </select>
-                    </div>
-                )}
-
-                {/* Conditionally render metrics based on model selection for er */}
-                {(modelType !== '') && (
-                    <div className='ERContent3'>
-                        {renderCheckboxes(metrics)}
-                        <button onClick={() => console.log('Calculating has not been implemented...')}>Calculate</button>
-                    </div>
-                )}
+            {(modelType !== '') && (
+                <div className="calculate">
+                    <button onClick={() => console.log('Calculating has not been implemented...')}>Calculate</button>
+                </div>
+            )}
             </div>
         </div>
     );
