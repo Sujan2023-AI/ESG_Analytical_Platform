@@ -1,14 +1,10 @@
 import '../Css/Enhanced.css';
 import React from 'react';
-import { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 
 function Enhanced() {
   
-
-
-
   return (
     <div className="App">
       <AppHeader />
@@ -24,7 +20,6 @@ function Enhanced() {
         </div>
       </div>
     </div>
-    
   );
 }
 
