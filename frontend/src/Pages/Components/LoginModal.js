@@ -1,8 +1,6 @@
 import '../../Css/Modal.css';
 import React from 'react';
 
-
-
 function LoginModal ({ isOpen, onSave, onClose }) {
   if (!isOpen) { return (<></>); }
   

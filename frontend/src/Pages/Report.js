@@ -9,36 +9,42 @@ function Report() {
     // states for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
     const [selectedErSubcategory, setSelectedErSubcategory] = useState('');
+    const [erModels, setErModels] = useState([]);
     const [erModelType, setErModelType] = useState('');
     const [erMetrics, setErMetrics] = useState([]);
 
     // states for social risk
     const [srSubcategories, setSrSubcategories] = useState([]);
     const [selectedSrSubcategory, setSelectedSrSubcategory] = useState('');
+    const [srModels, setSrModels] = useState([]);
     const [srModelType, setSrModelType] = useState('');
     const [srMetrics, setSrMetrics] = useState([]);
 
     // states for governance risk
     const [grSubcategories, setGrSubcategories] = useState([]);
     const [selectedGrSubcategory, setSelectedGrSubcategory] = useState('');
+    const [grModels, setGrModels] = useState([]);
     const [grModelType, setGrModelType] = useState('');
     const [grMetrics, setGrMetrics] = useState([]);
 
     // states for environment opportunity
     const [eoSubcategories, setEoSubcategories] = useState([]);
     const [selectedEoSubcategory, setSelectedEoSubcategory] = useState('');
+    const [eoModels, setEoModels] = useState([]);
     const [eoModelType, setEoModelType] = useState('');
     const [eoMetrics, setEoMetrics] = useState([]);
 
     // states for social opportunity
     const [soSubcategories, setSoSubcategories] = useState([]);
     const [selectedSoSubcategory, setSelectedSoSubcategory] = useState('');
+    const [soModels, setSoModels] = useState([]);
     const [soModelType, setSoModelType] = useState('');
     const [soMetrics, setSoMetrics] = useState([]);
 
     // states for governance opportunity
     const [goSubcategories, setGoSubcategories] = useState([]);
     const [selectedGoSubcategory, setSelectedGoSubcategory] = useState('');
+    const [goModels, setGoModels] = useState([]);
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
@@ -146,7 +152,6 @@ function Report() {
                 setIsSRContent3Visible(false);
             }
         }
-        console.log('Loaded SRContent2 visibility:', isSRContent2Visible);
     }, []); // Empty dependency array ensures this runs once when the component mounts
 
     /* PRIYA OLD METHOD */ /*
@@ -252,6 +257,8 @@ function Report() {
                         setSubcategories={setErSubcategories}
                         selectedSubcategory={selectedErSubcategory}
                         setSelectedSubcategory={setSelectedErSubcategory}
+                        models={erModels}
+                        setModels={setErModels}
                         modelType={erModelType}
                         setModelType={setErModelType}
                         metrics={erMetrics}
@@ -265,6 +272,8 @@ function Report() {
                         setSubcategories={setSrSubcategories}
                         selectedSubcategory={selectedSrSubcategory}
                         setSelectedSubcategory={setSelectedSrSubcategory}
+                        models={srModels}
+                        setModels={setSrModels}
                         modelType={srModelType}
                         setModelType={setSrModelType}
                         metrics={srMetrics}
@@ -278,6 +287,8 @@ function Report() {
                         setSubcategories={setGrSubcategories}
                         selectedSubcategory={selectedGrSubcategory}
                         setSelectedSubcategory={setSelectedGrSubcategory}
+                        models={grModels}
+                        setModels={setGrModels}
                         modelType={grModelType}
                         setModelType={setGrModelType}
                         metrics={grMetrics}
@@ -293,6 +304,8 @@ function Report() {
                         setSubcategories={setEoSubcategories}
                         selectedSubcategory={selectedEoSubcategory}
                         setSelectedSubcategory={setSelectedEoSubcategory}
+                        models={eoModels}
+                        setModels={setEoModels}
                         modelType={eoModelType}
                         setModelType={setEoModelType}
                         metrics={eoMetrics}
@@ -306,6 +319,8 @@ function Report() {
                         setSubcategories={setSoSubcategories}
                         selectedSubcategory={selectedSoSubcategory}
                         setSelectedSubcategory={setSelectedSoSubcategory}
+                        models={soModels}
+                        setModels={setSoModels}
                         modelType={soModelType}
                         setModelType={setSoModelType}
                         metrics={soMetrics}
@@ -319,6 +334,8 @@ function Report() {
                         setSubcategories={setGoSubcategories}
                         selectedSubcategory={selectedGoSubcategory}
                         setSelectedSubcategory={setSelectedGoSubcategory}
+                        models={goModels}
+                        setModels={setGoModels}
                         modelType={goModelType}
                         setModelType={setGoModelType}
                         metrics={goMetrics}

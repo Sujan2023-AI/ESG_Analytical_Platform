@@ -1,15 +1,5 @@
 // import '../Css/Enhanced.css';
-import React, { useEffect } from 'react';
-
-function DummyModelOptions({modelType, handleChange}) {
-    return (
-        <select id="modelSelection1" value={modelType} onChange={handleChange}>
-            <option value="">Select Model</option>
-            <option value="PCA Model">PCA Model</option>
-            <option value="Ontology Model">Ontology Model</option>
-        </select>
-    );
-}
+import React from 'react';
 
 function ReportCategorySection({
     category,
@@ -19,6 +9,8 @@ function ReportCategorySection({
     setSubcategories,
     selectedSubcategory,
     setSelectedSubcategory,
+    models,
+    setModels,
     modelType,
     setModelType,
     metrics,
@@ -30,12 +22,19 @@ function ReportCategorySection({
     // Subcategory selected
     const handleDropdownChange = (event) => {
         const selectedValue = event.target.value;
+
         setSelectedSubcategory(selectedValue); // Update the state with the new value
 
         // Save the selected value to localStorage for persistence
         localStorage.setItem(categoryShortCode + 'Subcategory', selectedValue);
         setModelType(''); // Reset the model selection
         localStorage.removeItem(categoryShortCode + 'ModelType');
+
+        // query metric list for selection
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedValue}/models`)
+            .then(response => response.json())
+            .then(data => setModels(data))
+            .catch(error => console.error('Error fetching ' + category + ':', error));
     };
 
     // Model selected
@@ -47,7 +46,7 @@ function ReportCategorySection({
         localStorage.setItem(categoryShortCode + 'modelType', selectedModel);
  
         // query metric list for selection
-        fetch(`http://localhost:3902/data/${categoryCode}/${selectedSubcategory}/metrics`)
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
             .then(response => response.json())
             .then(data => setMetrics(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
@@ -57,13 +56,13 @@ function ReportCategorySection({
     const renderCheckboxes = (metrics) => {
 
         return metrics.map((sc) => (
-            <div className='metric_checkbox' key={sc}>
+            <div className='metric_checkbox' key={sc[0]}>
                 <input
                     type="checkbox"
-                    value={sc}
+                    value={sc[0]}
                 />
-                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc.toLowerCase()}</label>
-                <label>1.23</label>
+                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0].toLowerCase()}</label>
+                <label>{sc[1]}</label>
             </div>
         ));
     
@@ -89,7 +88,7 @@ function ReportCategorySection({
             <div className='ERContent'>
                 <div className="ERContent1">
                     <select id="dropdown" value={selectedSubcategory} onChange={handleDropdownChange}>
-                        <option key='default' value=''>Select a Metric</option>
+                        <option key='' value=''>Select a Metric</option>
                         {subcategories.map((c) => (
                             <option key={c} value={c}>{c}</option>
                         ))}
@@ -97,7 +96,12 @@ function ReportCategorySection({
                 </div>
                 {(selectedSubcategory !== '') && (
                     <div className='ERContent2'>
-                        <DummyModelOptions modelType={modelType} handleChange={handleModelSelection} />
+                        <select id="modelSelection1" value={modelType} onChange={handleModelSelection}>
+                            <option value=''>Select Model</option>
+                            {models.map((m) => (
+                                <option key={m} value={m}>{m}</option>
+                            ))}
+                        </select>
                     </div>
                 )}
 

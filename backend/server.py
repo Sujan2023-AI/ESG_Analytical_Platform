@@ -8,30 +8,53 @@ CORS(app)
 
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
-    df = pd.read_csv("../Normalized_Data/esg_master_mapping_pillar_updated1.csv")
+    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
+
+    # 'Amlogic Shanghai Co Ltd' - 5068926914
 
     # select query
-    category_df = df[df["Pillar"] == category]
-    sorted_df = category_df.sort_values(category_df.columns[0], ascending = True)
-    unique_subcategory_df = sorted_df["Topic"].unique()
+    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
+    category_df = company_df[company_df["pillar"] == category]
+    sorted_df = category_df.sort_values(category_df.columns[12], ascending = True)
+    unique_subcategory_df = sorted_df["metric_name"].unique()
 
     # return result
     n_array = unique_subcategory_df.tolist()
     return jsonify(n_array)
 
-@app.route('/data/<string:category>/<string:subcategory>/metrics', methods=['GET'])
-def get_environment_risks_metrics(category, subcategory):
-    df = pd.read_csv("../Normalized_Data/esg_master_mapping_pillar_updated1.csv")
+@app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
+def get_models(category, subcategory):
+    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
 
     # select query
-    df_category = df[df["Pillar"] == category]
-    df_subcategory = df_category[df_category["Topic"] == subcategory]
-    sorted_df = df_subcategory.sort_values(df_subcategory.columns[0], ascending = True)
-    unique_metric_df = sorted_df["Metric"].unique()
+    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
+    df_category = company_df[company_df["pillar"] == category]
+    df_subcategory = df_category[df_category["metric_name"] == subcategory]
+    sorted_df = df_subcategory.sort_values(df_subcategory.columns[14], ascending = True)
+    unique_metric_df = sorted_df["model"].unique()
 
     # return result
     n_array = unique_metric_df.tolist()
     return jsonify(n_array)
+
+@app.route('/data/<string:category>/<string:subcategory>/<string:model>/metrics', methods=['GET'])
+def get_metrics(category, subcategory, model):
+    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
+
+    # select query
+    df_category = df[df["pillar"] == category]
+    df_subcategory = df_category[df_category["metric_name"] == subcategory]
+    df_model = df_subcategory[df_subcategory["model"] == model]
+    sorted_df = df_model.sort_values(df_model.columns[5], ascending = True)
+
+    metric_df = sorted_df["category"].unique()
+    value_df = sorted_df["metric_value"].unique()
+
+    # return result
+    m_array = metric_df.tolist()
+    v_array = value_df.tolist()
+    combined = list(zip(m_array, v_array))
+    return jsonify(combined)
 
 @app.route('/api/categories', methods=['GET'])
 def get_groups():
