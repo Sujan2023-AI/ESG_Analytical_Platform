@@ -24,9 +24,16 @@ function Report() {
     const [isSRContent3Visible, setIsSRContent3Visible] = useState(false);
     const [isSRContent4Visible, setIsSRContent4Visible] = useState(false);
 
-
+    const [erCategories, setErCategories] = useState([]);
+    const [erSubcategories, setErSubcategories] = useState([]);
+    
     // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
+        fetch('http://localhost:3902/data/er')
+          .then(response => response.json())
+          .then(data => setErCategories(data))
+          .catch(error => console.error('Error fetching groups:', error));
+
         // Fetch the saved dropdown value from localStorage for ER(if any)
         const savedValue1 = localStorage.getItem('dropdownValue1');
         const savedModel1 = localStorage.getItem('modelType1');
@@ -85,7 +92,7 @@ function Report() {
         setDropdownValue1(selectedValue); // Update the state with the new value
         // Save the selected value to localStorage for persistence
         localStorage.setItem('dropdownValue1', selectedValue);
-        if (selectedValue === 'GHG Emissions' || selectedValue === 'Water Management') {
+        if (selectedValue !== 'Select a Metric') {
             setIsERContent2Visible(true);  // Show ERContent2 when valid selection is made
         } else {
             setIsERContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
@@ -96,12 +103,15 @@ function Report() {
         setIsERContent4Visible(false);
     };
 
-    // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
-    const handleModelSelection1 = (event) => {
+    // When the user selects a model for Environment Risk section
+    const handleErModelSelection = (event) => {
         const selectedModel = event.target.value;
+
+        // local storage call
         setModelType1(selectedModel);
         localStorage.setItem('modelType1', selectedModel);
 
+        // priya thing
         if (selectedModel === 'PCA Model') {
             setIsERContent3Visible(true);
             setIsERContent4Visible(false);
@@ -112,6 +122,14 @@ function Report() {
             setIsERContent3Visible(false);
             setIsERContent4Visible(false);
         }
+ 
+        // query metric list for selection
+        console.log("ER - DELETE (subcategory) =", dropdownValue1)
+        console.log("ER - Selected Model =", selectedModel)
+        fetch(`http://localhost:3902/data/er/${dropdownValue1}/metrics`)
+          .then(response => response.json())
+          .then(data => {setErSubcategories(data); console.log(data);})
+          .catch(error => console.error('Error fetching groups:', error));
     };
 
     const handleCheckboxChangeERPCA = (event) => {
@@ -170,6 +188,19 @@ function Report() {
     
       // Step 6: Render the checkboxes and the "Calculate" button for each div
       const renderCheckboxes = (divNumber) => {
+
+        return erSubcategories.map((sc) => (
+            <div className='metric_checkbox' key={sc}>
+                <input
+                    type="checkbox"
+                    value={sc}
+                />
+                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc.toLowerCase()}</label>
+                <label>1.23</label>
+            </div>
+        ));
+        
+        /*
         const checkboxes = divNumber === 3 ? ['Option 1', 'Option 2', 'Option 3'] : ['Option A', 'Option B', 'Option C'];
     
         return checkboxes.map((option, index) => (
@@ -183,6 +214,7 @@ function Report() {
             <label>{option}</label>
           </div>
         ));
+        */
       };
 
   return (
@@ -197,16 +229,17 @@ function Report() {
                     <div className='metric1'>
                         <p className='metricTitle'>Environmental Risk</p>
                         <div className='ERContent'>
-                            <div class="ERContent1">
+                            <div className="ERContent1">
                                 <select id="dropdown" value={dropdownValue1} onChange={handleDropdownChange1}>
-                                    <option value="">Select a Metric</option>
-                                    <option value="GHG Emissions">GHG Emissions</option>
-                                    <option value="Water Management">Water Management</option>
+                                    <option key='default' value='Select a Metric'>Select a Metric</option>
+                                    {erCategories.map((c) => (
+                                        <option key={c} value={c}>{c}</option>
+                                    ))}
                                 </select>
                             </div>
                             {isERContent2Visible && (
                                 <div className='ERContent2'>
-                                    <select id="modelSelection1" value={modelType1} onChange={handleModelSelection1}>
+                                    <select id="modelSelection1" value={modelType1} onChange={handleErModelSelection}>
                                         <option value="">Select Model</option>
                                         <option value="PCA Model">PCA Model</option>
                                         <option value="Ontology Model">Ontology Model</option>
@@ -232,7 +265,7 @@ function Report() {
                     <div className='metric2'>
                         <p className='metricTitle'>Social Risk</p>
                         <div className='SRContent'>
-                            <div class="SRContent1">
+                            <div className="SRContent1">
                                 <select id="dropdown" value={dropdownValue2} onChange={handleDropdownChange2}>
                                     <option value="">Select a Metric</option>
                                     <option value="SocialRisk Metric1">SocialRisk Metric1</option>

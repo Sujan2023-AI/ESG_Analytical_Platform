@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 
+import pandas as pd
+
 app = Flask(__name__)
 CORS(app)
 
@@ -44,6 +46,31 @@ def get_groups():
             "subCategory": "risk",
         },
     ])
+
+@app.route('/data/er', methods=['GET'])
+def get_environment_risks():
+    df = pd.read_csv("../Normalized_Data/esg_master_mapping_pillar_updated1.csv")
+    filtered_df = df[df["Pillar"] == "E_risk"]
+    sorted_df = filtered_df.sort_values(filtered_df.columns[0], ascending = True)
+    unique_values = sorted_df["Topic"].unique()
+    n_array = unique_values.tolist()
+    return jsonify(n_array)
+
+@app.route('/data/er/<string:subcategory>/metrics', methods=['GET'])
+def get_environment_risks_metrics(subcategory):
+    print(subcategory)
+    df = pd.read_csv("../Normalized_Data/esg_master_mapping_pillar_updated1.csv")
+    df1 = df[df["Pillar"] == "E_risk"]
+    print(df1)
+    df2 = df1[df1["Topic"] == subcategory]
+    print(df2)
+    sorted_df = df2.sort_values(df2.columns[0], ascending = True)
+    unique_values = sorted_df["Metric"].unique()
+    n_array = unique_values.tolist()
+    print(n_array)
+    return jsonify(n_array)
+
+
 
 @app.route('/api/students', methods=['GET'])
 def get_students():
@@ -93,7 +120,7 @@ def delete_group(group_id):
 
     return '', 204  # Return 204 (do not modify this line)
 
-@app.route('/api/groups/<int:group_id>', methods=['GET'])
+@app.route('/api/groups/', methods=['GET'])
 def get_group(group_id):
     """
     Route to get a group by ID (for fetching group members)
