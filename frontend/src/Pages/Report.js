@@ -2,118 +2,127 @@ import '../Css/Report.css';
 import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
+import ReportCategorySection from './Components/ReportCategorySection';
 
 function Report() {
-    // Step 1: Initialize the state with an empty value (initially)
-    const [dropdownValue1, setDropdownValue1] = useState('');
-    const [isERContent2Visible, setIsERContent2Visible] = useState(false); // Updated variable name
-    const [modelType1, setModelType1] = useState('');
-    const [isERContent3Visible, setIsERContent3Visible] = useState(false);
-    const [isERContent4Visible, setIsERContent4Visible] = useState(false);
-    // States for checkboxes
-    const [selectedCheckboxesERPCA, setSelectedCheckboxesERPCA] = useState([]);
-    const [selectedCheckboxesEROntology, setSelectedCheckboxesEROntology] = useState([]);
-    // User-defined options for checkboxes
-    const optionsForDivERPCA = ['Scope Emission 1', 'Scope Emission 2', 'Scope Emission 3'];
-    const optionsForDivEROntology = ['Water 1', 'Water Discharge'];
 
-    // States for Metric 2 (Social Risk)
-    const [dropdownValue2, setDropdownValue2] = useState('');
-    const [isSRContent2Visible, setIsSRContent2Visible] = useState(false); // SRContent2 visibility state
-    const [modelType2, setModelType2] = useState(''); // Default model type for Metric 2
-    const [isSRContent3Visible, setIsSRContent3Visible] = useState(false);
-    const [isSRContent4Visible, setIsSRContent4Visible] = useState(false);
+    // states for environment risk
+    const [erSubcategories, setErSubcategories] = useState([]);
+    const [selectedErSubcategory, setSelectedErSubcategory] = useState('');
+    const [erModels, setErModels] = useState([]);
+    const [erModelType, setErModelType] = useState('');
+    const [erMetrics, setErMetrics] = useState([]);
 
+    // states for social risk
+    const [srSubcategories, setSrSubcategories] = useState([]);
+    const [selectedSrSubcategory, setSelectedSrSubcategory] = useState('');
+    const [srModels, setSrModels] = useState([]);
+    const [srModelType, setSrModelType] = useState('');
+    const [srMetrics, setSrMetrics] = useState([]);
+
+    // states for governance risk
+    const [grSubcategories, setGrSubcategories] = useState([]);
+    const [selectedGrSubcategory, setSelectedGrSubcategory] = useState('');
+    const [grModels, setGrModels] = useState([]);
+    const [grModelType, setGrModelType] = useState('');
+    const [grMetrics, setGrMetrics] = useState([]);
+
+    // states for environment opportunity
+    const [eoSubcategories, setEoSubcategories] = useState([]);
+    const [selectedEoSubcategory, setSelectedEoSubcategory] = useState('');
+    const [eoModels, setEoModels] = useState([]);
+    const [eoModelType, setEoModelType] = useState('');
+    const [eoMetrics, setEoMetrics] = useState([]);
+
+    // states for social opportunity
+    const [soSubcategories, setSoSubcategories] = useState([]);
+    const [selectedSoSubcategory, setSelectedSoSubcategory] = useState('');
+    const [soModels, setSoModels] = useState([]);
+    const [soModelType, setSoModelType] = useState('');
+    const [soMetrics, setSoMetrics] = useState([]);
+
+    // states for governance opportunity
+    const [goSubcategories, setGoSubcategories] = useState([]);
+    const [selectedGoSubcategory, setSelectedGoSubcategory] = useState('');
+    const [goModels, setGoModels] = useState([]);
+    const [goModelType, setGoModelType] = useState('');
+    const [goMetrics, setGoMetrics] = useState([]);
 
     // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
+
+        fetch('http://localhost:3902/data/E_risk')
+            .then(response => response.json())
+            .then(data => setErSubcategories(data))
+            .catch(error => console.error('Error fetching environment risk sub categories:', error));
+
+        fetch('http://localhost:3902/data/S_risk')
+            .then(response => response.json())
+            .then(data => setSrSubcategories(data))
+            .catch(error => console.error('Error fetching social risk sub categories:', error));
+
+        fetch('http://localhost:3902/data/G_risk')
+            .then(response => response.json())
+            .then(data => setGrSubcategories(data))
+            .catch(error => console.error('Error fetching governance risk sub categories:', error));
+
+        fetch('http://localhost:3902/data/E_opportunity')
+            .then(response => response.json())
+            .then(data => setEoSubcategories(data))
+            .catch(error => console.error('Error fetching environment opportunity sub categories:', error));
+
+        fetch('http://localhost:3902/data/S_opportunity')
+            .then(response => response.json())
+            .then(data => setSoSubcategories(data))
+            .catch(error => console.error('Error fetching risk opportunity sub categories:', error));
+
+        fetch('http://localhost:3902/data/G_opportunity')
+            .then(response => response.json())
+            .then(data => setGoSubcategories(data))
+            .catch(error => console.error('Error fetching governance opportunity sub categories:', error));
+
         // Fetch the saved dropdown value from localStorage for ER(if any)
-        const savedValue1 = localStorage.getItem('dropdownValue1');
-        const savedModel1 = localStorage.getItem('modelType1');
-  
-        // If a saved value exists, update the state
-        if (savedValue1) {
-            setDropdownValue1(savedValue1); // Set dropdownValue to the saved value
-            if (savedValue1 === 'GHG Emissions' || savedValue1 === 'Water Management') {
-                setIsERContent2Visible(true); // If 'show' is selected, make div2 visible
-            }
-        }
-        if (savedModel1) {
-            setModelType1(savedModel1); // Retain the model selection from localStorage
-            if (savedModel1 === 'PCA Model') {
-                setIsERContent3Visible(true);
-                setIsERContent4Visible(false);
-            } else if (savedModel1 === 'Ontology Model') {
-                setIsERContent4Visible(true);
-                setIsERContent3Visible(false);
-            }
-        }
+        // const savedValue1 = localStorage.getItem('erSubcategory');
+        // const savedModel1 = localStorage.getItem('erModelType');
+    }, []);
 
-        const savedCheckboxesERPCA = JSON.parse(localStorage.getItem('selectedCheckboxesERPCA')) || [];
-        const savedCheckboxesEROntology = JSON.parse(localStorage.getItem('selectedCheckboxesEROntology')) || [];
+    /* PRIYA OLD METHOD */ /*
+        // Step 3: Handle dropdown change and save to localStorage
+        const handleDropdownChange2 = (event) => {
+            const selectedValue = event.target.value;
+            setDropdownValue2(selectedValue); // Update the state with the new value
+            // Save the selected value to localStorage for persistence
+            localStorage.setItem('dropdownValue2', selectedValue);
+            if (selectedValue === 'SocialRisk Metric1' || selectedValue === 'SocialRisk Metric2') {
+                setIsSRContent2Visible(true);  // Show ERContent2 when valid selection is made
+            } else {
+                setIsSRContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
+            }        
+            setModelType2(''); // Reset the model selection
+            localStorage.removeItem('modelType2');
+            setIsSRContent3Visible(false); // Hide div3 (PCA Model)
+            setIsSRContent4Visible(false);
+        };
     
-        setSelectedCheckboxesERPCA(savedCheckboxesERPCA);
-        setSelectedCheckboxesEROntology(savedCheckboxesEROntology);
-
-        // Fetch the saved dropdown value from localStorage for SR(if any)
-        const savedValue2 = localStorage.getItem('dropdownValue2');
-        const savedModel2 = localStorage.getItem('modelType2');
-
-        // If a saved value exists, update the state
-        if (savedValue2) {
-            setDropdownValue2(savedValue2); // Set dropdownValue to the saved value
-            if (savedValue2 === 'GHG Emissions' || savedValue2 === 'Water Management') {
-                setIsSRContent2Visible(true); // If 'show' is selected, make div2 visible
-            }
-        }
-        if (savedModel2) {
-            setModelType2(savedModel2); // Retain the model selection from localStorage
-            if (savedModel2 === 'PCA Model') {
+        // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
+        const handleModelSelection2 = (event) => {
+            const selectedModel = event.target.value;
+            setModelType2(selectedModel);
+            localStorage.setItem('modelType2', selectedModel);
+    
+            if (selectedModel === 'PCA Model') {
                 setIsSRContent3Visible(true);
                 setIsSRContent4Visible(false);
-            } else if (savedModel2 === 'Ontology Model') {
+            } else if (selectedModel === 'Ontology Model') {
                 setIsSRContent4Visible(true);
                 setIsSRContent3Visible(false);
+            } else {
+                setIsSRContent3Visible(false);
+                setIsSRContent4Visible(false);
             }
-        }
-        console.log('Loaded SRContent2 visibility:', isSRContent2Visible);
-    }, []); // Empty dependency array ensures this runs once when the component mounts
+        }; */
 
-    // Step 3: Handle dropdown change and save to localStorage
-    const handleDropdownChange1 = (event) => {
-        const selectedValue = event.target.value;
-        setDropdownValue1(selectedValue); // Update the state with the new value
-        // Save the selected value to localStorage for persistence
-        localStorage.setItem('dropdownValue1', selectedValue);
-        if (selectedValue === 'GHG Emissions' || selectedValue === 'Water Management') {
-            setIsERContent2Visible(true);  // Show ERContent2 when valid selection is made
-        } else {
-            setIsERContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
-        }        
-        setModelType1(''); // Reset the model selection
-        localStorage.removeItem('modelType1');
-        setIsERContent3Visible(false); // Hide div3 (PCA Model)
-        setIsERContent4Visible(false);
-    };
-
-    // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
-    const handleModelSelection1 = (event) => {
-        const selectedModel = event.target.value;
-        setModelType1(selectedModel);
-        localStorage.setItem('modelType1', selectedModel);
-
-        if (selectedModel === 'PCA Model') {
-            setIsERContent3Visible(true);
-            setIsERContent4Visible(false);
-        } else if (selectedModel === 'Ontology Model') {
-            setIsERContent4Visible(true);
-            setIsERContent3Visible(false);
-        } else {
-            setIsERContent3Visible(false);
-            setIsERContent4Visible(false);
-        }
-    };
-
+    /* PRIYA CHECKBOX CODE */ /*
     const handleCheckboxChangeERPCA = (event) => {
         const { value, checked } = event.target;
         setSelectedCheckboxesERPCA((prevSelected) => {
@@ -131,59 +140,7 @@ function Report() {
         localStorage.setItem('selectedCheckboxesEROntology', JSON.stringify(newSelected));
         return newSelected;
     });
-    };
-
-    // Step 3: Handle dropdown change and save to localStorage
-    const handleDropdownChange2 = (event) => {
-        const selectedValue = event.target.value;
-        setDropdownValue2(selectedValue); // Update the state with the new value
-        // Save the selected value to localStorage for persistence
-        localStorage.setItem('dropdownValue2', selectedValue);
-        if (selectedValue === 'SocialRisk Metric1' || selectedValue === 'SocialRisk Metric2') {
-            setIsSRContent2Visible(true);  // Show ERContent2 when valid selection is made
-        } else {
-            setIsSRContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
-        }        
-        setModelType2(''); // Reset the model selection
-        localStorage.removeItem('modelType2');
-        setIsSRContent3Visible(false); // Hide div3 (PCA Model)
-        setIsSRContent4Visible(false);
-    };
-
-    // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
-    const handleModelSelection2 = (event) => {
-        const selectedModel = event.target.value;
-        setModelType2(selectedModel);
-        localStorage.setItem('modelType2', selectedModel);
-
-        if (selectedModel === 'PCA Model') {
-            setIsSRContent3Visible(true);
-            setIsSRContent4Visible(false);
-        } else if (selectedModel === 'Ontology Model') {
-            setIsSRContent4Visible(true);
-            setIsSRContent3Visible(false);
-        } else {
-            setIsSRContent3Visible(false);
-            setIsSRContent4Visible(false);
-        }
-    };
-    
-      // Step 6: Render the checkboxes and the "Calculate" button for each div
-      const renderCheckboxes = (divNumber) => {
-        const checkboxes = divNumber === 3 ? ['Option 1', 'Option 2', 'Option 3'] : ['Option A', 'Option B', 'Option C'];
-    
-        return checkboxes.map((option, index) => (
-          <div key={index}>
-            <input
-              type="checkbox"
-              value={option}
-              checked={divNumber === 3 ? selectedCheckboxesERPCA.includes(option) : selectedCheckboxesEROntology.includes(option)}
-              onChange={divNumber === 3 ? handleCheckboxChangeERPCA : handleCheckboxChangeEROntology}
-            />
-            <label>{option}</label>
-          </div>
-        ));
-      };
+    }; */
 
   return (
     <div className="App">
@@ -194,98 +151,96 @@ function Report() {
           <div className='allContent'>
             <div className="mainMetrics">
                 <div className='metricRow1'>
-                    <div className='metric1'>
-                        <p className='metricTitle'>Environmental Risk</p>
-                        <div className='ERContent'>
-                            <div class="ERContent1">
-                                <select id="dropdown" value={dropdownValue1} onChange={handleDropdownChange1}>
-                                    <option value="">Select a Metric</option>
-                                    <option value="GHG Emissions">GHG Emissions</option>
-                                    <option value="Water Management">Water Management</option>
-                                </select>
-                            </div>
-                            {isERContent2Visible && (
-                                <div className='ERContent2'>
-                                    <select id="modelSelection1" value={modelType1} onChange={handleModelSelection1}>
-                                        <option value="">Select Model</option>
-                                        <option value="PCA Model">PCA Model</option>
-                                        <option value="Ontology Model">Ontology Model</option>
-                                    </select>
-                                </div>
-                            )}
-
-                            {/* Conditionally render div3 or div4 based on model selection for Metric 1 */}
-                            {isERContent3Visible && (
-                                <div className='ERContent3'>
-                                    {renderCheckboxes(3)}
-                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
-                                </div>
-                            )}
-                            {isERContent4Visible && (
-                                <div className='ERContent4'>
-                                    {renderCheckboxes(4)}
-                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
-                                </div>
-                            )}
-                            </div>
-                        </div>
-                    <div className='metric2'>
-                        <p className='metricTitle'>Social Risk</p>
-                        <div className='SRContent'>
-                            <div class="SRContent1">
-                                <select id="dropdown" value={dropdownValue2} onChange={handleDropdownChange2}>
-                                    <option value="">Select a Metric</option>
-                                    <option value="SocialRisk Metric1">SocialRisk Metric1</option>
-                                    <option value="SocialRisk Metric2">SocialRisk Metric2</option>
-                                </select>
-                            </div>
-                            {isSRContent2Visible && (
-                                <div className='SRContent2'>
-                                    <select id="modelSelection2" value={modelType2} onChange={handleModelSelection2}>
-                                        <option value="">Select Model</option>
-                                        <option value="PCA Model">PCA Model</option>
-                                        <option value="Ontology Model">Ontology Model</option>
-                                    </select>
-                                </div>
-                            )}
-
-                            {/* Conditionally render div3 or div4 based on model selection for Metric 1 */}
-                            {isSRContent3Visible && (
-                                <div className='SRContent3'>
-                                    {renderCheckboxes(3)}
-                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
-                                </div>
-                            )}
-                            {isSRContent4Visible && (
-                                <div className='SRContent4'>
-                                    {renderCheckboxes(4)}
-                                    <button onClick={() => console.log('Calculating...')}>Calculate</button>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                    <div className='metric3'>
-                        <p className='metricTitle'>Governance Risk</p>
-                        <div className='GRContent'>GRContent</div>
-                    </div>
+                    <ReportCategorySection
+                        category={'Environment Risk'}
+                        categoryCode={'E_risk'}
+                        categoryShortCode={'Er'}
+                        subcategories={erSubcategories}
+                        selectedSubcategory={selectedErSubcategory}
+                        setSelectedSubcategory={setSelectedErSubcategory}
+                        models={erModels}
+                        setModels={setErModels}
+                        modelType={erModelType}
+                        setModelType={setErModelType}
+                        metrics={erMetrics}
+                        setMetrics={setErMetrics}
+                    />
+                    <ReportCategorySection
+                        category={'Social Risk'}
+                        categoryCode={'S_risk'}
+                        categoryShortCode={'Sr'}
+                        subcategories={srSubcategories}
+                        selectedSubcategory={selectedSrSubcategory}
+                        setSelectedSubcategory={setSelectedSrSubcategory}
+                        models={srModels}
+                        setModels={setSrModels}
+                        modelType={srModelType}
+                        setModelType={setSrModelType}
+                        metrics={srMetrics}
+                        setMetrics={setSrMetrics}
+                    />
+                    <ReportCategorySection
+                        category={'Governance Risk'}
+                        categoryCode={'G_risk'}
+                        categoryShortCode={'Gr'}
+                        subcategories={grSubcategories}
+                        selectedSubcategory={selectedGrSubcategory}
+                        setSelectedSubcategory={setSelectedGrSubcategory}
+                        models={grModels}
+                        setModels={setGrModels}
+                        modelType={grModelType}
+                        setModelType={setGrModelType}
+                        metrics={grMetrics}
+                        setMetrics={setGrMetrics}
+                    />
                 </div>
                 <div className='metricRow2'>
-                    <div className='metric4'>
-                        <p className='metricTitle'>EO</p>
-                        <div className='EOContent'>EOContent</div>
-                    </div>
-                    <div className='metric5'>
-                        <p className='metricTitle'>SO</p>
-                        <div className='SOContent'>SOContent</div>
-                    </div>
-                    <div className='metric6'>
-                        <p className='metricTitle'>GO</p>
-                        <div className='GOContent'>GOContent</div>
-                    </div>
+                    <ReportCategorySection
+                        category={'Environment Opportunity'}
+                        categoryCode={'E_opportunity'}
+                        categoryShortCode={'Eo'}
+                        subcategories={eoSubcategories}
+                        selectedSubcategory={selectedEoSubcategory}
+                        setSelectedSubcategory={setSelectedEoSubcategory}
+                        models={eoModels}
+                        setModels={setEoModels}
+                        modelType={eoModelType}
+                        setModelType={setEoModelType}
+                        metrics={eoMetrics}
+                        setMetrics={setEoMetrics}
+                    />
+                    <ReportCategorySection
+                        category={'Social Opportunity'}
+                        categoryCode={'S_opportunity'}
+                        categoryShortCode={'So'}
+                        subcategories={soSubcategories}
+                        selectedSubcategory={selectedSoSubcategory}
+                        setSelectedSubcategory={setSelectedSoSubcategory}
+                        models={soModels}
+                        setModels={setSoModels}
+                        modelType={soModelType}
+                        setModelType={setSoModelType}
+                        metrics={soMetrics}
+                        setMetrics={setSoMetrics}
+                    />
+                    <ReportCategorySection
+                        category={'Governance Opportunity'}
+                        categoryCode={'G_opportunity'}
+                        categoryShortCode={'Go'}
+                        subcategories={goSubcategories}
+                        selectedSubcategory={selectedGoSubcategory}
+                        setSelectedSubcategory={setSelectedGoSubcategory}
+                        models={goModels}
+                        setModels={setGoModels}
+                        modelType={goModelType}
+                        setModelType={setGoModelType}
+                        metrics={goMetrics}
+                        setMetrics={setGoMetrics}
+                    />
                 </div>
             </div>
             <div className='calculatedPanel'>
-                <p>Calculation comes here</p>
+                <p>(Summed calculations will be shown here in the future)</p>
             </div>
           </div>
         </div>
