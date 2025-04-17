@@ -8,7 +8,7 @@ CORS(app)
 
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
-    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
+    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # 'Amlogic Shanghai Co Ltd' - 5068926914
 
@@ -24,7 +24,7 @@ def get_subcategories(category):
 
 @app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
 def get_models(category, subcategory):
-    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
+    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query
     company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
@@ -39,7 +39,7 @@ def get_models(category, subcategory):
 
 @app.route('/data/<string:category>/<string:subcategory>/<string:model>/metrics', methods=['GET'])
 def get_metrics(category, subcategory, model):
-    df = pd.read_csv("../example/semiconductors_sasb_final.csv")
+    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query
     df_category = df[df["pillar"] == category]
