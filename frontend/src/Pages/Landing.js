@@ -21,6 +21,11 @@ const Landing = () => {
     .then(data => {
       if(data.success){
         console.log('Authentication successful:', data);
+        localStorage.setItem('userData', JSON.stringify({
+          name: data.name,
+          industry: data.industry,
+          company: data.company,
+        }));
         if(data.industry.toLowerCase() === 'semiconductor'){
           console.log('To dashboard now');
           navigate('/dashboard');

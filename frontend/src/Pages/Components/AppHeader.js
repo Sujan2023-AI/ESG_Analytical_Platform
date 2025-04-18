@@ -10,6 +10,20 @@ function AppHeader() {
   const openUserPopup = () => { setShowUserPopup(true); }
   const closeUserPopup = () => { setShowUserPopup(false); }
 
+  // Get the user's industry and name from localStorage
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const industry = userData ? userData.industry : 'Industry';
+  const name = userData ? userData.name : 'User';
+
+  // Function to get the initials from the user's name
+  const getInitials = (name) => {
+    const nameParts = name.split(' ');
+    const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
+    return initials;
+  };
+
+  const userInitials = getInitials(name);
+
   return (
     <div className="Header">
       <div className="Title" onClick={() => {navigate("/dashboard")}}>
@@ -20,10 +34,10 @@ function AppHeader() {
       </div>
       <div className="Options">
         <div className="Industry">
-          <p>Semiconductor</p>
+          <p>{industry}</p>
         </div>
         <button id="testId2" className="User" onClick={openUserPopup}>
-          Su
+          {userInitials}
         </button>
         <UserPopup isOpen={showUserPopup} onClose={closeUserPopup} />
       </div>
