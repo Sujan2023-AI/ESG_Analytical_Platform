@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';  // Updated import
 import '../Css/Landing.css';
 import LoginModal from './Components/LoginModal';
@@ -6,13 +6,38 @@ import LoginModal from './Components/LoginModal';
 const Landing = () => {
   const navigate = useNavigate();  // Updated usage
 
-  const doLogin = () => {
-    navigate('/dashboard');
-  }
-
-  const [showLoginModal, setLoginModal] = React.useState(false);
+  const [showLoginModal, setLoginModal] = useState(false);
   const openLoginModal = () => { setLoginModal(true); }
   const closeLoginModal = () => { setLoginModal(false); }
+
+  const doLogin = (email, password) => {
+    console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
+    fetch('http://localhost:5001/authenticate', {
+      method: 'POST', 
+      headers: {'Content-Type':'application/json',}, 
+      body: JSON.stringify({email,password}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if(data.success){
+        if(data.industry === 'semiconductor'){
+          console.log('To dashboard now');
+          navigate('/dashboard');
+        }
+        else if (data.industry === 'bioPharma'){
+          console.log('To dashboard nowwww');
+          navigate('/dashboard');
+        }
+      }
+      else{
+        alert('Invalid email or password');
+      }
+    })
+    .catch(error=> {
+      console.error('Error during authentication:', error);
+      alert('An error occurred. Please try again later.');
+    });
+  };
 
   return (
     <div className='home-page'>
