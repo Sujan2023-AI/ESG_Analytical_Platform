@@ -32,8 +32,15 @@ const authenticateUser = (email, password) => {
         console.log(`Checking row: ${JSON.stringify(row)}`); // Log the row being checked
         if (row.email === email && row.password === password) {
           userFound = true;
+          userData = {
+            success: true,
+            industry: row.industry,
+            name: row.name,        // Assuming 'name' field exists in the CSV
+            company: row.company,  // Assuming 'company' field exists in the CSV
+            email: row.email,
+          };
           console.log('User found and authenticated'); // Log success
-          resolve({ success: true, industry: row.industry });
+          resolve(userData);
         }
       })
       .on('end', () => {
