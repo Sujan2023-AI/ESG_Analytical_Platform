@@ -1,0 +1,43 @@
+/* whole box */
+.pillar {
+    width: 30%;
+    background-color: white;
+    display: block;
+    border-radius: 8px;
+    border: 1px solid #8a8c90; /* Border with color */
+}
+
+/* title - environment risk */
+.title {
+    padding: 10px;
+    background-color: #F2F9FF;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #8a8c90; /* Border with color */
+}
+
+/* box that contains the dropdowns */
+.pillar_body {
+    padding: 20px;
+ 
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+
+    box-sizing: border-box;
+    height: calc(100% - 40px);
+
+    overflow-y: auto;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dropdowns {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.calculate > button {
+    margin: 0px;
+}

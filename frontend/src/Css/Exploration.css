@@ -1,0 +1,11 @@
+.esg-selection, .ro-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+.esg-selection > button, .ro-selection > button {
+  height: 100px;
+  width: 200px;
+}
