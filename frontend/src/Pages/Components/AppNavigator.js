@@ -18,6 +18,7 @@ function DashboardNavigator() {
         document.getElementById('nav3').classList.remove('active');
         document.getElementById('nav4').classList.remove('active');
         document.getElementById('nav5').classList.remove('active');
+        document.getElementById('nav6').classList.remove('active');
     }
     const activate = (id) => {
         // clearButtons();
@@ -32,6 +33,7 @@ function DashboardNavigator() {
             <button id="nav3" className="navi" onClick={() => {clearButtons(); activate(3); navigate('/ontology');}}>View Ontology</button>
             <button id="nav4" className="navi" onClick={() => {clearButtons(); activate(4); navigate('/enhanced');}}>Ontology Enhanced PCA Analysis</button>
             <button id="nav5" className="navi" onClick={() => {clearButtons(); activate(5); navigate('/Report');}}>Reports</button>
+            <button id="nav6" className="navi" onClick={() => {clearButtons(); activate(6); navigate('/DownloadReport');}}>Download Reports</button>
       </nav>
     );
 }

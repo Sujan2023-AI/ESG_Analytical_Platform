@@ -9,6 +9,7 @@ import Ontology from './Pages/Ontology';
 import PCA from './Pages/PCA';
 import Enhanced from './Pages/Enhanced';
 import Report from './Pages/Report';
+import DownloadReport from './Pages/DownloadReports';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/pca" element={<PCA />} />
                 <Route path="/enhanced" element={<Enhanced />} />
                 <Route path="/report" element={<Report />} />
+                <Route path="/download-report" element={<PCA />} />
             </Routes>
         </BrowserRouter>
     );
