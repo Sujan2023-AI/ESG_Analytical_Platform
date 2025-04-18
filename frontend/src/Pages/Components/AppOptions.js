@@ -6,7 +6,7 @@ import '../../Css/AppOptions.css';
 function AppOptions() {
 
   const [categories, setCategories] = useState([]);
-
+  // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001
   useEffect(() => {
       fetch('http://localhost:3902/api/categories')
           .then(response => response.json())

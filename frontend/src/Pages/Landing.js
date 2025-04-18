@@ -20,11 +20,12 @@ const Landing = () => {
     .then(response => response.json())
     .then(data => {
       if(data.success){
-        if(data.industry === 'semiconductor'){
+        console.log('Authentication successful:', data);
+        if(data.industry.toLowerCase() === 'semiconductor'){
           console.log('To dashboard now');
           navigate('/dashboard');
         }
-        else if (data.industry === 'bioPharma'){
+        else if (data.industry.toLowerCase() === 'biopharma'){
           console.log('To dashboard nowwww');
           navigate('/dashboard');
         }
