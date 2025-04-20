@@ -48,16 +48,14 @@ function PillarReport() {
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
-    const [pillars, setPillars] = useState([]);
+    // const [pillars, setPillars] = useState([]);
 
     // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
         fetch('http://localhost:3902/data/all')
             .then(response => response.json())
-            .then(data => setPillars(data))
+            // .then(data => setPillars(data))
             .catch(error => console.error('Error fetching environment risk sub categories:', error));
-
-
 
 
         // fetch('http://localhost:3902/data/E_risk')
@@ -101,10 +99,12 @@ function PillarReport() {
           <div className='allContent'>
             <div className="mainMetrics">
                 <div className='metricRow1'>
-                    <test>h</test>
+                    <p>Sujan Says this whole page is not needed anymore</p>
+                    {/*
                     {pillars.map((m) => (
                             <option key={m} value={m}>{m}</option>
                         ))}
+                    */}
                     
                     <ReportCategorySection
                         category={'Social Risk'}
