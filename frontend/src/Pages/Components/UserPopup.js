@@ -10,7 +10,7 @@ function UserPopup ({ isOpen, onClose }) {
   useEffect(() => {
     function handleClickOutside(event) {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
-        onClose();
+        onClose(); /* this throws a lint error, since onClose isn't declared inside useEffect scope */
       }
     }
 
