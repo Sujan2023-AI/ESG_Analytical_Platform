@@ -22,17 +22,12 @@ function ReportCategorySection({
     const handleDropdownChange = (event) => {
         const selectedValue = event.target.value;
 
-        console.log('drop down selected');
-
         setSelectedSubcategory(selectedValue); // Update the state with the new value
 
         // Save the selected value to localStorage for persistence
         localStorage.setItem(categoryShortCode + 'Subcategory', selectedValue);
         setModelType(''); // Reset the model selection
         localStorage.removeItem(categoryShortCode + 'ModelType');
-
-        console.log(categoryCode);
-        console.log(selectedValue);
 
         // query metric list for selection
         fetch(`http://localhost:3902/data/${categoryCode}/${selectedValue}/models`)

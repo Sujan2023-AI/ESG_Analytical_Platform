@@ -1,11 +1,16 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
+import logging
 import sys
 import os
 from importnb import Notebook
 import pandas as pd
 from pathlib import Path
 import importlib.util
+
+# Disbale flask cors default logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
 sys.path.append(os.path.abspath('../notebooks'))
@@ -75,7 +80,6 @@ def get_all_subcategories():
 
 @app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
 def get_models(category, subcategory):
-    print("this called")
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query
