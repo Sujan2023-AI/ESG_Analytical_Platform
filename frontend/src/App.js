@@ -30,7 +30,7 @@ function App() {
                 <Route path="/enhanced" element={<Enhanced />} />
                 <Route path="/esg-report" element={<EsgReport />} />
                 <Route path="/pillar-report" element={<PillarReport />} />
-                <Route path="/download-report" element={<PCA />} />
+                <Route path="/DownloadReport" element={<DownloadReport />} />
             </Routes>
         </BrowserRouter>
     );
