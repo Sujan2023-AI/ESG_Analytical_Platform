@@ -22,10 +22,14 @@ function UserPopup ({ isOpen, onClose }) {
 
   if (!isOpen) { return (<></>); }
   
+  // Get the user's name from localStorage
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const userName = userData ? userData.name : 'User';  // Default to 'User' if no name found
+
   return (
     <div ref={popupRef} className="popup">
       <div className="popup-container">
-        <p>Sujan Bharadwaj</p>
+        <p>{userName}</p>
         <button onClick={() => navigate('/')}>Logout</button>
       </div>
     </div>

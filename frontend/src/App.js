@@ -8,7 +8,9 @@ import Exploration from './Pages/Exploration';
 import Ontology from './Pages/Ontology';
 import PCA from './Pages/PCA';
 import Enhanced from './Pages/Enhanced';
-import Report from './Pages/Report';
+import EsgReport from './Pages/EsgReport';
+import PillarReport from './Pages/PillarReport';
+import DownloadReport from './Pages/DownloadReports';
 
 function App() {
 
@@ -26,7 +28,9 @@ function App() {
                 <Route path="/ontology" element={<Ontology />} />
                 <Route path="/pca" element={<PCA />} />
                 <Route path="/enhanced" element={<Enhanced />} />
-                <Route path="/report" element={<Report />} />
+                <Route path="/esg-report" element={<EsgReport />} />
+                <Route path="/pillar-report" element={<PillarReport />} />
+                <Route path="/DownloadReport" element={<DownloadReport />} />
             </Routes>
         </BrowserRouter>
     );
