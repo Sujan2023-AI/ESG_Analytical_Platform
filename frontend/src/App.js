@@ -28,7 +28,7 @@ function App() {
                 <Route path="/pca" element={<PCA />} />
                 <Route path="/enhanced" element={<Enhanced />} />
                 <Route path="/report" element={<Report />} />
-                <Route path="/download-report" element={<PCA />} />
+                <Route path="/DownloadReport" element={<DownloadReport />} />
             </Routes>
         </BrowserRouter>
     );
