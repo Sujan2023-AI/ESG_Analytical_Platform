@@ -1,6 +1,6 @@
 import '../Css/Enhanced.css';
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 

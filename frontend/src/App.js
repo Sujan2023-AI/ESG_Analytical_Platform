@@ -10,7 +10,7 @@ import PCA from './Pages/PCA';
 import Enhanced from './Pages/Enhanced';
 import EsgReport from './Pages/EsgReport';
 import PillarReport from './Pages/PillarReport';
-// import DownloadReport from './Pages/DownloadReports';
+import DownloadReport from './Pages/DownloadReports';
 
 function App() {
 

@@ -67,6 +67,7 @@ print(top_metrics)
 
 @app.route('/top_5', methods=['GET'])
 def get_top_5():
+    '''
     results = OPCA.query_esg_observations(
         endpoint="http://localhost:7200/",
         repository="esg_repo",
@@ -93,6 +94,8 @@ def get_top_5():
     p_array = percent_df.tolist()
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
+    '''
+    return jsonify("test")
 
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
