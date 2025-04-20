@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './Pages/Landing';
 
@@ -13,10 +13,6 @@ import PillarReport from './Pages/PillarReport';
 import DownloadReport from './Pages/DownloadReports';
 
 function App() {
-
-    useEffect(() => {
-        localStorage.clear();  // Clears the localStorage when the app starts
-    }, []); 
 
     return (
         <BrowserRouter>
