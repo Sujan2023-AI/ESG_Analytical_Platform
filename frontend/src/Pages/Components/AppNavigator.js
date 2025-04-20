@@ -22,7 +22,7 @@ function DashboardNavigator() {
         deactivateAllButtons();
         let buttonId = "nav-button-" + activePage;
         let button = document.getElementById(buttonId);
-        if (button != undefined) { /* this cannot be change to !== as it throws an error, but the linter wants it*/
+        if (typeof button !== undefined) {
             button.classList.add("active");
         }
     }, [activePage]);
