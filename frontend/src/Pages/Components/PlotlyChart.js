@@ -6,7 +6,7 @@ const PlotlyChart = () => {
     const [plotData, setPlotData] = useState(null);
   
     useEffect(() => {
-        fetch("http://localhost:3902/plot/dummy")  // Match your Flask route
+        fetch("http://localhost:3902/plot/dummy")
             .then((res) => res.json())
             .then((json) => {
                 const parsed = typeof json === "string" ? JSON.parse(json) : json;

@@ -21,7 +21,7 @@ Returns:
 dict: SPARQL query results in JSON format.
 """
 
-def query_esg_observations( endpoint, repository, industry, metric_filter, pillar_filter, year):
+def query_esg_observations(industry, year, pillar_filter, metric_filter, repository="esg_repo", endpoint="http://localhost:7200/"):
 
     sparql = SPARQLWrapper(f"{endpoint}/repositories/{repository}")
 

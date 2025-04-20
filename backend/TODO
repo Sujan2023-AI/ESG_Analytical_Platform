@@ -1,0 +1,5 @@
+Vinanti file adjustments:
+
+- add default values for query_esg_observations()
+def query_esg_observations(industry, year, pillar_filter, metric_filter, repository="esg_repo", endpoint="http://localhost:7200/"):
+
