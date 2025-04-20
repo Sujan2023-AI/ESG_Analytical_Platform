@@ -58,8 +58,6 @@ function PillarReport() {
             .catch(error => console.error('Error fetching environment risk sub categories:', error));
 
 
-
-
         // fetch('http://localhost:3902/data/E_risk')
         //     .then(response => response.json())
         //     .then(data => setErSubcategories(data))

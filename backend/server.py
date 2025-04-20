@@ -3,71 +3,25 @@ from flask_cors import CORS
 import sys
 import os
 from importnb import Notebook
-
 import pandas as pd
-
-# Add the notebook folder to the system path
-sys.path.append(os.path.abspath('../notebooks'))
-
 from pathlib import Path
 import importlib.util
 
+# Import ontology result notebook
+sys.path.append(os.path.abspath('../notebooks'))
+with Notebook():
+    import Ontology_PCA_SC_v3_cleaned as OPCA
 
 # Initialise flask to await for frontend requests
 app = Flask(__name__)
 CORS(app)
 
-with Notebook():
-    #import Ontology_PCA_SC_v3
-    import Ontology_PCA_SC_v3_cleaned as Ontology_PCA_SC_v3
 
-# Step 1: Run the query
-results = Ontology_PCA_SC_v3.query_esg_observations(
-    endpoint="http://localhost:7200/",
-    repository="esg_repo",
-    industry="biotechnology_pharmaceuticals",
-    metric_filter="supply_chain_management",
-    pillar_filter="g_opportunity",
-    year="2020"
-)
 
-# Step 2: Continue workflow
-records = Ontology_PCA_SC_v3.parse_esg_results(results)
-pivot_df = Ontology_PCA_SC_v3.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
-pca, scores, imputed_df = Ontology_PCA_SC_v3.pca_workflow(pivot_df)
-# Step 3: Use the specific functions you wanted
-top_loadings = Ontology_PCA_SC_v3.get_top_pca_loadings(pca, imputed_df, top_n=10)
-top_metrics = Ontology_PCA_SC_v3.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
-print("Top ESG categories for user selection:")
-print(top_metrics)
-
-with Notebook():
-    #import Ontology_PCA_SC_v3
-    import Ontology_PCA_SC_v3_cleaned as Ontology_PCA_SC_v3
-
-# Step 1: Run the query
-results = Ontology_PCA_SC_v3.query_esg_observations(
-    endpoint="http://localhost:7200/",
-    repository="esg_repo",
-    industry="biotechnology_pharmaceuticals",
-    metric_filter="supply_chain_management",
-    pillar_filter="g_opportunity",
-    year="2020"
-)
-
-# Step 2: Continue workflow
-records = Ontology_PCA_SC_v3.parse_esg_results(results)
-pivot_df = Ontology_PCA_SC_v3.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
-pca, scores, imputed_df = Ontology_PCA_SC_v3.pca_workflow(pivot_df)
-# Step 3: Use the specific functions you wanted
-top_loadings = Ontology_PCA_SC_v3.get_top_pca_loadings(pca, imputed_df, top_n=10)
-top_metrics = Ontology_PCA_SC_v3.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
-print("Top ESG categories for user selection:")
-print(top_metrics)
-
+# Define App Routes
 @app.route('/top_5', methods=['GET'])
 def get_top_5():
-    '''
+
     results = OPCA.query_esg_observations(
         endpoint="http://localhost:7200/",
         repository="esg_repo",
@@ -76,6 +30,7 @@ def get_top_5():
         pillar_filter="g_opportunity",
         year="2020"
     )
+
     records = OPCA.parse_esg_results(results)
     pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
@@ -94,8 +49,6 @@ def get_top_5():
     p_array = percent_df.tolist()
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
-    '''
-    return jsonify("test")
 
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
@@ -206,6 +159,6 @@ def get_groups():
         },
     ])
 
+# Run server app
 if __name__ == '__main__':
     app.run(port=3902, debug=True)
-
