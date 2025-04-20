@@ -15,8 +15,26 @@ def get_subcategories(category):
     # select query
     company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
     category_df = company_df[company_df["pillar"] == category]
-    sorted_df = category_df.sort_values(category_df.columns[12], ascending = True)
-    unique_subcategory_df = sorted_df["metric_name"].unique()
+    sorted_df = category_df.sort_values(category_df.columns[10], ascending = True)
+    unique_subcategory_df = sorted_df["metric"].unique()
+
+    # return result
+    n_array = unique_subcategory_df.tolist()
+    return jsonify(n_array)
+
+@app.route('/data/all', methods=['GET'])
+def get_all_subcategories():
+    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
+
+    # 'Amlogic Shanghai Co Ltd' - 5068926914
+
+    # select query
+    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
+    
+    sorted_df = company_df.sort_values(company_df.columns[10], ascending = True)
+    unique_subcategory_df = sorted_df["metric"].unique()
+
+    print(unique_subcategory_df)
 
     # return result
     n_array = unique_subcategory_df.tolist()

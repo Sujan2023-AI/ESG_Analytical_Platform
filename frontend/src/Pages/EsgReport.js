@@ -4,7 +4,7 @@ import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 import ReportCategorySection from './Components/ReportCategorySection';
 
-function Report() {
+function EsgReport() {
 
     // states for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
@@ -249,4 +249,4 @@ function Report() {
   );
 }
 
-export default Report;
+export default EsgReport;
