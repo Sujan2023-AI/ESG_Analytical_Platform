@@ -75,16 +75,17 @@ def get_all_subcategories():
 
 @app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
 def get_models(category, subcategory):
+    print("this called")
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query
     company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
     df_category = company_df[company_df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric_name"] == subcategory]
-    sorted_df = df_subcategory.sort_values(df_subcategory.columns[14], ascending = True)
-    unique_metric_df = sorted_df["model"].unique()
+    df_subcategory = df_category[df_category["metric"] == subcategory]
+    sorted_df = df_subcategory.sort_values(df_subcategory.columns[-1], ascending = True)
 
     # return result
+    unique_metric_df = sorted_df["metric"].unique()
     n_array = unique_metric_df.tolist()
     return jsonify(n_array)
 
@@ -94,8 +95,8 @@ def get_metrics(category, subcategory, model):
 
     # select query
     df_category = df[df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric_name"] == subcategory]
-    df_model = df_subcategory[df_subcategory["model"] == model]
+    df_subcategory = df_category[df_category["metric"] == subcategory]
+    df_model = df_subcategory[df_subcategory["category"] == model]
     sorted_df = df_model.sort_values(df_model.columns[5], ascending = True)
 
     metric_df = sorted_df["category"].unique()

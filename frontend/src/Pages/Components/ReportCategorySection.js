@@ -22,6 +22,8 @@ function ReportCategorySection({
     const handleDropdownChange = (event) => {
         const selectedValue = event.target.value;
 
+        console.log('drop down selected');
+
         setSelectedSubcategory(selectedValue); // Update the state with the new value
 
         // Save the selected value to localStorage for persistence
@@ -29,8 +31,11 @@ function ReportCategorySection({
         setModelType(''); // Reset the model selection
         localStorage.removeItem(categoryShortCode + 'ModelType');
 
+        console.log(categoryCode);
+        console.log(selectedValue);
+
         // query metric list for selection
-        fetch(`http://localhost:3000/data/${categoryCode}/${selectedValue}/models`)
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedValue}/models`)
             .then(response => response.json())
             .then(data => setModels(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
@@ -45,7 +50,7 @@ function ReportCategorySection({
         localStorage.setItem(categoryShortCode + 'modelType', selectedModel);
  
         // query metric list for selection
-        fetch(`http://localhost:3000/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
             .then(response => response.json())
             .then(data => setMetrics(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
