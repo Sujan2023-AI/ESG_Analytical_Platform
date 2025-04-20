@@ -22,7 +22,7 @@ function DashboardNavigator() {
         deactivateAllButtons();
         let buttonId = "nav-button-" + activePage;
         let button = document.getElementById(buttonId);
-        if (typeof button !== undefined) {
+        if (button) {
             button.classList.add("active");
         }
     }, [activePage]);
