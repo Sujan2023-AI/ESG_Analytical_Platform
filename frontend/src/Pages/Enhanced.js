@@ -24,14 +24,24 @@ function Enhanced() {
                     <div>
                         <h1>Ontology Enhanced Principle Component Analysis</h1>
                         <p>Get advanced insights from our enhanced PCA analysis</p>
-                        {top5.map((t) => (
-                            <div key={t[0]}>
-                                <p>{t[0]}</p>
-                                <p>{t[1]}</p>
-                            </div>
-                        ))}
-                    </div>
-                    <div>
+                        <div className="table-container">
+                            <table className="my-table">
+                                <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Percentage</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {top5.map((t) => (
+                                        <tr key={t[0]}>
+                                            <td>{t[0]}</td>
+                                            <td>{t[1]}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
