@@ -7,6 +7,9 @@ from importnb import Notebook
 import pandas as pd
 from pathlib import Path
 import importlib.util
+from flask import Flask, jsonify
+import plotly.express as px
+import json
 
 # Disbale flask cors default logging
 log = logging.getLogger('werkzeug')
@@ -21,7 +24,16 @@ with Notebook():
 app = Flask(__name__)
 CORS(app)
 
-# Define App Routes
+
+## APP ROUTES
+
+# returns a dummy biplot graph
+@app.route("/plot/dummy")
+def get_plot_dummy_data():
+    fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
+    return jsonify(json.loads(fig.to_json()))
+
+# returns the top 5 categories, determined by ontology enhanced PCA analysis
 @app.route('/top_5', methods=['GET'])
 def get_top_5():
 

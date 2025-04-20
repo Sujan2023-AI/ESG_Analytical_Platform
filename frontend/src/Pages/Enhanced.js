@@ -3,16 +3,23 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
+import PlotlyChart from './Components/PlotlyChart';
 
 function Enhanced() {
 
     const [top5, setTop5] = useState([]);
+    // const [graphData, setGraphData] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:3902/top_5')
             .then(response => response.json())
             .then(data => setTop5(data))
-            .catch(error => console.error('Error fetching environment risk sub categories:', error));
+            .catch(error => console.error('Error hitting /top_5 endpoint:', error));
+
+        // fetch('http://localhost:3902/plot/dummy')
+        //     .then(response => response.json())
+        //     .then(data => setGraphData(data))
+        //     .catch(error => console.error('Error hitting /plot/dummy endpoint:', error));
     }, []);
   
     return (
@@ -24,6 +31,7 @@ function Enhanced() {
                     <div>
                         <h1>Ontology Enhanced Principle Component Analysis</h1>
                         <p>Get advanced insights from our enhanced PCA analysis</p>
+                        <PlotlyChart />
                         <div className="table-container">
                             <table className="my-table">
                                 <thead>
