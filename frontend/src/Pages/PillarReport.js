@@ -99,7 +99,7 @@ function PillarReport() {
           <div className='allContent'>
             <div className="mainMetrics">
                 <div className='metricRow1'>
-                    <test>h</test>
+                    <p>h</p>
                     {pillars.map((m) => (
                             <option key={m} value={m}>{m}</option>
                         ))}
