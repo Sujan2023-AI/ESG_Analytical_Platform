@@ -29,6 +29,7 @@ body, h1, h2, h3, p, ul, li, button, input, div {
     justify-content: center;
     gap: 100px;
     width: 100%;
+    background-color: #F1F5FB;;
 }
 
 .content-row {

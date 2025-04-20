@@ -30,7 +30,7 @@ body {
     font-family: Arial, sans-serif;
     height: 100%;  
     min-height: 100vh; 
-    background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
+    /*background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);*/
 }
 
 .login-button {
