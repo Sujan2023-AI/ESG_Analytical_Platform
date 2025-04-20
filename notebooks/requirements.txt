@@ -1,0 +1,11 @@
+pandas
+matplotlib
+seaborn
+scikit-learn
+StandardScaler
+PCA
+KNNImputer // maybe not?
+SPARQLWrapper
+JSON // maybe not?
+
+import_ipynb
