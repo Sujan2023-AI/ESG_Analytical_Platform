@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 // Path to your CSV file (ensure it's correct relative to the server file location)
-const loginCredentialsFile = './data/login_credentials.csv'; // Correct the path if needed
+const registeredEmailsFile = './data/registered_emails.csv';
 
 // Function to authenticate the user
 const authenticateUser = (email, password) => {
@@ -27,7 +27,7 @@ const authenticateUser = (email, password) => {
         console.log(`Authenticating user with email: ${email} and password: ${password}`); // Log received email and password
 
         // Read the CSV and check for the user's credentials
-        fs.createReadStream(loginCredentialsFile)
+        fs.createReadStream(registeredEmailsFile)
             .pipe(csv())
             .on('data', (row) => {
                 // console.log(`Checking row: ${JSON.stringify(row)}`); // Log the row being checked
