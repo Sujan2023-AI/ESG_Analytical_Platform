@@ -12,7 +12,7 @@ function AppOptions() {
 
   // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001, so i am changing, was earlier 3902
   useEffect(() => {
-      fetch('http://localhost:5001/api/categories')
+      fetch('http://localhost:3902/data/all')
           .then(response => response.json())
           .then(data => setCategories(data))
           .catch(error => console.error('Error fetching categories:', error));
@@ -64,8 +64,8 @@ function AppOptions() {
         <b>Dataset Categories</b>:
         <ul>
         {categories.map(category => (
-          <li key={category.id}>
-            {category.category} {category.subCategory}
+          <li key={category}>
+            {category}
           </li>
         ))}
         </ul>

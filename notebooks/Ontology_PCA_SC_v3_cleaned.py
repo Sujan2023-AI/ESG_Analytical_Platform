@@ -152,7 +152,7 @@ def select_best_imputation(df, n_neighbors):
         print("→ Using median imputation (moderate missing values or skew)")
         return df.fillna(df.median())
     else:
-        print("→ Using KNN imputation (high missing values)")
+        # print("→ Using KNN imputation (high missing values)")
         knn_imputer = KNNImputer(n_neighbors=n_neighbors)
         knn_imputed = knn_imputer.fit_transform(df)
         return pd.DataFrame(knn_imputed, index=df.index, columns=df.columns)

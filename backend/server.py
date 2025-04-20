@@ -10,13 +10,11 @@ import importlib.util
 # Import ontology result notebook
 sys.path.append(os.path.abspath('../notebooks'))
 with Notebook():
-    import Ontology_PCA_SC_v3_cleaned as OPCA
+    import Ontology_PCA_SC_v3_cleaned as OPCA # type: ignore # this points to our ipynb file
 
 # Initialise flask to await for frontend requests
 app = Flask(__name__)
 CORS(app)
-
-
 
 # Define App Routes
 @app.route('/top_5', methods=['GET'])
@@ -37,16 +35,9 @@ def get_top_5():
     top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df, top_n=10)
     top_metrics = OPCA.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
 
-    # print("Top ESG categories for user selection:")
-    print(top_metrics)
-
     # return result
-    metric_df = top_metrics["metric"]
-    percent_df = top_metrics["importance_percent"]
-
-    # return result
-    m_array = metric_df.tolist()
-    p_array = percent_df.tolist()
+    m_array = top_metrics["metric"].tolist()
+    p_array = top_metrics["importance_percent"].tolist()
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 
@@ -77,8 +68,6 @@ def get_all_subcategories():
     
     sorted_df = company_df.sort_values(company_df.columns[10], ascending = True)
     unique_subcategory_df = sorted_df["metric"].unique()
-
-    print(unique_subcategory_df)
 
     # return result
     n_array = unique_subcategory_df.tolist()
@@ -117,47 +106,6 @@ def get_metrics(category, subcategory, model):
     v_array = value_df.tolist()
     combined = list(zip(m_array, v_array))
     return jsonify(combined)
-
-@app.route('/api/categories', methods=['GET'])
-def get_groups():
-    """
-    Route to get all groups
-    return: Array of group objects
-    """
-
-    # TODO: (sample response below)
-    return jsonify([
-        {
-            "id": 1,
-            "category": "environment",
-            "subCategory": "opportunity",
-        },
-        {
-            "id": 2,
-            "category": "environment",
-            "subCategory": "risk",
-        },
-        {
-            "id": 3,
-            "category": "social",
-            "subCategory": "opportunity",
-        },
-        {
-            "id": 4,
-            "category": "social",
-            "subCategory": "risk",
-        },
-        {
-            "id": 5,
-            "category": "governance",
-            "subCategory": "opportunity",
-        },
-        {
-            "id": 6,
-            "category": "governance",
-            "subCategory": "risk",
-        },
-    ])
 
 # Run server app
 if __name__ == '__main__':
