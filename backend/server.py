@@ -1,10 +1,47 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
-
 import pandas as pd
+from pathlib import Path
+import importlib.util
 
+# Initialise flask to await for frontend requests
 app = Flask(__name__)
 CORS(app)
+
+# Import ontology logic from ipynb notebook
+notebook_path = Path(__file__).resolve().parent.parent / 'notebooks' / 'ontology_vinanti.py'
+spec = importlib.util.spec_from_file_location("OPCA", notebook_path)
+OPCA = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(OPCA)
+
+@app.route('/top_5', methods=['GET'])
+def get_top_5():
+    results = OPCA.query_esg_observations(
+        endpoint="http://localhost:7200/",
+        repository="esg_repo",
+        industry="biotechnology_pharmaceuticals",
+        metric_filter="supply_chain_management",
+        pillar_filter="g_opportunity",
+        year="2020"
+    )
+    records = OPCA.parse_esg_results(results)
+    pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
+    pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
+    top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df, top_n=10)
+    top_metrics = OPCA.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
+
+    # print("Top ESG categories for user selection:")
+    print(top_metrics)
+
+    # return result
+    metric_df = top_metrics["metric"]
+    percent_df = top_metrics["importance_percent"]
+
+    # return result
+    m_array = metric_df.tolist()
+    p_array = percent_df.tolist()
+    new_combined = list(zip(m_array, p_array))
+    return jsonify(new_combined)
 
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
