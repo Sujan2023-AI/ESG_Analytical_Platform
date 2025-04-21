@@ -10,6 +10,10 @@ function DashboardNavigator() {
         return localStorage.getItem("currentPage") || "0";
     });
 
+    const navClicked = (id) => {
+        setActivePage(id);
+    }
+
     const deactivateAllButtons = () => {
         var navButtons = document.getElementsByClassName("nav-button");
         for (let button of navButtons) {
@@ -29,12 +33,12 @@ function DashboardNavigator() {
 
     return (  
         <nav className="nav-links">
-            <button id="nav-button-1" className="nav-button" onClick={() => {setActivePage(1); navigate('/exploration');}}>Data Exploration</button>
-            <button id="nav-button-2" className="nav-button" onClick={() => {setActivePage(2); navigate('/pca');}}>PCA Analysis</button>
-            <button id="nav-button-3" className="nav-button" onClick={() => {setActivePage(3); navigate('/ontology');}}>View Ontology</button>
-            <button id="nav-button-4" className="nav-button" onClick={() => {setActivePage(4); navigate('/enhanced');}}>Ontology Enhanced PCA Results</button>
-            <button id="nav-button-5" className="nav-button" onClick={() => {setActivePage(5); navigate('/esg-report');}}>ESG Report</button>
-            <button id="nav-button-6" className="nav-button" onClick={() => {setActivePage(6); navigate('/DownloadReport');}}>Download Reports</button>
+            <button id="nav-button-1" className="nav-button" onClick={() => {navClicked(1); navigate('/exploration');}}>Data Exploration</button>
+            <button id="nav-button-2" className="nav-button" onClick={() => {navClicked(2); navigate('/pca');}}>PCA Analysis</button>
+            <button id="nav-button-3" className="nav-button" onClick={() => {navClicked(3); navigate('/ontology');}}>View Ontology</button>
+            <button id="nav-button-4" className="nav-button" onClick={() => {navClicked(4); navigate('/enhanced');}}>Ontology Enhanced PCA Results</button>
+            <button id="nav-button-5" className="nav-button" onClick={() => {navClicked(5); navigate('/esg-report');}}>ESG Report</button>
+            <button id="nav-button-6" className="nav-button" onClick={() => {navClicked(6); navigate('/DownloadReport');}}>Download Reports</button>
       </nav>
     );
 }

@@ -12,11 +12,11 @@ function Ontology() {
             <div className='Body'>
                 <AppNavigator />
                 <div className="content">
-                    <div>
+                    <div className="ontologyContent">
                         <h1>Ontology</h1>
                         <p>View our primary ontology</p>
+                        <img src="/ontologyExample.png" alt="dummy example ontology" height={210} width={370} />
                     </div>
-                    <img src="/ontologyExample.png" alt="dummy example ontology" height={210} width={370} />
                 </div>
             </div>
         </div>
