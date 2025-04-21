@@ -1,5 +1,5 @@
 import '../../Css/ReportCategorySection.css';
-import React from 'react';
+import React, { useState } from 'react';
 
 function ReportCategorySection({
     category,
@@ -21,6 +21,7 @@ function ReportCategorySection({
     let industry = userData.industry;
     let company = userData.company;
     let year = parseInt(localStorage.getItem("reportingYear"));
+    const [selectedMetrics, setSelectedMetrics] = useState([]);
 
     // metric selector
     const handleDropdownChange = (event) => {
@@ -55,11 +56,33 @@ function ReportCategorySection({
             .catch(error => console.error('Error fetching ' + category + ':', error));
     };
 
+    // Update selected metrics based on checkbox state
+    const handleCheckboxChange = (event) => {
+        const value = event.target.value;
+        setSelectedMetrics(prevSelectedMetrics => {
+            if (prevSelectedMetrics.includes(value)) {
+                return prevSelectedMetrics.filter(metric => metric !== value); // Deselect
+            } else {
+                return [...prevSelectedMetrics, value]; // Select
+            }
+        });
+    };
+
     const handleCalculateClick = () => {
+        // Gather selected metrics
+        const selectedMetrics = Array.from(document.querySelectorAll(`input[name="${categoryShortCode}_metrics"]:checked`))
+            .map(checkbox => checkbox.value);
+
+        // Debugging to ensure selected metrics are correct
+        //console.log("Selected Metrics:", selectedMetrics);
+
         // Ensure that onCalculate is called only if it's a valid function
         if (typeof onCalculate === 'function') {
-            if (selectedSubcategory && modelType) {
-                onCalculate(selectedSubcategory, modelType); // Pass the details to parent
+            if (selectedSubcategory && modelType && selectedMetrics.length > 0) {
+                onCalculate(selectedSubcategory, modelType, selectedMetrics); // Pass the details to parent
+            }
+            else{
+                console.error('Invalid data or no metrics selected');
             }
         } else {
             console.error('onCalculate is not a valid function');
@@ -74,8 +97,10 @@ function ReportCategorySection({
                 <input
                     type="checkbox"
                     value={sc[0]}
+                    name={`${categoryShortCode}_metrics`} // Group checkboxes by category
+                    onChange={handleCheckboxChange}
                 />
-                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0].toLowerCase()}</label>
+                <label title={sc[0]} style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0]}</label>
                 <label>{sc[1]}</label>
             </div>
         ));
