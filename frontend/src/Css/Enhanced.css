@@ -1,10 +1,22 @@
+.reportContent {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    padding: 26px;
+    height: 100%;
+    box-sizing: border-box;
+
+    overflow-y: scroll;
+}
+
 .table-container {
-    overflow-x: auto;
+    display: flex;
+    justify-content: center;
     padding: 1rem;
 }
 
 .my-table {
-    width: 100%;
+    width: 50%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
     background-color: white;

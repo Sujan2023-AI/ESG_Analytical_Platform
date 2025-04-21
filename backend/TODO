@@ -1,0 +1,6 @@
+Vinanti file adjustments:
+
+- add default values for query_esg_observations()
+def query_esg_observations(industry, year, pillar_filter, metric_filter, repository="esg_repo", endpoint="http://localhost:7200/"):
+
+- there is a graph db heap memory error if you make too many graphdb queries too quickly, I think it does a garbage collection automatically if you wait a few seconds, but it might be worht increasiing our storage limit

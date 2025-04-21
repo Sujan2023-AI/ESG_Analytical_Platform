@@ -1,26 +1,24 @@
 import '../../Css/Popup.css';
 import React from 'react';
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserPopup ({ isOpen, onClose }) {
   const popupRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        onClose();
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
+  // Return nothing if popup not open
   if (!isOpen) { return (<></>); }
+  
+  // Add an event listener to detect outside click
+  function handleClickOutside(event) {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      // When outside click, close popup and remove event listener
+      onClose();
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }
+  document.addEventListener("mousedown", handleClickOutside);
   
   // Get the user's name from localStorage
   const userData = JSON.parse(localStorage.getItem('userData'));

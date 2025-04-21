@@ -26,7 +26,7 @@ function AppOptions() {
     }
   }, []);
 
-  const reportingFrameworks = ["SASB", "IFRS S2"]
+  const reportingFrameworks = ["SASB"]
   const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
   return (  

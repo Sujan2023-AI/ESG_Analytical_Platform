@@ -1,23 +1,16 @@
 .allContent{
     width: 100%;
-    height: 100%;
-}
-
-.metric_checkbox {
-    display: flex;
-    justify-content: space-around;
+    height: 80%;
+    box-sizing: border-box;
+    overflow-y: scroll;
 }
 
 .mainMetrics{
-    width: 100%;
-    height: 80%;
-    padding-top: 10px;
-    padding-bottom: 30px;
-    gap: 28px;
-    justify-items: stretch;
+    padding: 26px;
+    gap: 26px;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+
 }
 
 .metricRow1, .metricRow2 {
@@ -26,13 +19,18 @@
     min-height: 320px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     text-align: center;
-    padding-top: 18px;
+}
+
+.metric_checkbox {
+    display: flex;
+    justify-content: space-around;
 }
 
 .calculatedPanel {
-    height: 400px;
+    height: 20%;
     background-color: #F9FAFC;
     padding: 40px;
+    box-sizing: border-box;
 }
