@@ -251,6 +251,23 @@ def get_metrics(industry, company, year, pillar):
     nda = df["metric"].unique()
     return jsonify(nda.tolist())
 
+@app.route('/models/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>', methods=['GET'])
+def get_models(industry, company, year, pillar, metric):
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar, metric)
+    df = df.sort_values(df.columns[0], ascending = True)
+    nda = df["model"].unique()
+    return jsonify(nda.tolist())
+
+@app.route('/categories/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>/<string:model>', methods=['GET'])
+def get_categories(industry, company, year, pillar, metric, model):
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar, metric, model)
+    df = df.sort_values(df.columns[0], ascending = True)
+    nda_c = df["category"].unique()
+    nda_v = df["metric_value"].unique()
+    return jsonify(list(zip(nda_c.tolist(), nda_v.tolist()))) # zips the iterative tuple of both into a jsonified list
+
 @app.route('/data/all', methods=['GET'])
 def get_all_subcategories():
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
@@ -268,7 +285,7 @@ def get_all_subcategories():
     return jsonify(n_array)
 
 @app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
-def get_models(category, subcategory):
+def get_models_OLD(category, subcategory):
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query

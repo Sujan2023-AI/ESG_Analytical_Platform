@@ -15,8 +15,11 @@ function ReportCategorySection({
     metrics,
     setMetrics,
 }) {
-
-    // Environment Risk Handlers
+    // Current user and selection
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    let industry = userData.industry;
+    let company = userData.company;
+    let year = parseInt(localStorage.getItem("reportingYear"));
 
     // metric selector
     const handleDropdownChange = (event) => {
@@ -30,7 +33,7 @@ function ReportCategorySection({
         localStorage.removeItem(categoryShortCode + 'ModelType');
 
         // query metric list for selection
-        fetch(`http://localhost:3902/metrics/industry/company/year/${categoryCode}/${selectedValue}/models`)
+        fetch(`http://localhost:3902/models/${industry}/${company}/${year}/${categoryCode}/${selectedValue}`)
             .then(response => response.json())
             .then(data => setModels(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
@@ -45,7 +48,7 @@ function ReportCategorySection({
         localStorage.setItem(categoryShortCode + 'modelType', selectedModel);
  
         // query metric list for selection
-        fetch(`http://localhost:3902/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
+        fetch(`http://localhost:3902/categories/${industry}/${company}/${year}/${categoryCode}/${selectedSubcategory}/${selectedModel}`)
             .then(response => response.json())
             .then(data => setMetrics(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
