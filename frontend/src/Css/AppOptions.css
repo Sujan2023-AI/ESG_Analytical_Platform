@@ -6,6 +6,10 @@
     gap: 10px;
 }
 
+.content-row > input {
+  width: 250px;
+}
+
 .input-year {
     width: 100px;
 }

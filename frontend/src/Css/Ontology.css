@@ -1,8 +1,17 @@
 .ontologyContent {
+    overflow-y: scroll;
     display: flex;
     height: 100%;
+    box-sizing: border-box;
     flex-direction: column;
-    justify-content: center;
+    justify-content: top;
     align-items: center;
     gap: 26px;
+    padding: 26px;
+}
+
+.imageContainer {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
 }

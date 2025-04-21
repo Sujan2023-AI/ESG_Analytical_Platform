@@ -22,13 +22,13 @@ function Enhanced() {
     const handlePillarSelection = (event) => {
         let newPillar = event.target.value;
         setPillar(newPillar);
+        setMetric('');
+        setModel('');
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/${newPillar}`)
             .then(response => response.json())
             .then(data => {setMetrics(data); console.log("api returned metrics =", data);})
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
-
-    
 
     // states for metric selection
     const [metric, setMetric] = useState('');
@@ -36,6 +36,7 @@ function Enhanced() {
     const handleMetricSelection = (event) => {
         let newMetric = event.target.value;
         setMetric(newMetric);
+        setModel('');
         fetch(`http://localhost:3902/models/${industry}/${company}/${year}/${pillar}/${newMetric}`)
             .then(response => response.json())
             .then(data => {setModels(data); console.log("api returned models =", data);})

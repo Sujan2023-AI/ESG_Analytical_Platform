@@ -61,8 +61,13 @@ def get_ontology_scree(industry, year, pillar, model, metric):
     title_x = "Principle Components"
     title_y = "Variance Ratio"
 
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
     results = OPCA.query_esg_observations(
-        industry=industry.lower(),
+        industry=newIndustry,
         year=year,
         pillar_filter=pillar.lower(),
         metric_filter=metric.lower()
@@ -187,8 +192,15 @@ def scree_plot():
 def get_ontology_table(industry, year, pillar, model, metric):
     print("call made to GET/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>")
 
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    print(newIndustry)
+
     results = OPCA.query_esg_observations(
-        industry=industry.lower(),
+        industry=newIndustry,
         year=year,
         pillar_filter=pillar.lower(),
         metric_filter=metric.lower()
