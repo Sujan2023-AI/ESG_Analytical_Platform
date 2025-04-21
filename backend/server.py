@@ -204,6 +204,41 @@ def get_top_5():
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 
+def get_file(industry):
+    match industry:
+        case "Biotechnology & Pharmaceuticals":
+            return "biopharma_model_frontend.csv"
+        case "Semiconductor":
+            return "semiconductors_model_frontend.csv"
+        
+def filter_by_company(df, company):
+    return df[df["company_name"] == company]
+def filter_by_year(df, year):
+    return df[df["year"] == year]
+def filter_by_pillar(df, pillar):
+    return df[df["pillar"] == pillar]
+def filter_by_metric(df, metric):
+    return df[df["metric"] == metric]
+def filter_by_model(df, model):
+    return df[df["model"] == model]
+def filter_by_category(df, category):
+    return df[df["category"] == category]
+
+def filter(df, company="", year="", pillar="", metric="", model="", category=""):
+    if (company != ""):
+        df = filter_by_company(df, company)
+    if (company != ""):
+        df = filter_by_year(df, year)
+    if (company != ""):
+        df = filter_by_pillar(df, pillar)
+    if (company != ""):
+        df = filter_by_metric(df, metric)
+    if (company != ""):
+        df = filter_by_model(df, model)
+    if (company != ""):
+        df = filter_by_category(df, category)
+    return df        
+
 @app.route('/data/<string:category>', methods=['GET'])
 def get_subcategories(category):
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")

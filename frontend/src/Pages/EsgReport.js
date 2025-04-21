@@ -48,7 +48,6 @@ function EsgReport() {
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
-    // Step 2: Use useEffect to load dropdownValue from localStorage
     useEffect(() => {
 
         fetch('http://localhost:3902/data/E_risk')
@@ -80,67 +79,7 @@ function EsgReport() {
             .then(response => response.json())
             .then(data => setGoSubcategories(data))
             .catch(error => console.error('Error fetching governance opportunity sub categories:', error));
-
-        // Fetch the saved dropdown value from localStorage for ER(if any)
-        // const savedValue1 = localStorage.getItem('erSubcategory');
-        // const savedModel1 = localStorage.getItem('erModelType');
     }, []);
-
-    /* PRIYA OLD METHOD */ /*
-        // Step 3: Handle dropdown change and save to localStorage
-        const handleDropdownChange2 = (event) => {
-            const selectedValue = event.target.value;
-            setDropdownValue2(selectedValue); // Update the state with the new value
-            // Save the selected value to localStorage for persistence
-            localStorage.setItem('dropdownValue2', selectedValue);
-            if (selectedValue === 'SocialRisk Metric1' || selectedValue === 'SocialRisk Metric2') {
-                setIsSRContent2Visible(true);  // Show ERContent2 when valid selection is made
-            } else {
-                setIsSRContent2Visible(false); // Hide ERContent2 when invalid selection or no selection
-            }        
-            setModelType2(''); // Reset the model selection
-            localStorage.removeItem('modelType2');
-            setIsSRContent3Visible(false); // Hide div3 (PCA Model)
-            setIsSRContent4Visible(false);
-        };
-    
-        // Step 3: Handle model selection for Metric 1 (PCA/ Ontology)
-        const handleModelSelection2 = (event) => {
-            const selectedModel = event.target.value;
-            setModelType2(selectedModel);
-            localStorage.setItem('modelType2', selectedModel);
-    
-            if (selectedModel === 'PCA Model') {
-                setIsSRContent3Visible(true);
-                setIsSRContent4Visible(false);
-            } else if (selectedModel === 'Ontology Model') {
-                setIsSRContent4Visible(true);
-                setIsSRContent3Visible(false);
-            } else {
-                setIsSRContent3Visible(false);
-                setIsSRContent4Visible(false);
-            }
-        }; */
-
-    /* PRIYA CHECKBOX CODE */ /*
-    const handleCheckboxChangeERPCA = (event) => {
-        const { value, checked } = event.target;
-        setSelectedCheckboxesERPCA((prevSelected) => {
-          const newSelected = checked ? [...prevSelected, value] : prevSelected.filter((item) => item !== value);
-          localStorage.setItem('selectedCheckboxesERPCA', JSON.stringify(newSelected));
-          return newSelected;
-        });
-    };
-    
-    // Step 5: Handle checkbox change for div4
-    const handleCheckboxChangeEROntology = (event) => {
-    const { value, checked } = event.target;
-    setSelectedCheckboxesEROntology((prevSelected) => {
-        const newSelected = checked ? [...prevSelected, value] : prevSelected.filter((item) => item !== value);
-        localStorage.setItem('selectedCheckboxesEROntology', JSON.stringify(newSelected));
-        return newSelected;
-    });
-    }; */
 
     return (
         <div className="App">
