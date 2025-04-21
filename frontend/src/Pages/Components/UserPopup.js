@@ -24,11 +24,19 @@ function UserPopup ({ isOpen, onClose }) {
   const userData = JSON.parse(localStorage.getItem('userData'));
   const userName = userData ? userData.name : 'User';  // Default to 'User' if no name found
 
+  const handleLogout = () => {
+    // Clear relevant data from localStorage
+    localStorage.removeItem('calculatedRows');
+
+    // Redirect to the login or home page
+    navigate('/'); // This assumes '/' is your login page or home page after logout
+  };
+
   return (
     <div ref={popupRef} className="popup">
       <div className="popup-container">
         <p>{userName}</p>
-        <button onClick={() => navigate('/')}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
