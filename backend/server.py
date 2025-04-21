@@ -50,8 +50,75 @@ def get_plot_data_1():
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
+    pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.7)
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
+
+    explained_variance = pca.explained_variance_ratio_
+    cumulative_variance = np.cumsum(explained_variance)
+    components = [f"PC{i+1}" for i in range(len(explained_variance))]
+
+    # Identify how many components to reach 70%
+    threshold = 0.7
+    num_components = (cumulative_variance >= threshold).argmax() + 1
+    threshold_text = f"{int(threshold * 100)}% Threshold (PC{num_components})"
+ 
+    # Build the Plotly figure
+    fig = go.Figure()
+ 
+    # Explained variance bar chart
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=explained_variance,
+        mode='lines+markers',
+        name='Explained Variance',
+        marker=dict(color='rgba(55, 128, 191, 0.7)')
+    ))
+ 
+    # Cumulative variance line plot
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=cumulative_variance,
+        mode='lines+markers',
+        name='Cumulative Variance',
+        line=dict(color='rgba(255, 100, 102, 0.7)')
+    ))
+ 
+    # Add horizontal threshold line
+    fig.add_shape(
+        type='line',
+        x0=0,
+        x1=len(components) - 1,
+        y0=threshold,
+        y1=threshold,
+        line=dict(color='red', dash='dash')
+    )
+ 
+    fig.add_annotation(
+        x=components[num_components - 1],
+        y=threshold,
+        text=threshold_text,
+        showarrow=True,
+        arrowhead=2,
+        ax=40,
+        ay=-40
+    )
+ 
+    # Layout
+    fig.update_layout(
+        title=title_graph,
+        xaxis_title=title_x,
+        yaxis_title=title_y,
+        template='plotly_white',
+        legend=dict(x=0.01, y=0.99),
+        margin=dict(t=60, b=40, l=50, r=20)
+    )
+ 
+    # Return figure JSON
+    return jsonify(json.loads(fig.to_json()))
+
+
+
+
 
     # explained_variance = pca.explained_variance_ratio_
     # cumulative_variance = np.cumsum(explained_variance)
@@ -59,7 +126,7 @@ def get_plot_data_1():
 
     explained = pca.explained_variance_ratio_
     cum_explained = explained.cumsum()
-    num_components = [f"PC{i+1}" for i in range((cum_explained >= 0.7).argmax() + 1)]
+    num_components = [i for i in range((cum_explained >= 0.7).argmax() + 1)]
 
     # Build the Plotly figure
     fig = go.Figure()

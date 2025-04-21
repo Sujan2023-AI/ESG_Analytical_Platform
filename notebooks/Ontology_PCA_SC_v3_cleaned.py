@@ -186,7 +186,7 @@ pca (PCA): Fitted PCA object.
 threshold (float): Variance threshold line to plot (default: 0.90 for 90%).
 """
 
-def plot_scree(pca, threshold):
+def plot_scree(pca, threshold=0.7):
 
     explained = pca.explained_variance_ratio_
     cum_explained = explained.cumsum()
