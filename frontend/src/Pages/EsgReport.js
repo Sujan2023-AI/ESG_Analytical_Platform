@@ -3,11 +3,15 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 import ReportCategorySection from './Components/ReportCategorySection';
+import UserPopup from './Components/UserPopup';
 
 function EsgReport() {
 
     // states for calculated component
     const [calculatedRows, setCalculatedRows] = useState([]);
+    // State for controlling the visibility of the UserPopup
+    //const [isPopupOpen, setIsPopupOpen] = useState(false); // Initialize as true so that the popup is shown on load
+    const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
 
     // states for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
@@ -51,13 +55,21 @@ function EsgReport() {
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
+    const resetState = () => {
+        console.log("resetting state");
+        // Reset calculated rows to empty state
+        setCalculatedRows([]);
+        // Clear calculated rows from localStorage
+        localStorage.setItem('calculatedRows', JSON.stringify([]));
+    };
+
     useEffect(() => {
         const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
         setCalculatedRows(savedRows);
     }, []);
 
-    const handleCalculate = (subcategory, model, metrics) => {
-        const newRow = {subcategory, model,metrics};
+    const handleCalculate = (subcategory, model, metrics, mean) => {
+        const newRow = {subcategory, model,metrics, mean};
         const updatedRows = [...calculatedRows, newRow];
         // Check if this row already exists (to prevent duplicates)
         const isDuplicate = calculatedRows.some(
@@ -228,6 +240,7 @@ function EsgReport() {
                                         <th>Subcategory</th>
                                         <th>Model</th>
                                         <th>Metrics</th>
+                                        <th>Result</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -236,6 +249,7 @@ function EsgReport() {
                                             <td>{row.subcategory}</td>
                                             <td>{row.model}</td>
                                             <td>{(row.metrics || []).join(', ')}</td>
+                                            <td>{row.mean}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -244,6 +258,7 @@ function EsgReport() {
                     </div>
                 </div>
             </div>
+            {/* Pass resetState to UserPopup */}
         </div>
     );
 }

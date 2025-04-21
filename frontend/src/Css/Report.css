@@ -60,3 +60,23 @@
     box-sizing: border-box;
 }
 
+.calculated-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Header row styling */
+.calculated-table th {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Body row styling */
+.calculated-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
