@@ -51,7 +51,7 @@ def query_esg_observations(  industry, metric_filter, pillar_filter, year, model
     PREFIX ex: <http://example.org/esg#>
     PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-    SELECT DISTINCT ?company ?year ?metric ?category ?value ?pillar ?unit ?model 
+    SELECT ?company ?year ?metric ?category ?value ?pillar ?unit ?model 
     WHERE {
       ?obs a ex:ESGObservation ;
            ex:hasCompany ?company ;
