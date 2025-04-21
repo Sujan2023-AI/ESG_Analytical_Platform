@@ -1,8 +1,16 @@
-.reportList {
-    padding: 10%;
-    height: 90%; /* not currently working properly*/
+.downloadContent {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 26px;
+    height: 100%;
+    overflow-y: scroll;
+    gap: 26px;
+}
+
+.reportList {
+    display: flex;
+    gap: 26px;
 }
 
 .download-report {

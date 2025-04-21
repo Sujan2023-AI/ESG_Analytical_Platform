@@ -1,4 +1,4 @@
-body, h1, h2, h3, p, ul, li, button, input, div {
+h1, h2, h3, p, ul, li, button, input {
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
@@ -18,19 +18,15 @@ body, h1, h2, h3, p, ul, li, button, input, div {
     width: 100vw;
     flex-direction: row;
     justify-content: space-between;
-    height: 100%;
-    flex-grow: 100%;
+    flex: 1 1 auto;
+    overflow-y: hidden;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 100px;
     width: 100%;
+    height: 100%;
     background-color: #F1F5FB;;
-    padding: 50px;
 }
 
 .content-row {
@@ -40,8 +36,9 @@ body, h1, h2, h3, p, ul, li, button, input, div {
     gap: 10px;
 }
 
-body {
-    background-color: #fff;
-    color: #000;
-    min-height: 100vh;
+.dashboardContent {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

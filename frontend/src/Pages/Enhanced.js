@@ -23,7 +23,7 @@ function Enhanced() {
             <div className='Body'>
                 <AppNavigator />
                 <div className="content">
-                    <div>
+                    <div className="reportContent">
                         <h1>Ontology Enhanced Principle Component Analysis</h1>
                         <p>Welcome to the insights from our enhanced PCA analysis</p>
                         <h2>PCA Screeplot</h2>

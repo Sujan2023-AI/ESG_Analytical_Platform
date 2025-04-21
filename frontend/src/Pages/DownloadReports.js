@@ -47,7 +47,7 @@ function DownloadReport() {
             <div className="Body">
                 <AppNavigator />
                 <div className="content">
-                    <div className='allContent'>
+                    <div className='downloadContent'>
                         <div className='header'>
                             <h1>Download Reports</h1>
                             <p className="p1">Here are the available reports for download:</p>

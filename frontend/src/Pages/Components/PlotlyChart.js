@@ -14,7 +14,7 @@ const PlotlyChart = () => {
             });
     }, []);
   
-    if (!plotData) return <p>Loading chart...</p>;
+    if (!plotData) return <p><i>(Loading chart...)</i></p>;
   
     return (
         <Plot
