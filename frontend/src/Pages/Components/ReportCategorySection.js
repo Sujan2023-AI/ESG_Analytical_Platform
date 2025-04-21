@@ -18,7 +18,7 @@ function ReportCategorySection({
 
     // Environment Risk Handlers
 
-    // Subcategory selected
+    // metric selector
     const handleDropdownChange = (event) => {
         const selectedValue = event.target.value;
 
@@ -30,7 +30,7 @@ function ReportCategorySection({
         localStorage.removeItem(categoryShortCode + 'ModelType');
 
         // query metric list for selection
-        fetch(`http://localhost:3902/data/${categoryCode}/${selectedValue}/models`)
+        fetch(`http://localhost:3902/metrics/industry/company/year/${categoryCode}/${selectedValue}/models`)
             .then(response => response.json())
             .then(data => setModels(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));

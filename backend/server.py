@@ -207,9 +207,9 @@ def get_top_5():
 def get_file(industry):
     match industry:
         case "Biotechnology & Pharmaceuticals":
-            return "biopharma_model_frontend.csv"
-        case "Semiconductor":
-            return "semiconductors_model_frontend.csv"
+            return "./data/biopharma_model_frontend.csv"
+        case "Semiconductors":
+            return "./data/semiconductors_model_frontend.csv"
         
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
@@ -227,31 +227,25 @@ def filter_by_category(df, category):
 def filter(df, company="", year="", pillar="", metric="", model="", category=""):
     if (company != ""):
         df = filter_by_company(df, company)
-    if (company != ""):
+    if (year != ""):
         df = filter_by_year(df, year)
-    if (company != ""):
+    if (pillar != ""):
         df = filter_by_pillar(df, pillar)
-    if (company != ""):
+    if (metric != ""):
         df = filter_by_metric(df, metric)
-    if (company != ""):
+    if (model != ""):
         df = filter_by_model(df, model)
-    if (company != ""):
+    if (category != ""):
         df = filter_by_category(df, category)
     return df        
 
-@app.route('/data/<string:industry>/<string:company>/<string:year>/<string:pillar>', methods=['GET'])
+@app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
 def get_metrics(industry, company, year, pillar):
-    # get data and filter rows
     df = pd.read_csv(get_file(industry))
     df = filter(df, company, year, pillar)
-
-    # select cols and sort
-    df = df["metric"].unique()
     df = df.sort_values(df.columns[0], ascending = True)
-
-    # return result
-    n_array = df.tolist()
-    return jsonify(n_array)
+    nda = df["metric"].unique()
+    return jsonify(nda.tolist())
 
 @app.route('/data/all', methods=['GET'])
 def get_all_subcategories():
@@ -285,7 +279,7 @@ def get_models(category, subcategory):
     return jsonify(n_array)
 
 @app.route('/data/<string:category>/<string:subcategory>/<string:model>/metrics', methods=['GET'])
-def get_metrics(category, subcategory, model):
+def get_metrics_old(category, subcategory, model):
     df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
     # select query

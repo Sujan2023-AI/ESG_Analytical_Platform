@@ -8,7 +8,7 @@ const Landing = () => {
 
   const [showLoginModal, setLoginModal] = useState(false);
   const openLoginModal = () => { setLoginModal(true); }
-  const closeLoginModal = () => { setLoginModal(false); }
+  const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); navigate("/dashboard"); }
 
   const doLogin = (email, password) => {
     console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
