@@ -15,11 +15,6 @@ function Enhanced() {
             .then(response => response.json())
             .then(data => setTop5(data))
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
-
-        // fetch('http://localhost:3902/plot/dummy')
-        //     .then(response => response.json())
-        //     .then(data => setGraphData(data))
-        //     .catch(error => console.error('Error hitting /plot/dummy endpoint:', error));
     }, []);
   
     return (

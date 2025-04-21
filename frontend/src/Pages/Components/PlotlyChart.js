@@ -6,7 +6,7 @@ const PlotlyChart = () => {
     const [plotData, setPlotData] = useState(null);
   
     useEffect(() => {
-        fetch("http://localhost:3902/plot/dummy")
+        fetch("http://localhost:3902/plot/scree/1")
             .then((res) => res.json())
             .then((json) => {
                 const parsed = typeof json === "string" ? JSON.parse(json) : json;

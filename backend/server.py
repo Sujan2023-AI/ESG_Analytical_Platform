@@ -10,6 +10,9 @@ import importlib.util
 from flask import Flask, jsonify
 import plotly.express as px
 import json
+from sklearn.decomposition import PCA
+import numpy as np
+import plotly.graph_objects as go
 
 # Disbale flask cors default logging
 log = logging.getLogger('werkzeug')
@@ -28,36 +31,67 @@ CORS(app)
 ## APP ROUTES
 
 # returns a dummy biplot graph
-@app.route("/plot/dummy")
+@app.route("/plot/biplot/dummy")
 def get_plot_dummy_data():
     fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
     return jsonify(json.loads(fig.to_json()))
 
-'''
 # returns Vinanti's first graph
-@app.route("/plot/1")
+@app.route("/plot/scree/1")
 def get_plot_data_1():
     results = OPCA.query_esg_observations(
-        endpoint="http://localhost:7200/",
-        repository="esg_repo",
         industry="biotechnology_pharmaceuticals",
-        metric_filter="supply_chain_management",
+        year="2020",
         pillar_filter="g_opportunity",
-        year="2020"
+        metric_filter="supply_chain_management"
     )
 
     records = OPCA.parse_esg_results(results)
     pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
-    top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df, top_n=10)
-    top_metrics = OPCA.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
+    
+    print(pca)
 
-    # return result
-    m_array = top_metrics["metric"].tolist()
-    p_array = top_metrics["importance_percent"].tolist()
-    new_combined = list(zip(m_array, p_array))
-    return jsonify(new_combined)
-'''
+    # just return dummy for now
+    fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
+    return jsonify(json.loads(fig.to_json()))
+    # return jsonify(json.loads(fig.to_json()))
+
+# return dummy scree plot
+@app.route('/plot/scree/dummy')
+def scree_plot():
+    # Simulate PCA data
+    X = np.random.rand(100, 5)
+    pca = PCA()
+    pca.fit(X)
+
+    explained_variance = pca.explained_variance_ratio_
+    cumulative_variance = np.cumsum(explained_variance)
+    components = [f"PC{i+1}" for i in range(len(explained_variance))]
+
+    # Build the Plotly figure
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=components,
+        y=explained_variance,
+        name='Explained Variance'
+    ))
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=cumulative_variance,
+        mode='lines+markers',
+        name='Cumulative Variance'
+    ))
+
+    fig.update_layout(
+        title='Scree Plot',
+        xaxis_title='Principal Components',
+        yaxis_title='Explained Variance Ratio',
+        template='plotly_white'
+    )
+
+    # Return figure JSON
+    return jsonify(json.loads(fig.to_json()))
 
 # returns the top 5 categories, determined by ontology enhanced PCA analysis
 @app.route('/top_5', methods=['GET'])

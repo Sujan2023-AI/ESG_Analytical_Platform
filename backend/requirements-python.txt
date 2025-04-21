@@ -3,3 +3,6 @@ flask-cors
 pandas
 importnb
 plotly
+plotly.graph_objects as go
+import numpy as np
+from sklearn.decomposition import PCA
