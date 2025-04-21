@@ -28,7 +28,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-## APP ROUTES
+## STAT APP ROUTES
 
 # returns a dummy biplot graph
 @app.route("/plot/biplot/dummy")
@@ -204,6 +204,7 @@ def get_top_5():
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 
+
 ## API DATA HELPERS
 
 def get_file(industry):
@@ -241,6 +242,7 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
         df = filter_by_category(df, category)
     return df   
 
+
 ## API DATA ROUTES
 
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
@@ -268,55 +270,16 @@ def get_categories(industry, company, year, pillar, metric, model):
     nda_v = df["metric_value"].unique()
     return jsonify(list(zip(nda_c.tolist(), nda_v.tolist()))) # zips the iterative tuple of both into a jsonified list
 
-@app.route('/data/all', methods=['GET'])
-def get_all_subcategories():
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
+@app.route('/metrics/<string:industry>/<string:company>/<int:year>', methods=['GET'])
+def get_metrics_all(industry, company, year):
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year)
+    df = df.sort_values(df.columns[10], ascending = True)
+    nda = df["metric"].unique()
+    return jsonify(nda.tolist())
 
-    # 'Amlogic Shanghai Co Ltd' - 5068926914
 
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    
-    sorted_df = company_df.sort_values(company_df.columns[10], ascending = True)
-    unique_subcategory_df = sorted_df["metric"].unique()
-
-    # return result
-    n_array = unique_subcategory_df.tolist()
-    return jsonify(n_array)
-
-@app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
-def get_models_OLD(category, subcategory):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
-
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    df_category = company_df[company_df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric"] == subcategory]
-    sorted_df = df_subcategory.sort_values(df_subcategory.columns[-1], ascending = True)
-
-    # return result
-    unique_metric_df = sorted_df["metric"].unique()
-    n_array = unique_metric_df.tolist()
-    return jsonify(n_array)
-
-@app.route('/data/<string:category>/<string:subcategory>/<string:model>/metrics', methods=['GET'])
-def get_metrics_old(category, subcategory, model):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
-
-    # select query
-    df_category = df[df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric"] == subcategory]
-    df_model = df_subcategory[df_subcategory["category"] == model]
-    sorted_df = df_model.sort_values(df_model.columns[5], ascending = True)
-
-    metric_df = sorted_df["category"].unique()
-    value_df = sorted_df["metric_value"].unique()
-
-    # return result
-    m_array = metric_df.tolist()
-    v_array = value_df.tolist()
-    combined = list(zip(m_array, v_array))
-    return jsonify(combined)
+## START THE APP
 
 # Run server app
 if __name__ == '__main__':

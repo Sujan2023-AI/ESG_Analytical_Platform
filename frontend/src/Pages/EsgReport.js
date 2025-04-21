@@ -55,14 +55,14 @@ function EsgReport() {
         let year = parseInt(localStorage.getItem("reportingYear"));
 
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/E_risk`)
-        .then(response => response.json())
-        .then(data => setErSubcategories(data))
-        .catch(error => console.error('Error fetching metrics from api:', error));
+            .then(response => response.json())
+            .then(data => setErSubcategories(data))
+            .catch(error => console.error('Error fetching metrics from api:', error));
         
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/S_risk`)
-        .then(response => response.json())
-        .then(data => setSrSubcategories(data))
-        .catch(error => console.error('Error fetching social risk sub categories:', error));
+            .then(response => response.json())
+            .then(data => setSrSubcategories(data))
+            .catch(error => console.error('Error fetching social risk sub categories:', error));
         
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/G_risk`)
             .then(response => response.json())
