@@ -100,8 +100,7 @@ function ReportCategorySection({
                     name={`${categoryShortCode}_metrics`} // Group checkboxes by category
                     onChange={handleCheckboxChange}
                 />
-                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0].toLowerCase()}</label>
-                <label>{sc[0]}</label>
+                <label title={sc[0]} style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0]}</label>
                 <label>{sc[1]}</label>
             </div>
         ));

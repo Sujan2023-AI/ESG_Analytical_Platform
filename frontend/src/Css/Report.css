@@ -23,10 +23,35 @@
     text-align: center;
 }
 
+/* Make sure to adjust the widths and add margins to prevent overlapping */
 .metric_checkbox {
-    display: flex;
-    justify-content: space-around;
-}
+    display: flex;                /* Use Flexbox to arrange label and value side by side */
+    flex-direction: row;          /* Keep the metric name and value in a row */
+    align-items: center;          /* Center the items vertically */
+    justify-content: space-between; /* Space out the name and the value */
+    margin-bottom: 10px;          /* Add space between checkboxes */
+  }
+  
+  .metric_checkbox input {
+    margin-right: 10px;           /* Add some spacing between checkbox and label */
+  }
+  
+  .metric_checkbox label {
+    max-width: 200px;             /* Limit the width of the labels */
+    text-align: left;
+    white-space: nowrap;          /* Prevent breaking the label into multiple lines */
+    overflow: hidden;             /* Hide overflowing content */
+    text-overflow: ellipsis;      /* Add ellipsis if the text is too long */
+    margin-right: 10px;           /* Add space between metric name and value */
+  }
+  
+  .metric_checkbox label:nth-child(2) {
+    min-width: 100px;             /* Ensure the value label has enough space */
+  }
+  
+  .metric_checkbox label:last-child {
+    min-width: 50px;              /* Ensure value (e.g., number) is not squished */
+  }
 
 .calculatedPanel {
     height: 20%;
