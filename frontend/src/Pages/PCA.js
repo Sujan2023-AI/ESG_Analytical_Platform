@@ -4,7 +4,7 @@ import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 import TraditionalChart from './Components/TraditionalChart';
 import TraditionalTable1 from './Components/TraditionalTable1';
-import PlotlyTable from './Components/PlotlyTable'; //TODO: DELETE THIS!!!
+import TraditionalTable2 from './Components/TraditionalTable2';
 
 function PCA() {
     let UserData = JSON.parse(localStorage.getItem('userData'));
@@ -29,7 +29,7 @@ function PCA() {
                         <h3>For PC1</h3>
                         <TraditionalTable1 industry={industry} year={year} />
                         <h3>For PC2</h3>
-                        <TraditionalTable1 industry={industry} year={year} />
+                        <TraditionalTable2 industry={industry} year={year} />
                     </div>
                 </div>
             </div>
