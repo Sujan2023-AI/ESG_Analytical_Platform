@@ -39,6 +39,9 @@ def get_plot_dummy_data():
 # returns Vinanti's first graph
 @app.route("/plot/scree/1")
 def get_plot_data_1():
+    title_graph = "this is a grapH!"
+    title_x = "this is a X axis title"
+    title_y = "this is a Y axis title"
     results = OPCA.query_esg_observations(
         industry="biotechnology_pharmaceuticals",
         year="2020",
@@ -49,8 +52,38 @@ def get_plot_data_1():
     records = OPCA.parse_esg_results(results)
     pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
-    
-    print(pca)
+
+    # explained_variance = pca.explained_variance_ratio_
+    # cumulative_variance = np.cumsum(explained_variance)
+    # components = [f"PC{i+1}" for i in range(len(explained_variance))]
+
+    explained = pca.explained_variance_ratio_
+    cum_explained = explained.cumsum()
+    num_components = [f"PC{i+1}" for i in range((cum_explained >= 0.7).argmax() + 1)]
+
+    # Build the Plotly figure
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=num_components,
+        y=explained,
+        name='Explained Variance'
+    ))
+    fig.add_trace(go.Scatter(
+        x=num_components,
+        y=cum_explained,
+        mode='lines+markers',
+        name='Cumulative Variance'
+    ))
+
+    fig.update_layout(
+        title=title_graph,
+        xaxis_title=title_x,
+        yaxis_title=title_y,
+        template='plotly_white'
+    )
+
+    # Return figure JSON
+    return jsonify(json.loads(fig.to_json()))
 
     # just return dummy for now
     fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
@@ -60,6 +93,9 @@ def get_plot_data_1():
 # return dummy scree plot
 @app.route('/plot/scree/dummy')
 def scree_plot():
+    title_graph = "this is a grapH!"
+    title_x = "this is a X axis title"
+    title_y = "this is a Y axis title"
     # Simulate PCA data
     X = np.random.rand(100, 5)
     pca = PCA()
@@ -84,9 +120,9 @@ def scree_plot():
     ))
 
     fig.update_layout(
-        title='Scree Plot',
-        xaxis_title='Principal Components',
-        yaxis_title='Explained Variance Ratio',
+        title=title_graph,
+        xaxis_title=title_x,
+        yaxis_title=title_y,
         template='plotly_white'
     )
 
