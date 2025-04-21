@@ -58,7 +58,24 @@ function Enhanced() {
     //             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     //     }
     // }, [metric])
-  
+    
+    const handleSaveReport = () => {
+        const report = {
+            pillar,
+            metric,
+            model,
+            timestamp: new Date().toLocaleString(),
+        };
+
+        // Save this report in localStorage or in the state (here we're saving it in localStorage)
+        let savedReports = JSON.parse(localStorage.getItem('savedReports')) || [];
+        savedReports.push(report);
+        localStorage.setItem('savedReports', JSON.stringify(savedReports));
+
+        // Alert user that the report has been saved
+        alert('Report saved successfully!');
+    };
+    
     return (
         <div className="App">
             <AppHeader />
@@ -105,6 +122,7 @@ function Enhanced() {
                             This step presents the top ESG metric categories that have the strongest influence on the principal components identified through PCA. After analyzing the data, PCA highlights which features contribute most to the variance in ESG performance across companies. The system ranks these features based on their impact, and this output helps end users focus on the most significant sustainability areas—such as emissions, supply chain risks, or governance practices—that drive differences in company behavior. These top categories serve as a data-driven guide for prioritizing metrics in further analysis, reporting, or decision-making.
                             </p>
                             <PlotlyTable industry={industry} year={year} pillar={pillar} model={model} metric={metric}/>
+                            <button onClick={handleSaveReport}>Save Report</button>
                             </>
                         )}
                     </div>
