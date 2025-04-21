@@ -4,6 +4,9 @@
     flex-direction: column;
     justify-content: start;
     gap: 10px;
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 26px;
 }
 
 .content-row > input {

@@ -1,8 +1,16 @@
 .pcaContent {
+
     display: flex;
-    height: 100%;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 26px;
+    padding: 26px;
+    height: 100%;
+    box-sizing: border-box;
+
+    overflow-y: scroll;
+}
+
+.pcaContent > .table-container {
+    justify-content: start;
+    align-items: start;
 }

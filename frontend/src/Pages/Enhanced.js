@@ -67,8 +67,9 @@ function Enhanced() {
                 <div className="content">
                     <div className="reportContent">
                         <h1>Ontology Enhanced Principle Component Analysis</h1>
-                        <p>Welcome to the insights from our enhanced PCA analysis</p>
+                        <p>Welcome to the insights from our enhanced PCA analysis. Please select the data you would like to see below.</p>
                         <div className="selectionOptions">
+                            <p>Data Selection:</p>
                             <select id="pillarSelection" value={pillar} onChange={handlePillarSelection}>
                                 <option value=''>Select Pillar</option>
                                 {pillars.map((m) => (

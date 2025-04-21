@@ -19,10 +19,16 @@ function PCA() {
                 <AppNavigator />
                 <div className="content">
                     <div className="pcaContent">
-                        <h1>Principle Component Analysis</h1>
-                        <h2>PCA</h2>
-                        <p>Dive into our initial analysis model</p>
+                        <h1>Traditional Principle Component Analysis</h1>
+                        <p>Here you can see basic results from our initial analysis model</p>
+                        <h2>PCA Screeplot</h2>
+                        <p>See screeplot below</p>
                         <TraditionalChart industry={industry} year={year} />
+                        <h2>Top ESG Categories</h2>
+                        <p>See categories below</p>
+                        <h3>For PC1</h3>
+                        <TraditionalTable1 industry={industry} year={year} />
+                        <h3>For PC2</h3>
                         <TraditionalTable1 industry={industry} year={year} />
                     </div>
                 </div>

@@ -18,7 +18,7 @@ function Exploration() {
                             <p><b>metric</b> - summary metric for a particular set of measurements (e.g. Water_Management, GHG_Emissions)</p>
                             <p><b>Model</b> - the SASB categorisation of selected metric. Determines which categories will contribute to the metric (e.g. GHG_Emissions_Model)</p>
                             <p><b>Category</b> - specific, measured values that make up the fundamental datapoints of this dataset (e.g. Targets_Emissions)</p>
-                            <div className="esg-selection">
+                            {/* <div className="esg-selection">
                                 <button>Environment</button>
                                 <button>Social</button>
                                 <button>Governance</button>
@@ -26,7 +26,7 @@ function Exploration() {
                             <div className="ro-selection">
                                 <button>Risk</button>
                                 <button>Opportunity</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

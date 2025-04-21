@@ -16,10 +16,11 @@
 .popup-container {
   padding: 20px;
   height: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-content: left;
+  gap: 10px;
+  justify-content: end;
 }
 
 .popup-container > button {

@@ -181,6 +181,37 @@ def get_traditional_table1(industry, year):
     new_combined = list(zip(m_array, rounded))
     return jsonify(new_combined)
 
+@app.route('/traditional/table2/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_table2(industry, year):
+    print("call made to /traditional/table1/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    if (newIndustry == "biotechnology_pharmaceuticals"):
+        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    m_array = top_pc2["Metric Name"]
+    p_array = top_pc2["Loading Value"]
+    rounded = [math.floor(x * 1000) / 1000 for x in p_array]
+    
+    new_combined = list(zip(m_array, rounded))
+    return jsonify(new_combined)
+
 @app.route('/traditional/scree/<string:industry>/<int:year>', methods=['GET'])
 def get_traditional_scree(industry, year):
     print("call made to /traditional/scree/<string:industry>/<int:year>")
