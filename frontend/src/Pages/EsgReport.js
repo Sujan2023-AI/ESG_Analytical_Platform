@@ -6,6 +6,9 @@ import ReportCategorySection from './Components/ReportCategorySection';
 
 function EsgReport() {
 
+    // states for calculated component
+    const [calculatedRows, setCalculatedRows] = useState([]);
+
     // states for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
     const [selectedErSubcategory, setSelectedErSubcategory] = useState('');
@@ -47,6 +50,18 @@ function EsgReport() {
     const [goModels, setGoModels] = useState([]);
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
+
+    useEffect(() => {
+        const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
+        setCalculatedRows(savedRows);
+    }, []);
+
+    const handleCalculate = (subcategory, model) => {
+        const newRow = {subcategory, model,};
+        const updatedRows = [...calculatedRows, newRow];
+        setCalculatedRows(updatedRows);
+        localStorage.setItem('calculatedRows', JSON.stringify(updatedRows));
+    };
     
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("userData"));
@@ -107,6 +122,7 @@ function EsgReport() {
                                 setModelType={setErModelType}
                                 metrics={erMetrics}
                                 setMetrics={setErMetrics}
+                                onCalculate={handleCalculate}
                             />
                             <ReportCategorySection
                                 category={'Social Risk'}
@@ -121,6 +137,7 @@ function EsgReport() {
                                 setModelType={setSrModelType}
                                 metrics={srMetrics}
                                 setMetrics={setSrMetrics}
+                                onCalculate={handleCalculate}
                             />
                             <ReportCategorySection
                                 category={'Governance Risk'}
@@ -135,6 +152,7 @@ function EsgReport() {
                                 setModelType={setGrModelType}
                                 metrics={grMetrics}
                                 setMetrics={setGrMetrics}
+                                onCalculate={handleCalculate}
                             />
                         </div>
                         <div className='metricRow2'>
@@ -151,6 +169,7 @@ function EsgReport() {
                                 setModelType={setEoModelType}
                                 metrics={eoMetrics}
                                 setMetrics={setEoMetrics}
+                                onCalculate={handleCalculate}
                             />
                             <ReportCategorySection
                                 category={'Social Opportunity'}
@@ -165,6 +184,7 @@ function EsgReport() {
                                 setModelType={setSoModelType}
                                 metrics={soMetrics}
                                 setMetrics={setSoMetrics}
+                                onCalculate={handleCalculate}
                             />
                             <ReportCategorySection
                                 category={'Governance Opportunity'}
@@ -179,12 +199,29 @@ function EsgReport() {
                                 setModelType={setGoModelType}
                                 metrics={goMetrics}
                                 setMetrics={setGoMetrics}
+                                onCalculate={handleCalculate}
                             />
                         </div>
                     </div>
                     </div>
                     <div className='calculatedPanel'>
-                        <p>(Summed calculations will be shown here in the future)</p>
+                        <h3>Calculated Results</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subcategory</th>
+                                    <th>Model</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {calculatedRows.map((row,index) => (
+                                    <tr key={index}>
+                                        <td>{row.subcategory}</td>
+                                        <td>{row.model}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
