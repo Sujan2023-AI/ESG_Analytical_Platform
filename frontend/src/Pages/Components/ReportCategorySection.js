@@ -14,6 +14,7 @@ function ReportCategorySection({
     setModelType,
     metrics,
     setMetrics,
+    onCalculate
 }) {
     // Current user and selection
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -53,6 +54,17 @@ function ReportCategorySection({
             .then(data => setMetrics(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
     };
+
+    const handleCalculateClick = () => {
+        // Ensure that onCalculate is called only if it's a valid function
+        if (typeof onCalculate === 'function') {
+            if (selectedSubcategory && modelType) {
+                onCalculate(selectedSubcategory, modelType); // Pass the details to parent
+            }
+        } else {
+            console.error('onCalculate is not a valid function');
+        }
+    }
 
     // Step 6: Render the checkboxes and the "Calculate" button for each div
     const renderCheckboxes = (metrics) => {
@@ -114,7 +126,7 @@ function ReportCategorySection({
                 </div>
             {(modelType !== '') && (
                 <div className="calculate">
-                    <button onClick={() => console.log('Calculating has not been implemented...')}>Calculate</button>
+                    <button onClick={handleCalculateClick}>Calculate</button>
                 </div>
             )}
             </div>
