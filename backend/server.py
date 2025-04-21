@@ -19,9 +19,9 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
-sys.path.append(os.path.abspath('../notebooks'))
+sys.path.append(os.path.abspath('./data/'))
 with Notebook():
-    import Ontology_PCA_SC_v3_cleaned as OPCA # type: ignore # this points to our ipynb file
+    import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
 
 # Initialise flask to await for frontend requests
 app = Flask(__name__)
@@ -36,12 +36,29 @@ def get_plot_dummy_data():
     fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
     return jsonify(json.loads(fig.to_json()))
 
+# @app.route("/plot/scree/image")
+# def get_plot_data_image():
+
+#     results = OPCA.query_esg_observations(
+#         industry="semiconductors",
+#         year="2022",
+#         pillar_filter="e_risk",
+#         metric_filter="ghg_emissions"
+#     )
+ 
+#     records = OPCA.parse_esg_results(results)
+#     pivot_df = OPCA.prepare_pivot_table(records, model_name='ghg_emissions_model', missing_threshold=0.7)
+#     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
+ 
+#     img_buf = OPCA.plot_scree_image(pca)
+#     return OPCA.send_file(img_buf, mimetype='image/png')
+
 # returns Vinanti's first graph
 @app.route("/plot/scree/1")
 def get_plot_data_1():
-    title_graph = "this is a grapH!"
-    title_x = "this is a X axis title"
-    title_y = "this is a Y axis title"
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
     results = OPCA.query_esg_observations(
         industry="semiconductors",
         year="2022",
@@ -50,17 +67,14 @@ def get_plot_data_1():
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name='ghg_emissions_model', missing_threshold=0.7)
+    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     explained_variance = pca.explained_variance_ratio_
     cumulative_variance = np.cumsum(explained_variance)
     components = [f"PC{i+1}" for i in range(len(explained_variance))]
-
-    # Identify how many components to reach 70%
     threshold = 0.7
-    num_components = (cumulative_variance >= threshold).argmax() + 1
-    threshold_text = f"{int(threshold * 100)}% Threshold (PC{num_components})"
+    threshold_text = f"{int(threshold * 100)}% Threshold"
  
     # Build the Plotly figure
     fig = go.Figure()
@@ -94,13 +108,24 @@ def get_plot_data_1():
     )
  
     fig.add_annotation(
-        x=components[num_components - 1],
+        x=components,
         y=threshold,
         text=threshold_text,
-        showarrow=True,
-        arrowhead=2,
-        ax=40,
-        ay=-40
+
+
+        ax=15,
+        ay=-15
+    )
+    fig.update_layout(
+        legend=dict(
+            x=1.05,          # move legend outside to the right
+            y=1.05,             # align legend top with the plot
+            traceorder='normal',
+            bgcolor='rgba(0,0,0,0)',  # transparent background
+            bordercolor='Black',
+            borderwidth=1
+        ),
+        margin=dict(r=100),  # add space on the right
     )
  
     # Layout
@@ -115,47 +140,6 @@ def get_plot_data_1():
  
     # Return figure JSON
     return jsonify(json.loads(fig.to_json()))
-
-
-
-
-
-    # explained_variance = pca.explained_variance_ratio_
-    # cumulative_variance = np.cumsum(explained_variance)
-    # components = [f"PC{i+1}" for i in range(len(explained_variance))]
-
-    explained = pca.explained_variance_ratio_
-    cum_explained = explained.cumsum()
-    num_components = [i for i in range((cum_explained >= 0.7).argmax() + 1)]
-
-    # Build the Plotly figure
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=num_components,
-        y=explained,
-        name='Explained Variance'
-    ))
-    fig.add_trace(go.Scatter(
-        x=num_components,
-        y=cum_explained,
-        mode='lines+markers',
-        name='Cumulative Variance'
-    ))
-
-    fig.update_layout(
-        title=title_graph,
-        xaxis_title=title_x,
-        yaxis_title=title_y,
-        template='plotly_white'
-    )
-
-    # Return figure JSON
-    return jsonify(json.loads(fig.to_json()))
-
-    # just return dummy for now
-    fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
-    return jsonify(json.loads(fig.to_json()))
-    # return jsonify(json.loads(fig.to_json()))
 
 # return dummy scree plot
 @app.route('/plot/scree/dummy')
@@ -201,21 +185,22 @@ def scree_plot():
 def get_top_5():
 
     results = OPCA.query_esg_observations(
-        industry="biotechnology_pharmaceuticals",
-        year="2020",
-        pillar_filter="g_opportunity",
-        metric_filter="supply_chain_management"
+        industry="semiconductors",
+        year="2022",
+        pillar_filter="e_risk",
+        metric_filter="ghg_emissions"
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.9)
+    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
-    top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df, top_n=10)
-    top_metrics = OPCA.get_top_metric_categories(top_loadings, top_n=5, as_percent=True)
 
-    # return result
+    top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df)
+    top_metrics = OPCA.get_top_metric_categories(top_loadings)
+
     m_array = top_metrics["metric"].tolist()
     p_array = top_metrics["importance_percent"].tolist()
+    
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 

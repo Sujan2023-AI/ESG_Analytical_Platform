@@ -8,6 +8,9 @@ from sklearn.decomposition import PCA
 from sklearn.impute import KNNImputer
 from SPARQLWrapper import SPARQLWrapper, JSON
 
+import io
+from flask import send_file
+
 """
 Parameters:
 endpoint (str): Base URL of the GraphDB server (e.g., "http://localhost:7200").
@@ -205,6 +208,32 @@ def plot_scree(pca, threshold=0.7):
     plt.tight_layout()
     plt.show()
 
+def plot_scree_image(pca):
+    explained = pca.explained_variance_ratio_
+    cum_explained = explained.cumsum()
+    num_components = (cum_explained >= 0.7).argmax() + 1
+ 
+    fig, ax = plt.subplots(figsize=(10, 6))
+    x_vals = range(1, len(explained) + 1)
+ 
+    ax.plot(x_vals, explained, marker='o', label='Explained Variance')
+    ax.plot(x_vals, cum_explained, marker='s', label='Cumulative Variance')
+    ax.axhline(y=0.7, color='red', linestyle='--', label=f'70% Threshold (PC{num_components})')
+ 
+    ax.set_title("Scree Plot - PCA Explained Variance")
+    ax.set_xlabel("Principal Component")
+    ax.set_ylabel("Variance Ratio")
+    ax.legend()
+    ax.grid(True)
+    fig.tight_layout()
+ 
+    # Save as PNG image in memory
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close(fig)
+    return buf
+
 """
 Parameters:
 pca (PCA): Fitted PCA object.
@@ -283,7 +312,14 @@ def plot_biplot(pca, scores, df, pc_x=1, pc_y=2, arrow_scale=3.0, label_offset=1
     plt.title(f'PCA Biplot: PC{pc_x} vs PC{pc_y} with All Feature Labels')
     plt.grid(True)
     plt.tight_layout()
-    plt.show()
+
+    # This part is for the frontend specifically, need a better way to support this in notebook
+    buf = io.BytesIO()
+    fig.savefig(buf, format='png')
+    buf.seek(0)
+    plt.close(fig)
+    return buf
+    # plt.show()
 
 
 """
