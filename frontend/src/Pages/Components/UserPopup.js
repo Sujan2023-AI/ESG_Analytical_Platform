@@ -7,6 +7,10 @@ function UserPopup ({ isOpen, onClose }) {
   const popupRef = useRef(null);
   const navigate = useNavigate();
 
+  let otherUserData = JSON.parse(localStorage.getItem('userData'));
+  let industry = otherUserData.industry;
+  let company = otherUserData.company;
+
   // Return nothing if popup not open
   if (!isOpen) { return (<></>); }
   
@@ -27,7 +31,13 @@ function UserPopup ({ isOpen, onClose }) {
   return (
     <div ref={popupRef} className="popup">
       <div className="popup-container">
+        <p><b>Username</b>:</p>
         <p>{userName}</p>
+        <p><b>Industry</b>:</p>
+        <p>{industry}</p>
+        <p><b>Company</b>:</p>
+        <p>{company}</p>
+        <p>&nbsp;</p>
         <button onClick={() => navigate('/')}>Logout</button>
       </div>
     </div>

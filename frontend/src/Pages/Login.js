@@ -17,12 +17,12 @@ const Login = () => {
       if (response.status === 200) {
         navigate('/dashboard');  // This replaces history.push('/dashboard')
       } else {
-        //alert('Login failed!');
-        navigate('/dashboard');
+        alert('Login failed!');
+        // navigate('/dashboard');
       }
     } catch (error) {
-      //alert('Login error:', error);
-      navigate('/dashboard');
+      alert('Login error:', error);
+      //navigate('/dashboard');
     }
   };
 

@@ -7,14 +7,10 @@ function AppOptions() {
 
     const [categories, setCategories] = useState([]);
     const [reportingYear, setReportingYear] = useState(localStorage.getItem("reportingYear"));
+    const initalUserData = JSON.parse(localStorage.getItem('userData'));
     const [userData, setUserData] = useState({
-      name: '', company: '', industry: ''
+        name: initalUserData.name, company: initalUserData.company, industry: initalUserData.industry
     });
-
-    // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001, so i am changing, was earlier 3902
-    useEffect(() => {
-      
-    }, []);
 
     // Check localStorage for saved user data
     useEffect(() => {

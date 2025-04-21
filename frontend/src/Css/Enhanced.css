@@ -9,6 +9,11 @@
     overflow-y: scroll;
 }
 
+.selectionOptions {
+    display: flex;
+    gap: 10px;
+}
+
 .table-container {
     display: flex;
     justify-content: center;

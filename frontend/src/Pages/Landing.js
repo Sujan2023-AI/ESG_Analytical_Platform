@@ -4,16 +4,16 @@ import '../Css/Landing.css';
 import LoginModal from './Components/LoginModal';
 
 const Landing = () => {
-  const navigate = useNavigate();  // Updated usage
+  const navigate = useNavigate();
 
   const [showLoginModal, setLoginModal] = useState(false);
   const openLoginModal = () => { setLoginModal(true); }
-  const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); navigate("/dashboard"); }
+  const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); }
 
   const doLogin = (email, password) => {
-    console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
+    //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
     fetch('http://localhost:5001/authenticate', {
-      method: 'POST', 
+      method: 'POST',
       headers: {'Content-Type':'application/json',}, 
       body: JSON.stringify({email,password}),
     })
@@ -26,12 +26,10 @@ const Landing = () => {
           industry: data.industry,
           company: data.company,
         }));
-        if(data.industry.toLowerCase() === 'semiconductor'){
-          console.log('To dashboard now');
+        if(data.industry.toLowerCase() === 'semiconductors'){
           navigate('/dashboard');
         }
-        else if (data.industry.toLowerCase() === 'biopharma'){
-          console.log('To dashboard nowwww');
+        else if (data.industry.toLowerCase() === 'biotechnology & pharmaceuticals'){
           navigate('/dashboard');
         }
       }
@@ -59,6 +57,7 @@ const Landing = () => {
           proposed by Yu, Rabhi, & Bandara (2024), which emphasizes semantic standardization and structured ESG knowledge 
           representation. Through this study, students will gain hands-on experience with machine learning, 
           ontology engineering, and sustainability analytics.</p>
+        <p>If you would like to request access to this website and the associated dataset, please email <a href="sujan.bharadwaj@unsw.com">sujan.bharadwaj@unsw.com</a> with your use case, for approval case.</p>
         <button className='login-button' onClick={openLoginModal}>Login</button>
       </div>
     </div>
