@@ -75,17 +75,29 @@ function ReportCategorySection({
 
         // Debugging to ensure selected metrics are correct
         //console.log("Selected Metrics:", selectedMetrics);
+        if (selectedMetrics.length > 0) {
+            // Fetch values for selected metrics from the metrics list
+            const selectedValues = metrics.filter(metric => selectedMetrics.includes(metric[0])).map(metric => metric[1]);
+    
+            // Calculate the mean of the selected metrics' values
+            const mean = selectedValues.length > 0 
+                ? selectedValues.reduce((acc, value) => acc + value, 0) / selectedValues.length 
+                : 0;    
 
-        // Ensure that onCalculate is called only if it's a valid function
-        if (typeof onCalculate === 'function') {
-            if (selectedSubcategory && modelType && selectedMetrics.length > 0) {
-                onCalculate(selectedSubcategory, modelType, selectedMetrics); // Pass the details to parent
+            // Ensure that onCalculate is called only if it's a valid function
+            if (typeof onCalculate === 'function') {
+                if (selectedSubcategory && modelType && selectedMetrics.length > 0) {
+                    onCalculate(selectedSubcategory, modelType, selectedMetrics, mean); // Pass the details to parent
+                }
+                else{
+                    console.error('Invalid data or no metrics selected');
+                }
+            } else {
+                console.error('onCalculate is not a valid function');
             }
-            else{
-                console.error('Invalid data or no metrics selected');
-            }
-        } else {
-            console.error('onCalculate is not a valid function');
+        }
+        else{
+            console.error('No metrics selected')
         }
     }
 

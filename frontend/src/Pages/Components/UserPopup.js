@@ -1,9 +1,9 @@
 import '../../Css/Popup.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-function UserPopup ({ isOpen, onClose }) {
+function UserPopup ({ isOpen, onClose, resetState }) {
   const popupRef = useRef(null);
   const navigate = useNavigate();
 
@@ -29,8 +29,18 @@ function UserPopup ({ isOpen, onClose }) {
   const userName = userData ? userData.name : 'User';  // Default to 'User' if no name found
 
   const handleLogout = () => {
+    console.log("logging out")
     // Clear relevant data from localStorage
     localStorage.removeItem('calculatedRows');
+    localStorage.removeItem('reportingYear');
+    localStorage.removeItem('calculatedRows');
+    
+    // Reset the state of calculated rows in the parent component
+    if (resetState) {
+      resetState(); // Call resetState function passed from EsgReport
+    } else {
+        console.error("resetState is not defined");
+    }
 
     // Redirect to the login or home page
     navigate('/'); // This assumes '/' is your login page or home page after logout
@@ -46,7 +56,7 @@ function UserPopup ({ isOpen, onClose }) {
         <p><b>Company</b>:</p>
         <p>{company}</p>
         <p>&nbsp;</p>
-        <button onClick={() => navigate('/')}>Logout</button>
+        <button onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );
