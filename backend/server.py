@@ -13,6 +13,7 @@ import json
 from sklearn.decomposition import PCA
 import numpy as np
 import plotly.graph_objects as go
+import math
 
 # Disbale flask cors default logging
 log = logging.getLogger('werkzeug')
@@ -22,6 +23,7 @@ log.setLevel(logging.ERROR)
 sys.path.append(os.path.abspath('./data/'))
 with Notebook():
     import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
+    import Traditional_PCA as TPCA # type: ignore # this points to our ipynb file
 
 # Initialise flask to await for frontend requests
 app = Flask(__name__)
@@ -123,6 +125,116 @@ def get_ontology_scree(industry, year, pillar, model, metric):
         ax=15,
         ay=-15
     )
+    fig.update_layout(
+        legend=dict(
+            x=1.05,          # move legend outside to the right
+            y=1.05,             # align legend top with the plot
+            traceorder='normal',
+            bgcolor='rgba(0,0,0,0)',  # transparent background
+            bordercolor='Black',
+            borderwidth=1
+        ),
+        margin=dict(r=100),  # add space on the right
+    )
+ 
+    # Layout
+    fig.update_layout(
+        title=title_graph,
+        xaxis_title=title_x,
+        yaxis_title=title_y,
+        template='plotly_white',
+        legend=dict(x=0.01, y=0.99),
+        margin=dict(t=60, b=40, l=50, r=20)
+    )
+ 
+    # Return figure JSON
+    return jsonify(json.loads(fig.to_json()))
+
+@app.route('/traditional/table1/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_table1(industry, year):
+    print("call made to /traditional/table1/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    if (newIndustry == "biotechnology_pharmaceuticals"):
+        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    m_array = top_pc1["Metric Name"]
+    p_array = top_pc1["Loading Value"]
+    rounded = [math.floor(x * 1000) / 1000 for x in p_array]
+    
+    new_combined = list(zip(m_array, rounded))
+    return jsonify(new_combined)
+
+@app.route('/traditional/scree/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_scree(industry, year):
+    print("call made to /traditional/scree/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    if (newIndustry == "biotechnology_pharmaceuticals"):
+        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    pca_full = PCA()
+    pca_full.fit(scaled_data)
+
+    explained_variance = pca_full.explained_variance_ratio_
+    cumulative_variance = np.cumsum(explained_variance)
+    components = [f"PC{i+1}" for i in range(len(explained_variance))]
+    threshold = 0.7
+    threshold_text = f"{int(threshold * 100)}% Threshold"
+ 
+    # Build the Plotly figure
+    fig = go.Figure()
+ 
+    # Explained variance bar chart
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=explained_variance,
+        mode='lines+markers',
+        name='Explained Variance',
+        marker=dict(color='rgba(55, 128, 191, 0.7)')
+    ))
+ 
+    # Cumulative variance line plot
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=cumulative_variance,
+        mode='lines+markers',
+        name='Cumulative Variance',
+        line=dict(color='rgba(255, 100, 102, 0.7)')
+    ))
+ 
+
+
     fig.update_layout(
         legend=dict(
             x=1.05,          # move legend outside to the right
