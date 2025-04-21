@@ -239,20 +239,18 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
         df = filter_by_category(df, category)
     return df        
 
-@app.route('/data/<string:category>', methods=['GET'])
-def get_subcategories(category):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
+@app.route('/data/<string:industry>/<string:company>/<string:year>/<string:pillar>', methods=['GET'])
+def get_metrics(industry, company, year, pillar):
+    # get data and filter rows
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar)
 
-    # 'Amlogic Shanghai Co Ltd' - 5068926914
-
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    category_df = company_df[company_df["pillar"] == category]
-    sorted_df = category_df.sort_values(category_df.columns[10], ascending = True)
-    unique_subcategory_df = sorted_df["metric"].unique()
+    # select cols and sort
+    df = df["metric"].unique()
+    df = df.sort_values(df.columns[0], ascending = True)
 
     # return result
-    n_array = unique_subcategory_df.tolist()
+    n_array = df.tolist()
     return jsonify(n_array)
 
 @app.route('/data/all', methods=['GET'])
