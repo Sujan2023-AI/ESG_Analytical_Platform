@@ -56,12 +56,27 @@ function EsgReport() {
         setCalculatedRows(savedRows);
     }, []);
 
-    const handleCalculate = (subcategory, model) => {
-        const newRow = {subcategory, model,};
+    const handleCalculate = (subcategory, model, metrics) => {
+        const newRow = {subcategory, model,metrics};
         const updatedRows = [...calculatedRows, newRow];
-        setCalculatedRows(updatedRows);
-        localStorage.setItem('calculatedRows', JSON.stringify(updatedRows));
+        // Check if this row already exists (to prevent duplicates)
+        const isDuplicate = calculatedRows.some(
+            (row) => row.subcategory === subcategory && row.model === model && JSON.stringify(row.metrics) === JSON.stringify(metrics)
+        );
+
+        if (isDuplicate) {
+            alert('Record already exists');
+        } else {
+            const updatedRows = [...calculatedRows, newRow];
+            setCalculatedRows(updatedRows);
+            localStorage.setItem('calculatedRows', JSON.stringify(updatedRows));
+        }
     };
+
+    useEffect(() => {
+        const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
+        setCalculatedRows(savedRows);
+    }, []);
     
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("userData"));
@@ -206,22 +221,26 @@ function EsgReport() {
                     </div>
                     <div className='calculatedPanel'>
                         <h3>Calculated Results</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Subcategory</th>
-                                    <th>Model</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {calculatedRows.map((row,index) => (
-                                    <tr key={index}>
-                                        <td>{row.subcategory}</td>
-                                        <td>{row.model}</td>
+                        <div className="calculated-table" style={{ overflowY: 'auto', maxHeight: '150px' }}>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Subcategory</th>
+                                        <th>Model</th>
+                                        <th>Metrics</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {calculatedRows.map((row,index) => (
+                                        <tr key={index}>
+                                            <td>{row.subcategory}</td>
+                                            <td>{row.model}</td>
+                                            <td>{(row.metrics || []).join(', ')}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
