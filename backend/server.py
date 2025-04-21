@@ -43,14 +43,14 @@ def get_plot_data_1():
     title_x = "this is a X axis title"
     title_y = "this is a Y axis title"
     results = OPCA.query_esg_observations(
-        industry="biotechnology_pharmaceuticals",
-        year="2020",
-        pillar_filter="g_opportunity",
-        metric_filter="supply_chain_management"
+        industry="semiconductors",
+        year="2022",
+        pillar_filter="e_risk",
+        metric_filter="ghg_emissions"
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name='supply_chain_management_model', missing_threshold=0.7)
+    pivot_df = OPCA.prepare_pivot_table(records, model_name='ghg_emissions_model', missing_threshold=0.7)
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     explained_variance = pca.explained_variance_ratio_
