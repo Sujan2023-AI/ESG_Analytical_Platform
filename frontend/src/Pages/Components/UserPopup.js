@@ -35,8 +35,14 @@ function UserPopup ({ isOpen, onClose }) {
   return (
     <div ref={popupRef} className="popup">
       <div className="popup-container">
+        <p><b>Username</b>:</p>
         <p>{userName}</p>
-        <button onClick={handleLogout}>Logout</button>
+        <p><b>Industry</b>:</p>
+        <p>{industry}</p>
+        <p><b>Company</b>:</p>
+        <p>{company}</p>
+        <p>&nbsp;</p>
+        <button onClick={() => navigate('/')}>Logout</button>
       </div>
     </div>
   );
