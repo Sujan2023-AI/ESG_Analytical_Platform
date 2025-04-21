@@ -6,6 +6,7 @@ import '../../Css/AppOptions.css';
 function AppOptions() {
 
   const [categories, setCategories] = useState([]);
+  const [reportingYear, setReportingYear] = useState("2024");
   const [userData, setUserData] = useState({
     name: '', company: '', industry: ''
   });
@@ -25,6 +26,14 @@ function AppOptions() {
       setUserData(JSON.parse(savedUserData));
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("reportingYear", reportingYear)
+  }, [reportingYear]);
+
+  const handleYearSelection = (event) => {
+    setReportingYear(event.target.value);
+  }
 
   const reportingFrameworks = ["SASB"]
   const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
@@ -53,7 +62,7 @@ function AppOptions() {
       <div className="content-row">
         <p>Reporting Year:</p>
         <div className="year-selection">
-        <select defaultValue={"2024"}>
+        <select defaultValue={"2024"} onChange={handleYearSelection}>
           {reportingYears.map((year) => 
             <option key={year} value={year}>{year}</option>
           )}

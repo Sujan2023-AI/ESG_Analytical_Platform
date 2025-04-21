@@ -204,6 +204,8 @@ def get_top_5():
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 
+## API DATA HELPERS
+
 def get_file(industry):
     match industry:
         case "Biotechnology & Pharmaceuticals":
@@ -237,7 +239,9 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
         df = filter_by_model(df, model)
     if (category != ""):
         df = filter_by_category(df, category)
-    return df        
+    return df   
+
+## API DATA ROUTES
 
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
 def get_metrics(industry, company, year, pillar):

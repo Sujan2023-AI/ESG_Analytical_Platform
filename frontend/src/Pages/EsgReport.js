@@ -52,37 +52,37 @@ function EsgReport() {
         const userData = JSON.parse(localStorage.getItem("userData"));
         let industry = userData.industry;
         let company = userData.company;
-        let year = 2022;
+        let year = parseInt(localStorage.getItem("reportingYear"));
 
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/E_risk`)
+        .then(response => response.json())
+        .then(data => setErSubcategories(data))
+        .catch(error => console.error('Error fetching metrics from api:', error));
+        
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/S_risk`)
+        .then(response => response.json())
+        .then(data => setSrSubcategories(data))
+        .catch(error => console.error('Error fetching social risk sub categories:', error));
+        
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/G_risk`)
             .then(response => response.json())
-            .then(data => setErSubcategories(data))
-            .catch(error => console.error('Error fetching metrics from api:', error));
-
-        // fetch('http://localhost:3902/data/S_risk')
-        //     .then(response => response.json())
-        //     .then(data => setSrSubcategories(data))
-        //     .catch(error => console.error('Error fetching social risk sub categories:', error));
-
-        // fetch('http://localhost:3902/data/G_risk')
-        //     .then(response => response.json())
-        //     .then(data => setGrSubcategories(data))
-        //     .catch(error => console.error('Error fetching governance risk sub categories:', error));
-
-        // fetch('http://localhost:3902/data/E_opportunity')
-        //     .then(response => response.json())
-        //     .then(data => setEoSubcategories(data))
-        //     .catch(error => console.error('Error fetching environment opportunity sub categories:', error));
-
-        // fetch('http://localhost:3902/data/S_opportunity')
-        //     .then(response => response.json())
-        //     .then(data => setSoSubcategories(data))
-        //     .catch(error => console.error('Error fetching risk opportunity sub categories:', error));
-
-        // fetch('http://localhost:3902/data/G_opportunity')
-        //     .then(response => response.json())
-        //     .then(data => setGoSubcategories(data))
-        //     .catch(error => console.error('Error fetching governance opportunity sub categories:', error));
+            .then(data => setGrSubcategories(data))
+            .catch(error => console.error('Error fetching governance risk sub categories:', error));
+        
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/E_opportunity`)
+            .then(response => response.json())
+            .then(data => setEoSubcategories(data))
+            .catch(error => console.error('Error fetching environment opportunity sub categories:', error));
+        
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/S_opportunity`)
+            .then(response => response.json())
+            .then(data => setSoSubcategories(data))
+            .catch(error => console.error('Error fetching risk opportunity sub categories:', error));
+        
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/G_opportunity`)
+            .then(response => response.json())
+            .then(data => setGoSubcategories(data))
+            .catch(error => console.error('Error fetching governance opportunity sub categories:', error));
     }, []);
 
     return (
