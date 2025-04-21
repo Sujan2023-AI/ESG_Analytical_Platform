@@ -54,20 +54,22 @@ def get_plot_dummy_data():
 #     return OPCA.send_file(img_buf, mimetype='image/png')
 
 # returns Vinanti's first graph
-@app.route("/plot/scree/1")
-def get_plot_data_1():
+@app.route("/ontology/scree/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>", methods=['GET'])
+def get_ontology_scree(industry, year, pillar, model, metric):
+    print("call made to /ontology/scree/<string:industry>/<int:y${tesear>/<string:pillar>/<string:model>/<string:metric>")
     title_graph = "PCA Explained Variance"
     title_x = "Principle Components"
     title_y = "Variance Ratio"
+
     results = OPCA.query_esg_observations(
-        industry="semiconductors",
-        year="2022",
-        pillar_filter="e_risk",
-        metric_filter="ghg_emissions"
+        industry=industry.lower(),
+        year=year,
+        pillar_filter=pillar.lower(),
+        metric_filter=metric.lower()
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
+    pivot_df = OPCA.prepare_pivot_table(records, model_name=model.lower())
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     explained_variance = pca.explained_variance_ratio_
@@ -181,18 +183,19 @@ def scree_plot():
     return jsonify(json.loads(fig.to_json()))
 
 # returns the top 5 categories, determined by ontology enhanced PCA analysis
-@app.route('/top_5', methods=['GET'])
-def get_top_5():
+@app.route('/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>', methods=['GET'])
+def get_ontology_table(industry, year, pillar, model, metric):
+    print("call made to GET/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>")
 
     results = OPCA.query_esg_observations(
-        industry="semiconductors",
-        year="2022",
-        pillar_filter="e_risk",
-        metric_filter="ghg_emissions"
+        industry=industry.lower(),
+        year=year,
+        pillar_filter=pillar.lower(),
+        metric_filter=metric.lower()
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
+    pivot_df = OPCA.prepare_pivot_table(records, model_name=model.lower())
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df)
@@ -217,7 +220,7 @@ def get_file(industry):
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
 def filter_by_year(df, year):
-    return df[df["year"] == year]
+    return df[df["year"] == int(year)]
 def filter_by_pillar(df, pillar):
     return df[df["pillar"] == pillar]
 def filter_by_metric(df, metric):
@@ -247,6 +250,7 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
 
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
 def get_metrics(industry, company, year, pillar):
+    print("call made to GET/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>")
     df = pd.read_csv(get_file(industry))
     df = filter(df, company, year, pillar)
     df = df.sort_values(df.columns[0], ascending = True)
@@ -255,6 +259,7 @@ def get_metrics(industry, company, year, pillar):
 
 @app.route('/models/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>', methods=['GET'])
 def get_models(industry, company, year, pillar, metric):
+    print("call made to GET/models/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>")
     df = pd.read_csv(get_file(industry))
     df = filter(df, company, year, pillar, metric)
     df = df.sort_values(df.columns[0], ascending = True)
@@ -263,6 +268,7 @@ def get_models(industry, company, year, pillar, metric):
 
 @app.route('/categories/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>/<string:model>', methods=['GET'])
 def get_categories(industry, company, year, pillar, metric, model):
+    print('call made to GET/categories/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>/<string:model>')
     df = pd.read_csv(get_file(industry))
     df = filter(df, company, year, pillar, metric, model)
     df = df.sort_values(df.columns[0], ascending = True)
@@ -272,6 +278,7 @@ def get_categories(industry, company, year, pillar, metric, model):
 
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>', methods=['GET'])
 def get_metrics_all(industry, company, year):
+    print('call made to GET/metrics/<string:industry>/<string:company>/<int:year>')
     df = pd.read_csv(get_file(industry))
     df = filter(df, company, year)
     df = df.sort_values(df.columns[10], ascending = True)

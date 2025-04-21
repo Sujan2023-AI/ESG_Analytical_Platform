@@ -6,7 +6,7 @@ import '../../Css/AppOptions.css';
 function AppOptions() {
 
     const [categories, setCategories] = useState([]);
-    const [reportingYear, setReportingYear] = useState("2024");
+    const [reportingYear, setReportingYear] = useState(localStorage.getItem("reportingYear"));
     const [userData, setUserData] = useState({
       name: '', company: '', industry: ''
     });
@@ -67,7 +67,7 @@ function AppOptions() {
             <div className="content-row">
                 <p>Reporting Year:</p>
                 <div className="year-selection">
-                    <select defaultValue={"2024"} onChange={handleYearSelection}>
+                    <select defaultValue={reportingYear} onChange={handleYearSelection}>
                         {reportingYears.map((year) => 
                             <option key={year} value={year}>{year}</option>
                         )}
