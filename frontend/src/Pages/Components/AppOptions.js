@@ -74,8 +74,8 @@ function AppOptions() {
                     </select>
                 </div>
             </div>
-            <div className="conent-row">
-                <b>Dataset Categories</b>:
+            <div className="conent-row dataset-categories">
+                <p>Dataset Categories Available in {reportingYear}:</p>
                 <ul>
                     {categories.map(category => (
                         <li key={category}>

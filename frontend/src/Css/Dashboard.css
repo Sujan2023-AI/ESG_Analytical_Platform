@@ -39,6 +39,7 @@ h1, h2, h3, p, ul, li, button, input {
 .dashboardContent {
     height: 100%;
     display: flex;
-    justify-content: center;
+    padding-left: 26px;
+    justify-content: start;
     align-items: center;
 }
