@@ -2,11 +2,12 @@ import '../../Css/Modal.css';
 import React, {useState} from 'react';
 
 function LoginModal ({ isOpen, onSave, onClose }) {
-  if (!isOpen) { return (<></>); }
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
+  if (!isOpen) { return (<></>); }
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleLogin();

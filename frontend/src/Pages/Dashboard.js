@@ -5,18 +5,20 @@ import AppOptions from './Components/AppOptions';
 import AppHeader from './Components/AppHeader';
 
 function Dashboard() {
-  return (
-    <div className="App">
-      <AppHeader />
-      <div className="Body">
-        <AppNavigator />
-        <div className="content">
-          <AppOptions />
+    return (
+        <div className="App">
+            <AppHeader />
+            <div className="Body">
+                <AppNavigator />
+                <div className="content">
+                    <div className="dashboardContent">
+                        <AppOptions />
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    
-  );
+      
+    );
 }
 
 export default Dashboard;

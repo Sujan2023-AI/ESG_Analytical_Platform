@@ -1,37 +1,44 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Css/AppNavigator.css';
 
 function DashboardNavigator() {
     const navigate = useNavigate();
 
-    var currPage = 5;
+    const [activePage, setActivePage] = useState(() => {
+        return localStorage.getItem("currentPage") || "0";
+    });
 
-    var startButton = document.getElementById('nav' + currPage);
-    if (startButton !== null) {
-        startButton.classList.add('active');
+    const navClicked = (id) => {
+        setActivePage(id);
     }
 
-    const clearButtons = () => {
-        document.getElementById('nav1').classList.remove('active');
-        document.getElementById('nav2').classList.remove('active');
-        document.getElementById('nav3').classList.remove('active');
-        document.getElementById('nav4').classList.remove('active');
-        document.getElementById('nav5').classList.remove('active');
+    const deactivateAllButtons = () => {
+        var navButtons = document.getElementsByClassName("nav-button");
+        for (let button of navButtons) {
+            button.classList.remove("active");
+        }
     }
-    const activate = (id) => {
-        // clearButtons();
-        document.getElementById('nav' + id).classList.add('active');
-        localStorage.setItem('navPage', id);
-    }
+      
+    useEffect(() => {
+        localStorage.setItem("currentPage", activePage);
+        deactivateAllButtons();
+        let buttonId = "nav-button-" + activePage;
+        let button = document.getElementById(buttonId);
+        if (button) {
+            button.classList.add("active");
+        }
+    }, [activePage]);
 
     return (  
         <nav className="nav-links">
-            <button id="nav1" className="navi" onClick={() => {clearButtons(); activate(1); navigate('/exploration');}}>Data Exploration</button>
-            <button id="nav2" className="navi" onClick={() => {clearButtons(); activate(2); navigate('/pca');}}>PCA Analysis</button>
-            <button id="nav3" className="navi" onClick={() => {clearButtons(); activate(3); navigate('/ontology');}}>View Ontology</button>
-            <button id="nav4" className="navi" onClick={() => {clearButtons(); activate(4); navigate('/enhanced');}}>Ontology Enhanced PCA Analysis</button>
-            <button id="nav5" className="navi" onClick={() => {clearButtons(); activate(5); navigate('/Report');}}>Reports</button>
+            <button id="nav-button-1" className="nav-button" onClick={() => {navClicked(1); navigate('/exploration');}}>Data Exploration</button>
+            <button id="nav-button-2" className="nav-button" onClick={() => {navClicked(2); navigate('/pca');}}>PCA Analysis</button>
+            <button id="nav-button-3" className="nav-button" onClick={() => {navClicked(3); navigate('/ontology');}}>View Ontology</button>
+            <button id="nav-button-4" className="nav-button" onClick={() => {navClicked(4); navigate('/enhanced');}}>Ontology Enhanced PCA Results</button>
+            <button id="nav-button-5" className="nav-button" onClick={() => {navClicked(5); navigate('/esg-report');}}>ESG Report</button>
+            <button id="nav-button-6" className="nav-button" onClick={() => {navClicked(6); navigate('/DownloadReport');}}>Download Reports</button>
       </nav>
     );
 }

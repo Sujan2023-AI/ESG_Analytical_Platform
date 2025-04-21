@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Landing from './Pages/Landing';
 
@@ -8,13 +8,10 @@ import Exploration from './Pages/Exploration';
 import Ontology from './Pages/Ontology';
 import PCA from './Pages/PCA';
 import Enhanced from './Pages/Enhanced';
-import Report from './Pages/Report';
+import EsgReport from './Pages/EsgReport';
+import DownloadReport from './Pages/DownloadReports';
 
 function App() {
-
-    useEffect(() => {
-        localStorage.clear();  // Clears the localStorage when the app starts
-    }, []); 
 
     return (
         <BrowserRouter>
@@ -26,7 +23,8 @@ function App() {
                 <Route path="/ontology" element={<Ontology />} />
                 <Route path="/pca" element={<PCA />} />
                 <Route path="/enhanced" element={<Enhanced />} />
-                <Route path="/report" element={<Report />} />
+                <Route path="/esg-report" element={<EsgReport />} />
+                <Route path="/DownloadReport" element={<DownloadReport />} />
             </Routes>
         </BrowserRouter>
     );

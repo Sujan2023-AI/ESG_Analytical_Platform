@@ -30,7 +30,7 @@ function ReportCategorySection({
         localStorage.removeItem(categoryShortCode + 'ModelType');
 
         // query metric list for selection
-        fetch(`http://localhost:3000/data/${categoryCode}/${selectedValue}/models`)
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedValue}/models`)
             .then(response => response.json())
             .then(data => setModels(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
@@ -45,7 +45,7 @@ function ReportCategorySection({
         localStorage.setItem(categoryShortCode + 'modelType', selectedModel);
  
         // query metric list for selection
-        fetch(`http://localhost:3000/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
+        fetch(`http://localhost:3902/data/${categoryCode}/${selectedSubcategory}/${selectedModel}/metrics`)
             .then(response => response.json())
             .then(data => setMetrics(data))
             .catch(error => console.error('Error fetching ' + category + ':', error));
