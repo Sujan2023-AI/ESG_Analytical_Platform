@@ -8,11 +8,12 @@ function LoginModal ({ isOpen, onSave, onClose }) {
 
   if (!isOpen) { return (<></>); }
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleLogin();
-    }
-  }
+  // const handleKeyDown = (e) => {
+  //   if (e.key === 'Enter') {
+  //     handleLogin();
+  //   }
+  // }
+  // window.addEventListener("keypress", (event) => {handleKeyDown(event);});
 
   const handleLogin = () => {
     if (email && password){
@@ -41,7 +42,7 @@ function LoginModal ({ isOpen, onSave, onClose }) {
           </div>
           <br />
           <div className="modal-row">
-            <button className='login-button' onKeyDown={handleKeyDown} onClick={handleLogin}>Login</button>
+            <button className='login-button' onClick={handleLogin}>Login</button>
           </div>
           <div className="modal-row">
             <p>Forgot your password? | Create an account</p>
