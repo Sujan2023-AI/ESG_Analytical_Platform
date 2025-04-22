@@ -10,6 +10,9 @@ const Landing = () => {
   const openLoginModal = () => { setLoginModal(true); }
   const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); }
 
+  localStorage.setItem("reportingYear", 2020);
+  localStorage.setItem("savedReports", "[]");
+
   const doLogin = (email, password) => {
     //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
     fetch('http://localhost:5001/authenticate', {
