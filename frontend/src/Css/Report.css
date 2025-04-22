@@ -1,6 +1,6 @@
 .allContent{
     width: 100%;
-    height: 80%;
+    height: 60%;
     box-sizing: border-box;
     overflow-y: scroll;
 }
@@ -54,16 +54,19 @@
   }
 
 .calculatedPanel {
-    height: 20%;
+    height: 40%;
     background-color: #F9FAFC;
-    padding: 2px;
+    padding: 26px;
     box-sizing: border-box;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
 }
 
 .calculated-table table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
 /* Header row styling */

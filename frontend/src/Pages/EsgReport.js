@@ -233,7 +233,7 @@ function EsgReport() {
                     </div>
                     <div className='calculatedPanel'>
                         <h3>Calculated Results</h3>
-                        <div className="calculated-table" style={{ overflowY: 'auto', maxHeight: '150px' }}>
+                        <div className="calculated-table" style={{  }}>
                             <table>
                                 <thead>
                                     <tr>
@@ -255,6 +255,7 @@ function EsgReport() {
                                 </tbody>
                             </table>
                         </div>
+                        <button>Save Data</button>
                     </div>
                 </div>
             </div>
