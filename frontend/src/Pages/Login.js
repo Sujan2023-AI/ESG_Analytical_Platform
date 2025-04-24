@@ -10,8 +10,15 @@ const Login = () => {
     const openLoginModal = () => { setLoginModal(true); }
     const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); }
 
-    localStorage.setItem("reportingYear", 2020);
-    localStorage.setItem("savedReports", "[]");
+    const resetState = () => {
+        // LocalStorage data
+        localStorage.setItem('currentPage', 0)
+        localStorage.setItem('savedReports', JSON.stringify([]));
+        localStorage.setItem('userData', JSON.stringify({}));
+        localStorage.setItem('calculatedRows', JSON.stringify([]));
+        localStorage.setItem('reportingYear', 2020);
+    };
+    resetState();
 
     const doLogin = (email, password) => {
         //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent

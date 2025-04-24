@@ -3,15 +3,11 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 import ReportCategorySection from './Components/ReportCategorySection';
-import UserPopup from './Components/UserPopup';
 
 function EsgReport() {
 
     // states for calculated component
     const [calculatedRows, setCalculatedRows] = useState([]);
-    // State for controlling the visibility of the UserPopup
-    //const [isPopupOpen, setIsPopupOpen] = useState(false); // Initialize as true so that the popup is shown on load
-    const [isUserPopupOpen, setIsUserPopupOpen] = useState(false);
 
     // states for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
@@ -55,14 +51,6 @@ function EsgReport() {
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
-    const resetState = () => {
-        console.log("resetting state");
-        // Reset calculated rows to empty state
-        setCalculatedRows([]);
-        // Clear calculated rows from localStorage
-        localStorage.setItem('calculatedRows', JSON.stringify([]));
-    };
-
     useEffect(() => {
         const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
         setCalculatedRows(savedRows);
@@ -70,7 +58,7 @@ function EsgReport() {
 
     const handleCalculate = (subcategory, model, metrics, mean) => {
         const newRow = {subcategory, model,metrics, mean};
-        const updatedRows = [...calculatedRows, newRow];
+
         // Check if this row already exists (to prevent duplicates)
         const isDuplicate = calculatedRows.some(
             (row) => row.subcategory === subcategory && row.model === model && JSON.stringify(row.metrics) === JSON.stringify(metrics)
