@@ -40,19 +40,19 @@ function AppOptions() {
     const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
     return (  
-        <div className="appOptions">
-            <div className="content-row">
+        <div className="AppOptions">
+            <div className="options-row">
                 <h3>Logged in as {userData.name}</h3>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Your Company:</p>
                 <input value={userData.company} disabled></input>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Your Industry:</p>
                 <input value={userData.industry} disabled></input>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Reporting Framework:</p>
                 <select>
                     {reportingFrameworks.map((rf) => (
@@ -60,7 +60,7 @@ function AppOptions() {
                     ))}
                 </select>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Reporting Year:</p>
                 <div className="year-selection">
                     <select defaultValue={reportingYear} onChange={handleYearSelection}>
