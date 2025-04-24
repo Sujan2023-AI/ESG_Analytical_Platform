@@ -9,6 +9,7 @@
     overflow-y: scroll;
     height: 100%;
     box-sizing: border-box;
+    background-color: #F1F5FB;
 }
 
 .home-page .welcome h1 {
