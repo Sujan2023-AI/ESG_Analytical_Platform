@@ -22,11 +22,10 @@
 .Title:hover {
   cursor: pointer;
   color: #bbbbbb;
-  /*font-size: 24px;*/
   transform: scale(1.2);
 }
 
-.Topic{
+.Topic {
   font-size: 35px;
   color: white;
   font-weight: bold;
@@ -61,9 +60,6 @@
   background-color: white;
   color: #1C3989;
   font-weight: bold;
-
-
-
   font-size: 15px;
   padding: 0px;
 }

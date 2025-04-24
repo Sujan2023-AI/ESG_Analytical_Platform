@@ -1,8 +1,6 @@
-.allContent{
+.report-selection{
     width: 100%;
-    height: 60%;
     box-sizing: border-box;
-    overflow-y: scroll;
 }
 
 .mainMetrics{
@@ -10,7 +8,6 @@
     gap: 26px;
     display: flex;
     flex-direction: column;
-
 }
 
 .metricRow1, .metricRow2 {
@@ -30,56 +27,51 @@
     align-items: center;          /* Center the items vertically */
     justify-content: space-between; /* Space out the name and the value */
     margin-bottom: 10px;          /* Add space between checkboxes */
-  }
+}
   
-  .metric_checkbox input {
+.metric_checkbox input {
     margin-right: 10px;           /* Add some spacing between checkbox and label */
-  }
+}
   
-  .metric_checkbox label {
+.metric_checkbox label {
     max-width: 200px;             /* Limit the width of the labels */
     text-align: left;
     white-space: nowrap;          /* Prevent breaking the label into multiple lines */
     overflow: hidden;             /* Hide overflowing content */
     text-overflow: ellipsis;      /* Add ellipsis if the text is too long */
     margin-right: 10px;           /* Add space between metric name and value */
-  }
+}
   
-  .metric_checkbox label:nth-child(2) {
+.metric_checkbox label:nth-child(2) {
     min-width: 100px;             /* Ensure the value label has enough space */
-  }
+}
   
-  .metric_checkbox label:last-child {
+.metric_checkbox label:last-child {
     min-width: 50px;              /* Ensure value (e.g., number) is not squished */
-  }
+}
 
-.calculatedPanel {
+.report-calculation {
     height: 40%;
     background-color: #F9FAFC;
     padding: 26px;
     box-sizing: border-box;
-    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 26px;
 }
 
-.calculated-table table {
-  width: 100%;
-  border-collapse: collapse;
+.report-calculation table {
+    width: 100%;
+    border-collapse: collapse;
 }
-
-/* Header row styling */
-.calculated-table th {
-  background-color: #f4f4f4;
-  padding: 10px;
-  text-align: left;
-  border: 1px solid #ddd;
+.report-calculation th {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
 }
-
-/* Body row styling */
-.calculated-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: left;
+.report-calculation td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
 }

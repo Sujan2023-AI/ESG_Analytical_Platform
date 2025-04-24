@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';  // Updated import
+import { useNavigate } from 'react-router-dom';
 import '../Css/Landing.css';
 import LoginModal from './Components/LoginModal';
 
@@ -8,7 +8,7 @@ const Login = () => {
 
     const [showLoginModal, setLoginModal] = useState(false);
     const openLoginModal = () => { setLoginModal(true); }
-    const closeLoginModal = () => { setLoginModal(false); localStorage.setItem("currentPage", 0); }
+    const closeLoginModal = () => { setLoginModal(false); }
 
     const resetState = () => {
         // LocalStorage data
@@ -21,36 +21,31 @@ const Login = () => {
     resetState();
 
     const doLogin = (email, password) => {
-        //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`);  // Log the credentials being sent
+        //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`); // Log the credentials being sent
         fetch('http://localhost:5001/authenticate', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json',}, 
-          body: JSON.stringify({email,password}),
+            method: 'POST',
+            headers: {'Content-Type':'application/json',}, 
+            body: JSON.stringify({email,password}),
         })
         .then(response => response.json())
         .then(data => {
-            if(data.success){
+            if (data.success) {
                 console.log('Authentication successful:', data);
                 localStorage.setItem('userData', JSON.stringify({
                     name: data.name,
                     industry: data.industry,
                     company: data.company,
                 }));
-                if(data.industry.toLowerCase() === 'semiconductors'){
-                    navigate('/dashboard');
-                }
-                else if (data.industry.toLowerCase() === 'biotechnology & pharmaceuticals'){
-                    navigate('/dashboard');
-                }
-              }
-              else{
-                  alert('Invalid email or password');
-              }
-          })
-          .catch(error=> {
-              console.error('Error during authentication:', error);
-              alert('An error occurred. Please try again later.');
-          });
+                navigate('/home');
+            }
+            else{
+                alert('Invalid email or password');
+            }
+        })
+        .catch(error=> {
+            console.error('Error during authentication:', error);
+            alert('An error occurred. Please try again later.');
+        });
     };
 
     return (

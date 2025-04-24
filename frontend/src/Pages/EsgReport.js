@@ -1,4 +1,4 @@
-import '../Css/Report.css';
+import '../Css/EsgReport.css';
 import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
@@ -120,106 +120,106 @@ function EsgReport() {
             <AppHeader />
             <div className='Body'>
                 <AppNavigator />
-                <div className="content">
-                <div className='allContent'>
-                    <div className="mainMetrics">
-                        <div className='metricRow1'>
-                            <ReportCategorySection
-                                category={'Environment Risk'}
-                                categoryCode={'E_risk'}
-                                categoryShortCode={'Er'}
-                                subcategories={erSubcategories}
-                                selectedSubcategory={selectedErSubcategory}
-                                setSelectedSubcategory={setSelectedErSubcategory}
-                                models={erModels}
-                                setModels={setErModels}
-                                modelType={erModelType}
-                                setModelType={setErModelType}
-                                metrics={erMetrics}
-                                setMetrics={setErMetrics}
-                                onCalculate={handleCalculate}
-                            />
-                            <ReportCategorySection
-                                category={'Social Risk'}
-                                categoryCode={'S_risk'}
-                                categoryShortCode={'Sr'}
-                                subcategories={srSubcategories}
-                                selectedSubcategory={selectedSrSubcategory}
-                                setSelectedSubcategory={setSelectedSrSubcategory}
-                                models={srModels}
-                                setModels={setSrModels}
-                                modelType={srModelType}
-                                setModelType={setSrModelType}
-                                metrics={srMetrics}
-                                setMetrics={setSrMetrics}
-                                onCalculate={handleCalculate}
-                            />
-                            <ReportCategorySection
-                                category={'Governance Risk'}
-                                categoryCode={'G_risk'}
-                                categoryShortCode={'Gr'}
-                                subcategories={grSubcategories}
-                                selectedSubcategory={selectedGrSubcategory}
-                                setSelectedSubcategory={setSelectedGrSubcategory}
-                                models={grModels}
-                                setModels={setGrModels}
-                                modelType={grModelType}
-                                setModelType={setGrModelType}
-                                metrics={grMetrics}
-                                setMetrics={setGrMetrics}
-                                onCalculate={handleCalculate}
-                            />
-                        </div>
-                        <div className='metricRow2'>
-                            <ReportCategorySection
-                                category={'Environment Opportunity'}
-                                categoryCode={'E_opportunity'}
-                                categoryShortCode={'Eo'}
-                                subcategories={eoSubcategories}
-                                selectedSubcategory={selectedEoSubcategory}
-                                setSelectedSubcategory={setSelectedEoSubcategory}
-                                models={eoModels}
-                                setModels={setEoModels}
-                                modelType={eoModelType}
-                                setModelType={setEoModelType}
-                                metrics={eoMetrics}
-                                setMetrics={setEoMetrics}
-                                onCalculate={handleCalculate}
-                            />
-                            <ReportCategorySection
-                                category={'Social Opportunity'}
-                                categoryCode={'S_opportunity'}
-                                categoryShortCode={'So'}
-                                subcategories={soSubcategories}
-                                selectedSubcategory={selectedSoSubcategory}
-                                setSelectedSubcategory={setSelectedSoSubcategory}
-                                models={soModels}
-                                setModels={setSoModels}
-                                modelType={soModelType}
-                                setModelType={setSoModelType}
-                                metrics={soMetrics}
-                                setMetrics={setSoMetrics}
-                                onCalculate={handleCalculate}
-                            />
-                            <ReportCategorySection
-                                category={'Governance Opportunity'}
-                                categoryCode={'G_opportunity'}
-                                categoryShortCode={'Go'}
-                                subcategories={goSubcategories}
-                                selectedSubcategory={selectedGoSubcategory}
-                                setSelectedSubcategory={setSelectedGoSubcategory}
-                                models={goModels}
-                                setModels={setGoModels}
-                                modelType={goModelType}
-                                setModelType={setGoModelType}
-                                metrics={goMetrics}
-                                setMetrics={setGoMetrics}
-                                onCalculate={handleCalculate}
-                            />
+                <div className='Main'>
+                    <div className='report-selection'>
+                        <div className="mainMetrics">
+                            <div className='metricRow1'>
+                                <ReportCategorySection
+                                    category={'Environment Risk'}
+                                    categoryCode={'E_risk'}
+                                    categoryShortCode={'Er'}
+                                    subcategories={erSubcategories}
+                                    selectedSubcategory={selectedErSubcategory}
+                                    setSelectedSubcategory={setSelectedErSubcategory}
+                                    models={erModels}
+                                    setModels={setErModels}
+                                    modelType={erModelType}
+                                    setModelType={setErModelType}
+                                    metrics={erMetrics}
+                                    setMetrics={setErMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                                <ReportCategorySection
+                                    category={'Social Risk'}
+                                    categoryCode={'S_risk'}
+                                    categoryShortCode={'Sr'}
+                                    subcategories={srSubcategories}
+                                    selectedSubcategory={selectedSrSubcategory}
+                                    setSelectedSubcategory={setSelectedSrSubcategory}
+                                    models={srModels}
+                                    setModels={setSrModels}
+                                    modelType={srModelType}
+                                    setModelType={setSrModelType}
+                                    metrics={srMetrics}
+                                    setMetrics={setSrMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                                <ReportCategorySection
+                                    category={'Governance Risk'}
+                                    categoryCode={'G_risk'}
+                                    categoryShortCode={'Gr'}
+                                    subcategories={grSubcategories}
+                                    selectedSubcategory={selectedGrSubcategory}
+                                    setSelectedSubcategory={setSelectedGrSubcategory}
+                                    models={grModels}
+                                    setModels={setGrModels}
+                                    modelType={grModelType}
+                                    setModelType={setGrModelType}
+                                    metrics={grMetrics}
+                                    setMetrics={setGrMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                            </div>
+                            <div className='metricRow2'>
+                                <ReportCategorySection
+                                    category={'Environment Opportunity'}
+                                    categoryCode={'E_opportunity'}
+                                    categoryShortCode={'Eo'}
+                                    subcategories={eoSubcategories}
+                                    selectedSubcategory={selectedEoSubcategory}
+                                    setSelectedSubcategory={setSelectedEoSubcategory}
+                                    models={eoModels}
+                                    setModels={setEoModels}
+                                    modelType={eoModelType}
+                                    setModelType={setEoModelType}
+                                    metrics={eoMetrics}
+                                    setMetrics={setEoMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                                <ReportCategorySection
+                                    category={'Social Opportunity'}
+                                    categoryCode={'S_opportunity'}
+                                    categoryShortCode={'So'}
+                                    subcategories={soSubcategories}
+                                    selectedSubcategory={selectedSoSubcategory}
+                                    setSelectedSubcategory={setSelectedSoSubcategory}
+                                    models={soModels}
+                                    setModels={setSoModels}
+                                    modelType={soModelType}
+                                    setModelType={setSoModelType}
+                                    metrics={soMetrics}
+                                    setMetrics={setSoMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                                <ReportCategorySection
+                                    category={'Governance Opportunity'}
+                                    categoryCode={'G_opportunity'}
+                                    categoryShortCode={'Go'}
+                                    subcategories={goSubcategories}
+                                    selectedSubcategory={selectedGoSubcategory}
+                                    setSelectedSubcategory={setSelectedGoSubcategory}
+                                    models={goModels}
+                                    setModels={setGoModels}
+                                    modelType={goModelType}
+                                    setModelType={setGoModelType}
+                                    metrics={goMetrics}
+                                    setMetrics={setGoMetrics}
+                                    onCalculate={handleCalculate}
+                                />
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    <div className='calculatedPanel'>
+                    <div className='report-calculation'>
                         <h3>Calculated Results</h3>
                         <div className="calculated-table" style={{  }}>
                             <table>
@@ -247,7 +247,6 @@ function EsgReport() {
                     </div>
                 </div>
             </div>
-            {/* Pass resetState to UserPopup */}
         </div>
     );
 }

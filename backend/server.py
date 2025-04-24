@@ -340,8 +340,6 @@ def get_ontology_table(industry, year, pillar, model, metric):
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
 
-    print(newIndustry)
-
     results = OPCA.query_esg_observations(
         industry=newIndustry,
         year=year,

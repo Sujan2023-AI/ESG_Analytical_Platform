@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../Css/AppHeader.css';
+import '../../Css/Header.css';
 import UserPopup from './UserPopup';
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ function AppHeader() {
 
     return (
         <div className="Header">
-            <div className="Title" onClick={() => {localStorage.setItem("currentPage", 0); navigate("/dashboard")}}>
+            <div className="Title" onClick={() => {localStorage.setItem("currentPage", 0); navigate("/home")}}>
                 <p>Home</p>
             </div>
             <div className="Topic">

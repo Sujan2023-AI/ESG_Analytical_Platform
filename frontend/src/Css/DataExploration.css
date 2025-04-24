@@ -1,20 +1,11 @@
-.explorationContent {
+.data-summary {
     display: flex;
-    height: 100%;
     flex-direction: column;
     justify-content: start;
-    padding: 26px;
     gap: 26px;
 }
 
-.exploration-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 10px;
-}
-
-.esg-selection, .ro-selection {
+/* .esg-selection, .ro-selection {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -24,4 +15,4 @@
 .esg-selection > button, .ro-selection > button {
     height: 100px;
     width: 200px;
-}
+} */

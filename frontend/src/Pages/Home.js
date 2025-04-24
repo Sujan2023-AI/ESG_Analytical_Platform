@@ -1,17 +1,17 @@
 import React from 'react';
-import '../Css/Dashboard.css';
+import '../Css/Global.css';
 import AppNavigator from './Components/AppNavigator';
 import AppOptions from './Components/AppOptions';
 import AppHeader from './Components/AppHeader';
 
-function Dashboard() {
+function Home() {
     return (
         <div className="App">
             <AppHeader />
             <div className="Body">
                 <AppNavigator />
-                <div className="content">
-                    <div className="dashboardContent">
+                <div className="Main">
+                    <div className="Content">
                         <AppOptions />
                     </div>
                 </div>
@@ -21,4 +21,4 @@ function Dashboard() {
     );
 }
 
-export default Dashboard;
+export default Home;

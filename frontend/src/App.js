@@ -3,8 +3,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from './Pages/Login';
 
-import Dashboard from './Pages/Dashboard';
-import Exploration from './Pages/Exploration';
+import Home from './Pages/Home';
+import DataExploration from './Pages/DataExploration';
 import Ontology from './Pages/Ontology';
 import PCA from './Pages/PCA';
 import Enhanced from './Pages/Enhanced';
@@ -18,8 +18,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Login />} />
 
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/exploration" element={<Exploration />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/data-exploration" element={<DataExploration />} />
                 <Route path="/ontology" element={<Ontology />} />
                 <Route path="/pca" element={<PCA />} />
                 <Route path="/enhanced" element={<Enhanced />} />
