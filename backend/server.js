@@ -1,3 +1,6 @@
+print('hello world!');
+console.log("world hello");
+
 // server.js
 const express = require('express');
 const csv = require('csv-parser');
