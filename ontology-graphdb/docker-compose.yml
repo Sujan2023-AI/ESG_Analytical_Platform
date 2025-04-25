@@ -9,11 +9,11 @@ services:
       - ./graphdb-import:/opt/graphdb/import
     environment:
       - JAVA_OPTS=-Xms1g -Xmx2g
-  authenticator:
-    build: .
-    ports:
-      - "3902:3902"
-    volumes:
-      - .:/app
-    environment:
-      - FLASK_ENV=development
+  # authenticator:
+  #   build: .
+  #   ports:
+  #     - "3902:3902"
+  #   volumes:
+  #     - .:/app
+  #   environment:
+  #     - FLASK_ENV=development

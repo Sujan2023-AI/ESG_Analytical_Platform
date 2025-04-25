@@ -163,9 +163,10 @@ def get_traditional_table1(industry, year):
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
 
-    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
-    if (newIndustry == "biotechnology_pharmaceuticals"):
-        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+    file_path = get_file(newIndustry)
+    #file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    #if (newIndustry == "biotechnology_pharmaceuticals"):
+    #    file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
 
     filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
     pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
@@ -364,11 +365,16 @@ def get_ontology_table(industry, year, pillar, model, metric):
 ## API DATA HELPERS
 
 def get_file(industry):
+    file_name = ""
     match industry:
         case "Biotechnology & Pharmaceuticals":
-            return "biopharma_model_frontend.csv"
+            file_name = "biopharma_model_frontend.csv"
         case "Semiconductors":
-            return "semiconductors_model_frontend.csv"
+            file_name = "semiconductors_model_frontend.csv"
+        
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(current_folder, file_name)
+    return csv_path
         
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
@@ -404,16 +410,7 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
 def get_metrics(industry, company, year, pillar):
     print("call made to GET/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>")
-    current_folder = os.path.dirname(os.path.abspath(__file__))
-
-    # Build the full path to the CSV
-    csv_path = os.path.join(current_folder, get_file(industry))
-
-    # THIS WORKS
-    ## TODO: JORDAN: DO THIS FOR EVERYTHING
-
-    #df = pd.read_csv(get_file(industry))
-    df = pd.read_csv(csv_path)
+    df = pd.read_csv(get_file(industry))
     df = filter(df, company, year, pillar)
     df = df.sort_values(df.columns[0], ascending = True)
     nda = df["metric"].unique()
