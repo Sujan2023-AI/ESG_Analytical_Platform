@@ -1,0 +1,21 @@
+services:
+  graphdb:
+    image: ontotext/graphdb:10.3.1
+    container_name: graphdb
+    ports:
+      - "7200:7200"
+    volumes:
+      - ./graphdb-data:/opt/graphdb/home
+      - ./graphdb-import:/opt/graphdb/import
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx2g
+  retriever:
+    build:
+      context: ../
+      dockerfile: docker/retriever
+    ports:
+      - "3902:3902"
+    volumes:
+      - .:/retriever/app
+    environment:
+      - FLASK_ENV=development

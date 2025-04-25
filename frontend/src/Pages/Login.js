@@ -16,7 +16,7 @@ const Login = () => {
         localStorage.setItem('savedReports', JSON.stringify([]));
         localStorage.setItem('userData', JSON.stringify({}));
         localStorage.setItem('calculatedRows', JSON.stringify([]));
-        localStorage.setItem('reportingYear', 2020);
+        localStorage.setItem('reportingYear', 2022);
     };
     resetState();
 
