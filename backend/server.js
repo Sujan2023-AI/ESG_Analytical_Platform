@@ -1,4 +1,3 @@
-print('hello world!');
 console.log("world hello");
 
 // server.js
