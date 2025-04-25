@@ -20,7 +20,7 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
-sys.path.append(os.path.abspath('./data/'))
+#sys.path.append(os.path.abspath('./data/'))
 with Notebook():
     import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
     import Traditional_PCA as TPCA # type: ignore # this points to our ipynb file
@@ -366,9 +366,9 @@ def get_ontology_table(industry, year, pillar, model, metric):
 def get_file(industry):
     match industry:
         case "Biotechnology & Pharmaceuticals":
-            return "./data/biopharma_model_frontend.csv"
+            return "biopharma_model_frontend.csv"
         case "Semiconductors":
-            return "./data/semiconductors_model_frontend.csv"
+            return "semiconductors_model_frontend.csv"
         
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
@@ -404,7 +404,16 @@ def filter(df, company="", year="", pillar="", metric="", model="", category="")
 @app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
 def get_metrics(industry, company, year, pillar):
     print("call made to GET/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>")
-    df = pd.read_csv(get_file(industry))
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to the CSV
+    csv_path = os.path.join(current_folder, get_file(industry))
+
+    # THIS WORKS
+    ## TODO: JORDAN: DO THIS FOR EVERYTHING
+
+    #df = pd.read_csv(get_file(industry))
+    df = pd.read_csv(csv_path)
     df = filter(df, company, year, pillar)
     df = df.sort_values(df.columns[0], ascending = True)
     nda = df["metric"].unique()
@@ -443,4 +452,4 @@ def get_metrics_all(industry, company, year):
 
 # Run server app
 if __name__ == '__main__':
-    app.run(port=3902, debug=True)
+    app.run(host="0.0.0.0", port=3902, debug=True)
