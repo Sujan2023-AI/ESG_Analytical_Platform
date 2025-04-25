@@ -20,7 +20,7 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
-sys.path.append(os.path.abspath('./data/'))
+#sys.path.append(os.path.abspath('./data/'))
 with Notebook():
     import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
     import Traditional_PCA as TPCA # type: ignore # this points to our ipynb file
@@ -163,9 +163,10 @@ def get_traditional_table1(industry, year):
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
 
-    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
-    if (newIndustry == "biotechnology_pharmaceuticals"):
-        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+    file_path = get_file(newIndustry)
+    #file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    #if (newIndustry == "biotechnology_pharmaceuticals"):
+    #    file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
 
     filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
     pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
@@ -364,11 +365,16 @@ def get_ontology_table(industry, year, pillar, model, metric):
 ## API DATA HELPERS
 
 def get_file(industry):
+    file_name = ""
     match industry:
         case "Biotechnology & Pharmaceuticals":
-            return "./data/biopharma_model_frontend.csv"
+            file_name = "biopharma_model_frontend.csv"
         case "Semiconductors":
-            return "./data/semiconductors_model_frontend.csv"
+            file_name = "semiconductors_model_frontend.csv"
+        
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(current_folder, file_name)
+    return csv_path
         
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
@@ -443,4 +449,4 @@ def get_metrics_all(industry, company, year):
 
 # Run server app
 if __name__ == '__main__':
-    app.run(port=3902, debug=True)
+    app.run(host="0.0.0.0", port=3902, debug=True)
