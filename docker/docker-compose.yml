@@ -19,3 +19,14 @@ services:
       - .:/retriever/app
     environment:
       - FLASK_ENV=development
+  # authenticator:
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/authenticator
+  #   ports:
+  #     - "5001:5001"
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #   environment:
+  #     NODE_ENV: development
