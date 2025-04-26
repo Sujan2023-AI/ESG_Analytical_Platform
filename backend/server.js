@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 // Path to your CSV file (ensure it's correct relative to the server file location)
-const registeredEmailsFile = './data/registered_emails.csv';
+const registeredEmailsFile = './registered_emails.csv';
 
 // Function to authenticate the user
 const authenticateUser = (email, password) => {
