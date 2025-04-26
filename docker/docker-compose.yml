@@ -1,42 +1,42 @@
 services:
-  # graphdb:
-  #   image: ontotext/graphdb:10.3.1
-  #   container_name: graphdb
-  #   ports:
-  #     - "7200:7200"
-  #   volumes:
-  #     - ./graphdb-data:/opt/graphdb/home
-  #     - ./graphdb-import:/opt/graphdb/import
-  #   environment:
-  #     - JAVA_OPTS=-Xms1g -Xmx2g
-  # retriever:
-  #   container_name: retriever
-  #   build:
-  #     context: ../
-  #     dockerfile: docker/retriever
-  #   ports:
-  #     - "3902:3902"
-  #   volumes:
-  #     - .:/retriever/app
-  #   environment:
-  #     - FLASK_ENV=development
-  # authenticator:
-  #   container_name: authenticator
-  #   build:
-  #     context: ../
-  #     dockerfile: docker/authenticator
-  #   ports:
-  #     - "5001:5001"
-  #   volumes:
-  #     - .:/authenticator/app
-  #     - /authenticator/app/node_modules
-  #   environment:
-  #     NODE_ENV: development
+  graphdb:
+    image: ontotext/graphdb:10.3.1
+    container_name: graphdb
+    ports:
+      - "7200:7200"
+    volumes:
+      - ./graphdb-data:/opt/graphdb/home
+      - ./graphdb-import:/opt/graphdb/import
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx2g
+  retriever:
+    container_name: retriever
+    build:
+      context: ../
+      dockerfile: docker/retriever
+    ports:
+      - "3902:3902"
+    volumes:
+      - .:/retriever/app
+    environment:
+      - FLASK_ENV=development
+  authenticator:
+    container_name: authenticator
+    build:
+      context: ../
+      dockerfile: docker/authenticator
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/authenticator/app
+      - /authenticator/app/node_modules
+    environment:
+      NODE_ENV: development
   frontend:
     container_name: frontend
     build:
       context: ../
-      dockerfile: docker/frontend
+      dockerfile: docker/frontend-prod
     ports:
       - "3000:3000"
     volumes:

@@ -1,0 +1,22 @@
+# Use a Node base image
+FROM node:18
+
+# Create app directory
+WORKDIR /app
+
+# Install app dependencies
+COPY ./frontend/package*.json ./
+RUN npm install
+
+# Copy the rest of your app's code
+COPY ./frontend/ ./
+
+# Expose the port your app runs on (example: 3000)
+EXPOSE 3000
+
+# Debugging
+# RUN echo "---- package.json contents ----" && cat package.json
+# RUN npm list --depth=0
+
+# Run the server
+CMD ["npm", "run build"]

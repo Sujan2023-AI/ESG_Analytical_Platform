@@ -1,0 +1,15 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install 'serve' globally
+RUN npm install -g serve
+
+# Copy build folder
+COPY frontend/build/ .
+
+# Expose port
+EXPOSE 3000
+
+# Start server
+CMD ["serve", "-s", ".", "-l", "3000"]
