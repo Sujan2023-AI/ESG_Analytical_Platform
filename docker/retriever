@@ -15,8 +15,8 @@ COPY ./backend/* ./
 EXPOSE 3902
 
 # Debugging
-RUN echo "📂 Full directory tree:" && \
-    find . -type d -print -exec sh -c 'ls -l "{}"' \;
+# RUN echo "📂 Full directory tree:" && \
+#     find . -type d -print -exec sh -c 'ls -l "{}"' \;
 
 # Run the app
 CMD ["python", "./server.py"]

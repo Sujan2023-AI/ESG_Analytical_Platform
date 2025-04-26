@@ -10,6 +10,7 @@ services:
     environment:
       - JAVA_OPTS=-Xms1g -Xmx2g
   retriever:
+    container_name: retriever
     build:
       context: ../
       dockerfile: docker/retriever
@@ -19,14 +20,15 @@ services:
       - .:/retriever/app
     environment:
       - FLASK_ENV=development
-  # authenticator:
-  #   build:
-  #     context: ../
-  #     dockerfile: docker/authenticator
-  #   ports:
-  #     - "5001:5001"
-  #   volumes:
-  #     - .:/app
-  #     - /app/node_modules
-  #   environment:
-  #     NODE_ENV: development
+  authenticator:
+    container_name: authenticator
+    build:
+      context: ../
+      dockerfile: docker/authenticator
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/authenticator/app
+      - /authenticator/app/node_modules
+    environment:
+      NODE_ENV: development

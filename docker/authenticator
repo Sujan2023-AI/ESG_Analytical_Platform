@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Install app dependencies
-COPY package*.json ./
+COPY ./docker/package*.json ./
 RUN npm install
 
 # Copy the rest of your app's code
@@ -13,6 +13,10 @@ COPY ./backend/* ./
 
 # Expose the port your app runs on (example: 3000)
 EXPOSE 5001
+
+# Debugging
+# RUN echo "---- package.json contents ----" && cat package.json
+# RUN npm list --depth=0
 
 # Run the server
 CMD ["npm", "start"]
