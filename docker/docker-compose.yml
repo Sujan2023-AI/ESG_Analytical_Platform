@@ -32,3 +32,15 @@ services:
       - /authenticator/app/node_modules
     environment:
       NODE_ENV: development
+  frontend:
+    container_name: frontend
+    build:
+      context: ../
+      dockerfile: docker/frontend-prod
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/frontend/app
+      - /frontend/app/node_modules
+    environment:
+      NODE_ENV: development

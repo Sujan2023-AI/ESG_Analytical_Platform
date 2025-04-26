@@ -1,1 +1,26 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=18341257&assignment_repo_type=AssignmentRepo)
+
+### Sujan's Turtle's
+
+## Installation Instructions
+
+# Build Docker Image
+
+Run the following command from the root of the repo:
+
+docker-compose -f docker/docker-compose.yml build
+
+# Run Docker Image
+
+Run the following command from the root of the repo:
+
+docker-compose -f docker/docker-compose.yml up
+
+# Go to Website
+
+Go to this url in your web browser:
+
+http://localhost:3000/
+
+# (Optional) View Jupyter Notebooks
+
+Navigate to the "notebooks" folder, and to view the full logic and results from our traditional PCA and ontology enhanced PCA

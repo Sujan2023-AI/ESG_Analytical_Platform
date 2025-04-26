@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Install app dependencies
-COPY ./docker/package*.json ./
+COPY ./backend/package.json ./
 RUN npm install
 
 # Copy the rest of your app's code
