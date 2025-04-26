@@ -1,17 +1,15 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const PlotlyTable = ({industry, year, pillar, model, metric}) => {
     const [tableData, setTableData] = useState(null);
     
-    useEffect(() => {
-        fetch(`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`)
-            .then((res) => res.json())
-            .then((json) => {
-                const parsed = typeof json === "string" ? JSON.parse(json) : json;
-                setTableData(parsed);
-            });
-    }, []);
+    fetch(`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`)
+        .then((res) => res.json())
+        .then((json) => {
+            const parsed = typeof json === "string" ? JSON.parse(json) : json;
+            setTableData(parsed);
+        });
   
     if (!tableData) return <p><i>(Loading table...)</i></p>;
   

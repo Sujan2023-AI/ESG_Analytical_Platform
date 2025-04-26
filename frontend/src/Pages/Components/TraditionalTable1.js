@@ -1,17 +1,17 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const TraditionalTable1 = ({industry, year, pillar, model, metric}) => {
     const [tableData, setTableData] = useState(null);
     
-    useEffect(() => {
-        fetch(`http://localhost:3902/traditional/table1/${industry}/${year}`)
-            .then((res) => res.json())
-            .then((json) => {
-                const parsed = typeof json === "string" ? JSON.parse(json) : json;
-                setTableData(parsed);
-            });
-    }, []);
+    fetch(`http://localhost:3902/traditional/table1/${industry}/${year}`)
+        .then((res) => res.json())
+        .then((json) => {
+            const parsed = typeof json === "string" ? JSON.parse(json) : json;
+            setTableData(parsed);
+        });
+    // useEffect(() => {
+    // }, []);
   
     if (!tableData) return <p><i>(Loading table...)</i></p>;
   

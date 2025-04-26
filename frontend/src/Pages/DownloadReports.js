@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 // @ts-ignore
-import html2pdf from 'html2pdf.js/dist/html2pdf.min.js';
+import html3pdf from 'html3pdf';
 
 function DownloadReport() {
     // State to store multiple report files
@@ -64,7 +64,7 @@ function DownloadReport() {
             jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
         };
 
-        html2pdf()
+        html3pdf()
             .from(reportContent)
             .set(options)
             .save();

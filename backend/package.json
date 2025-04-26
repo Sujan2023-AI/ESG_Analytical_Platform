@@ -11,17 +11,16 @@
   "license": "ISC",
   "dependencies": {
     "@types/cors": "^2.8.17",
-    "cors": "^2.8.5",
+    "csv-parser": "^3.2.0",
     "express": "4.21.2",
-    "ts-node": "10.9.2",
-    "csv-parser": "^3.2.0"
+    "ts-node": "10.9.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "cors": "^2.8.5",
+    "csv-parser": "^3.2.0",
     "express": "4.21.2",
-    "ts-node": "^10.9.2",
-    "csv-parser": "^3.2.0"
+    "ts-node": "^10.9.2"
   },
   "description": ""
 }

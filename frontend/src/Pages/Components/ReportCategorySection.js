@@ -1,5 +1,5 @@
 import '../../Css/ReportCategorySection.css';
-import React, { useState } from 'react';
+import React from 'react';
 
 function ReportCategorySection({
     category,
@@ -21,7 +21,7 @@ function ReportCategorySection({
     let industry = userData.industry;
     let company = userData.company;
     let year = parseInt(localStorage.getItem("reportingYear"));
-    const [selectedMetrics, setSelectedMetrics] = useState([]);
+    // const [selectedMetrics, setSelectedMetrics] = useState([]);
 
     // metric selector
     const handleDropdownChange = (event) => {
@@ -58,14 +58,14 @@ function ReportCategorySection({
 
     // Update selected metrics based on checkbox state
     const handleCheckboxChange = (event) => {
-        const value = event.target.value;
-        setSelectedMetrics(prevSelectedMetrics => {
-            if (prevSelectedMetrics.includes(value)) {
-                return prevSelectedMetrics.filter(metric => metric !== value); // Deselect
-            } else {
-                return [...prevSelectedMetrics, value]; // Select
-            }
-        });
+        //const value = event.target.value;
+        // setSelectedMetrics(prevSelectedMetrics => {
+        //     if (prevSelectedMetrics.includes(value)) {
+        //         return prevSelectedMetrics.filter(metric => metric !== value); // Deselect
+        //     } else {
+        //         return [...prevSelectedMetrics, value]; // Select
+        //     }
+        // });
     };
 
     const handleCalculateClick = () => {
