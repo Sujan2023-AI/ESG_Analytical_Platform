@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /app
 
 # Install app dependencies
-COPY ./frontend/package.json ./
+COPY ./frontend/package*.json ./
 RUN npm install
 
 # Copy the rest of your app's code
