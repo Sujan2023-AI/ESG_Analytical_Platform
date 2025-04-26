@@ -1,10 +1,26 @@
 .appOptions {
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 10px;
 }
 
 .input-year {
-  width: 100px;
+    width: 100px;
+}
+
+.dataset-categories {
+    height: 400px;
+}
+
+.dataset-categories > ul {
+  width: 20em;
+  list-style: circle;
+  margin: 1em auto;
+}
+.dataset-categories > li {
+
+  margin-right: 10px;
+  padding-right : 15px;
 }

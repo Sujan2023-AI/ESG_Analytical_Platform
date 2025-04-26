@@ -28,7 +28,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-## APP ROUTES
+## STAT APP ROUTES
 
 # returns a dummy biplot graph
 @app.route("/plot/biplot/dummy")
@@ -54,20 +54,22 @@ def get_plot_dummy_data():
 #     return OPCA.send_file(img_buf, mimetype='image/png')
 
 # returns Vinanti's first graph
-@app.route("/plot/scree/1")
-def get_plot_data_1():
+@app.route("/ontology/scree/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>", methods=['GET'])
+def get_ontology_scree(industry, year, pillar, model, metric):
+    print("call made to /ontology/scree/<string:industry>/<int:y${tesear>/<string:pillar>/<string:model>/<string:metric>")
     title_graph = "PCA Explained Variance"
     title_x = "Principle Components"
     title_y = "Variance Ratio"
+
     results = OPCA.query_esg_observations(
-        industry="semiconductors",
-        year="2022",
-        pillar_filter="e_risk",
-        metric_filter="ghg_emissions"
+        industry=industry.lower(),
+        year=year,
+        pillar_filter=pillar.lower(),
+        metric_filter=metric.lower()
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
+    pivot_df = OPCA.prepare_pivot_table(records, model_name=model.lower())
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     explained_variance = pca.explained_variance_ratio_
@@ -181,18 +183,19 @@ def scree_plot():
     return jsonify(json.loads(fig.to_json()))
 
 # returns the top 5 categories, determined by ontology enhanced PCA analysis
-@app.route('/top_5', methods=['GET'])
-def get_top_5():
+@app.route('/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>', methods=['GET'])
+def get_ontology_table(industry, year, pillar, model, metric):
+    print("call made to GET/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>")
 
     results = OPCA.query_esg_observations(
-        industry="semiconductors",
-        year="2022",
-        pillar_filter="e_risk",
-        metric_filter="ghg_emissions"
+        industry=industry.lower(),
+        year=year,
+        pillar_filter=pillar.lower(),
+        metric_filter=metric.lower()
     )
 
     records = OPCA.parse_esg_results(results)
-    pivot_df = OPCA.prepare_pivot_table(records, model_name="ghg_emissions_model")
+    pivot_df = OPCA.prepare_pivot_table(records, model_name=model.lower())
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
 
     top_loadings = OPCA.get_top_pca_loadings(pca, imputed_df)
@@ -204,71 +207,86 @@ def get_top_5():
     new_combined = list(zip(m_array, p_array))
     return jsonify(new_combined)
 
-@app.route('/data/<string:category>', methods=['GET'])
-def get_subcategories(category):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
-    # 'Amlogic Shanghai Co Ltd' - 5068926914
+## API DATA HELPERS
 
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    category_df = company_df[company_df["pillar"] == category]
-    sorted_df = category_df.sort_values(category_df.columns[10], ascending = True)
-    unique_subcategory_df = sorted_df["metric"].unique()
+def get_file(industry):
+    match industry:
+        case "Biotechnology & Pharmaceuticals":
+            return "./data/biopharma_model_frontend.csv"
+        case "Semiconductors":
+            return "./data/semiconductors_model_frontend.csv"
+        
+def filter_by_company(df, company):
+    return df[df["company_name"] == company]
+def filter_by_year(df, year):
+    return df[df["year"] == int(year)]
+def filter_by_pillar(df, pillar):
+    return df[df["pillar"] == pillar]
+def filter_by_metric(df, metric):
+    return df[df["metric"] == metric]
+def filter_by_model(df, model):
+    return df[df["model"] == model]
+def filter_by_category(df, category):
+    return df[df["category"] == category]
 
-    # return result
-    n_array = unique_subcategory_df.tolist()
-    return jsonify(n_array)
+def filter(df, company="", year="", pillar="", metric="", model="", category=""):
+    if (company != ""):
+        df = filter_by_company(df, company)
+    if (year != ""):
+        df = filter_by_year(df, year)
+    if (pillar != ""):
+        df = filter_by_pillar(df, pillar)
+    if (metric != ""):
+        df = filter_by_metric(df, metric)
+    if (model != ""):
+        df = filter_by_model(df, model)
+    if (category != ""):
+        df = filter_by_category(df, category)
+    return df   
 
-@app.route('/data/all', methods=['GET'])
-def get_all_subcategories():
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
 
-    # 'Amlogic Shanghai Co Ltd' - 5068926914
+## API DATA ROUTES
 
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    
-    sorted_df = company_df.sort_values(company_df.columns[10], ascending = True)
-    unique_subcategory_df = sorted_df["metric"].unique()
+@app.route('/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>', methods=['GET'])
+def get_metrics(industry, company, year, pillar):
+    print("call made to GET/metrics/<string:industry>/<string:company>/<int:year>/<string:pillar>")
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar)
+    df = df.sort_values(df.columns[0], ascending = True)
+    nda = df["metric"].unique()
+    return jsonify(nda.tolist())
 
-    # return result
-    n_array = unique_subcategory_df.tolist()
-    return jsonify(n_array)
+@app.route('/models/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>', methods=['GET'])
+def get_models(industry, company, year, pillar, metric):
+    print("call made to GET/models/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>")
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar, metric)
+    df = df.sort_values(df.columns[0], ascending = True)
+    nda = df["model"].unique()
+    return jsonify(nda.tolist())
 
-@app.route('/data/<string:category>/<string:subcategory>/models', methods=['GET'])
-def get_models(category, subcategory):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
+@app.route('/categories/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>/<string:model>', methods=['GET'])
+def get_categories(industry, company, year, pillar, metric, model):
+    print('call made to GET/categories/<string:industry>/<string:company>/<int:year>/<string:pillar>/<string:metric>/<string:model>')
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year, pillar, metric, model)
+    df = df.sort_values(df.columns[0], ascending = True)
+    nda_c = df["category"].unique()
+    nda_v = df["metric_value"].unique()
+    return jsonify(list(zip(nda_c.tolist(), nda_v.tolist()))) # zips the iterative tuple of both into a jsonified list
 
-    # select query
-    company_df = df[df["company_name"] == 'Amlogic Shanghai Co Ltd']
-    df_category = company_df[company_df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric"] == subcategory]
-    sorted_df = df_subcategory.sort_values(df_subcategory.columns[-1], ascending = True)
+@app.route('/metrics/<string:industry>/<string:company>/<int:year>', methods=['GET'])
+def get_metrics_all(industry, company, year):
+    print('call made to GET/metrics/<string:industry>/<string:company>/<int:year>')
+    df = pd.read_csv(get_file(industry))
+    df = filter(df, company, year)
+    df = df.sort_values(df.columns[10], ascending = True)
+    nda = df["metric"].unique()
+    return jsonify(nda.tolist())
 
-    # return result
-    unique_metric_df = sorted_df["metric"].unique()
-    n_array = unique_metric_df.tolist()
-    return jsonify(n_array)
 
-@app.route('/data/<string:category>/<string:subcategory>/<string:model>/metrics', methods=['GET'])
-def get_metrics(category, subcategory, model):
-    df = pd.read_csv("../Normalized_Data/semiconductors_sasb_final.csv")
-
-    # select query
-    df_category = df[df["pillar"] == category]
-    df_subcategory = df_category[df_category["metric"] == subcategory]
-    df_model = df_subcategory[df_subcategory["category"] == model]
-    sorted_df = df_model.sort_values(df_model.columns[5], ascending = True)
-
-    metric_df = sorted_df["category"].unique()
-    value_df = sorted_df["metric_value"].unique()
-
-    # return result
-    m_array = metric_df.tolist()
-    v_array = value_df.tolist()
-    combined = list(zip(m_array, v_array))
-    return jsonify(combined)
+## START THE APP
 
 # Run server app
 if __name__ == '__main__':

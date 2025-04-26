@@ -5,73 +5,87 @@ import '../../Css/AppOptions.css';
 
 function AppOptions() {
 
-  const [categories, setCategories] = useState([]);
-  const [userData, setUserData] = useState({
-    name: '', company: '', industry: ''
-  });
+    const [categories, setCategories] = useState([]);
+    const [reportingYear, setReportingYear] = useState(localStorage.getItem("reportingYear"));
+    const [userData, setUserData] = useState({
+      name: '', company: '', industry: ''
+    });
 
-  // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001, so i am changing, was earlier 3902
-  useEffect(() => {
-      fetch('http://localhost:3902/data/all')
-          .then(response => response.json())
-          .then(data => setCategories(data))
-          .catch(error => console.error('Error fetching categories:', error));
-  }, []);
+    // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001, so i am changing, was earlier 3902
+    useEffect(() => {
+      
+    }, []);
 
-  // Check localStorage for saved user data
-  useEffect(() => {
-    const savedUserData = localStorage.getItem('userData');
-    if (savedUserData) {
-      setUserData(JSON.parse(savedUserData));
+    // Check localStorage for saved user data
+    useEffect(() => {
+        const savedUserData = localStorage.getItem('userData');
+        if (savedUserData) {
+            setUserData(JSON.parse(savedUserData));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("reportingYear", reportingYear)
+
+        let otherUserData = JSON.parse(localStorage.getItem('userData'));
+        let industry = otherUserData.industry;
+        let company = otherUserData.company;
+        fetch(`http://localhost:3902/metrics/${industry}/${company}/${reportingYear}`)
+            .then(response => response.json())
+            .then(data => setCategories(data))
+            .catch(error => console.error('Error fetching categories:', error));
+    }, [reportingYear]);
+
+    const handleYearSelection = (event) => {
+        setReportingYear(event.target.value);
     }
-  }, []);
 
-  const reportingFrameworks = ["SASB"]
-  const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
+    const reportingFrameworks = ["SASB"]
+    const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
-  return (  
-    <div className="appOptions">
-      <div className="content-row">
-        <h3>Logged in as {userData.name}</h3>
-      </div>
-      <div className="content-row">
-        <p>Your Company:</p>
-        <input value={userData.company} disabled></input>
-      </div>
-      <div className="content-row">
-        <p>Your Industry:</p>
-        <input value={userData.industry} disabled></input>
-      </div>
-      <div className="content-row">
-        <p>Reporting Framework:</p>
-        <select>
-          {reportingFrameworks.map((rf) => (
-            <option key={rf} value={rf}>{rf}</option>
-          ))}
-        </select>
-      </div>
-      <div className="content-row">
-        <p>Reporting Year:</p>
-        <div className="year-selection">
-        <select defaultValue={"2024"}>
-          {reportingYears.map((year) => 
-            <option key={year} value={year}>{year}</option>
-          )}
-        </select>
+    return (  
+        <div className="appOptions">
+            <div className="content-row">
+                <h3>Logged in as {userData.name}</h3>
+            </div>
+            <div className="content-row">
+                <p>Your Company:</p>
+                <input value={userData.company} disabled></input>
+            </div>
+            <div className="content-row">
+                <p>Your Industry:</p>
+                <input value={userData.industry} disabled></input>
+            </div>
+            <div className="content-row">
+                <p>Reporting Framework:</p>
+                <select>
+                    {reportingFrameworks.map((rf) => (
+                        <option key={rf} value={rf}>{rf}</option>
+                    ))}
+                </select>
+            </div>
+            <div className="content-row">
+                <p>Reporting Year:</p>
+                <div className="year-selection">
+                    <select defaultValue={reportingYear} onChange={handleYearSelection}>
+                        {reportingYears.map((year) => 
+                            <option key={year} value={year}>{year}</option>
+                        )}
+                    </select>
+                </div>
+            </div>
+            <div className="conent-row dataset-categories">
+                <p>Dataset Categories Available in {reportingYear}:</p>
+                <ul>
+                    {categories.map(category => (
+                        <li key={category}>
+                            {category}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
-      </div>
-      <div className="conent-row">
-        <b>Dataset Categories</b>:
-        <ul>
-        {categories.map(category => (
-          <li key={category}>
-            {category}
-          </li>
-        ))}
-        </ul>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default AppOptions;
