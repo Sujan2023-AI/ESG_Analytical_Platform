@@ -1,11 +1,19 @@
 .home-page {
     margin: 0;
-    padding-top: 50px;
+    height: 100vh;
 }
 
 .home-page .welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 52px;
+    gap: 52px;
     text-align: center;
-    padding: 50px 20px;
+    overflow-y: scroll;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: #F1F5FB;
 }
 
 .home-page .welcome h1 {
@@ -16,12 +24,7 @@
 .home-page .welcome p {
     color: #666;
     font-size: 1.2rem;
-    margin-top: 100px;
-    margin-bottom: 20px;
     text-align: justify;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-bottom: 100px;
 }
 
 .login-button {

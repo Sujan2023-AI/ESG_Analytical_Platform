@@ -1,5 +1,5 @@
 import '../../Css/ReportCategorySection.css';
-import React from 'react';
+import React, { useState } from 'react';
 
 function ReportCategorySection({
     category,
@@ -14,12 +14,14 @@ function ReportCategorySection({
     setModelType,
     metrics,
     setMetrics,
+    onCalculate
 }) {
     // Current user and selection
     const userData = JSON.parse(localStorage.getItem("userData"));
     let industry = userData.industry;
     let company = userData.company;
     let year = parseInt(localStorage.getItem("reportingYear"));
+    const [selectedMetrics, setSelectedMetrics] = useState([]);
 
     // metric selector
     const handleDropdownChange = (event) => {
@@ -54,6 +56,51 @@ function ReportCategorySection({
             .catch(error => console.error('Error fetching ' + category + ':', error));
     };
 
+    // Update selected metrics based on checkbox state
+    const handleCheckboxChange = (event) => {
+        const value = event.target.value;
+        setSelectedMetrics(prevSelectedMetrics => {
+            if (prevSelectedMetrics.includes(value)) {
+                return prevSelectedMetrics.filter(metric => metric !== value); // Deselect
+            } else {
+                return [...prevSelectedMetrics, value]; // Select
+            }
+        });
+    };
+
+    const handleCalculateClick = () => {
+        // Gather selected metrics
+        const selectedMetrics = Array.from(document.querySelectorAll(`input[name="${categoryShortCode}_metrics"]:checked`))
+            .map(checkbox => checkbox.value);
+
+        // Debugging to ensure selected metrics are correct
+        //console.log("Selected Metrics:", selectedMetrics);
+        if (selectedMetrics.length > 0) {
+            // Fetch values for selected metrics from the metrics list
+            const selectedValues = metrics.filter(metric => selectedMetrics.includes(metric[0])).map(metric => metric[1]);
+    
+            // Calculate the mean of the selected metrics' values
+            const mean = selectedValues.length > 0 
+                ? selectedValues.reduce((acc, value) => acc + value, 0) / selectedValues.length 
+                : 0;    
+
+            // Ensure that onCalculate is called only if it's a valid function
+            if (typeof onCalculate === 'function') {
+                if (selectedSubcategory && modelType && selectedMetrics.length > 0) {
+                    onCalculate(selectedSubcategory, modelType, selectedMetrics, mean); // Pass the details to parent
+                }
+                else{
+                    console.error('Invalid data or no metrics selected');
+                }
+            } else {
+                console.error('onCalculate is not a valid function');
+            }
+        }
+        else{
+            console.error('No metrics selected')
+        }
+    }
+
     // Step 6: Render the checkboxes and the "Calculate" button for each div
     const renderCheckboxes = (metrics) => {
 
@@ -62,8 +109,10 @@ function ReportCategorySection({
                 <input
                     type="checkbox"
                     value={sc[0]}
+                    name={`${categoryShortCode}_metrics`} // Group checkboxes by category
+                    onChange={handleCheckboxChange}
                 />
-                <label style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0].toLowerCase()}</label>
+                <label title={sc[0]} style={{minWidth: '200px', maxWidth: '200px', textAlign: 'left'}}>{sc[0]}</label>
                 <label>{sc[1]}</label>
             </div>
         ));
@@ -114,7 +163,7 @@ function ReportCategorySection({
                 </div>
             {(modelType !== '') && (
                 <div className="calculate">
-                    <button onClick={() => console.log('Calculating has not been implemented...')}>Calculate</button>
+                    <button onClick={handleCalculateClick}>Calculate</button>
                 </div>
             )}
             </div>

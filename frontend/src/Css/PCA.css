@@ -1,8 +1,51 @@
-.pcaContent {
+.pca-results {
     display: flex;
-    height: 100%;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 26px;
+    padding-bottom: 26px;
+}
+
+.pca-results > .table-container {
+    justify-content: start;
+    align-items: start;
+}
+
+.selectionOptions {
+    display: flex;
+    gap: 10px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.my-table {
+    width: 50%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.my-table th,
+.my-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.my-table thead {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.my-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.my-table tbody tr:hover {
+    background-color: #f1f5f9;
+    transition: background-color 0.2s ease-in-out;
 }

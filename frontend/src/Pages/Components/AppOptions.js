@@ -7,14 +7,10 @@ function AppOptions() {
 
     const [categories, setCategories] = useState([]);
     const [reportingYear, setReportingYear] = useState(localStorage.getItem("reportingYear"));
+    const initalUserData = JSON.parse(localStorage.getItem('userData'));
     const [userData, setUserData] = useState({
-      name: '', company: '', industry: ''
+        name: initalUserData.name, company: initalUserData.company, industry: initalUserData.industry
     });
-
-    // this is throwing me an error on frontend, the backend i'm running from server.js is using port 5001, so i am changing, was earlier 3902
-    useEffect(() => {
-      
-    }, []);
 
     // Check localStorage for saved user data
     useEffect(() => {
@@ -44,19 +40,19 @@ function AppOptions() {
     const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
     return (  
-        <div className="appOptions">
-            <div className="content-row">
+        <div className="AppOptions">
+            <div className="options-row">
                 <h3>Logged in as {userData.name}</h3>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Your Company:</p>
                 <input value={userData.company} disabled></input>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Your Industry:</p>
                 <input value={userData.industry} disabled></input>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Reporting Framework:</p>
                 <select>
                     {reportingFrameworks.map((rf) => (
@@ -64,7 +60,7 @@ function AppOptions() {
                     ))}
                 </select>
             </div>
-            <div className="content-row">
+            <div className="options-row">
                 <p>Reporting Year:</p>
                 <div className="year-selection">
                     <select defaultValue={reportingYear} onChange={handleYearSelection}>

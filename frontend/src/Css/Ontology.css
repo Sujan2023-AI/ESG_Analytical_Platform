@@ -1,8 +1,14 @@
-.ontologyContent {
+.ontology-results {
     display: flex;
-    height: 100%;
+    box-sizing: border-box;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 26px;
+    padding-bottom: 26px;
+}
+
+.ontology-image {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../Css/Global.css';
 import '../../Css/AppNavigator.css';
 
 function DashboardNavigator() {
@@ -31,15 +32,15 @@ function DashboardNavigator() {
         }
     }, [activePage]);
 
-    return (  
-        <nav className="nav-links">
-            <button id="nav-button-1" className="nav-button" onClick={() => {navClicked(1); navigate('/exploration');}}>Data Exploration</button>
+    return (
+        <nav className='Sidebar'>
+            <button id="nav-button-1" className="nav-button" onClick={() => {navClicked(1); navigate('/data-exploration');}}>Data Exploration</button>
             <button id="nav-button-2" className="nav-button" onClick={() => {navClicked(2); navigate('/pca');}}>PCA Analysis</button>
             <button id="nav-button-3" className="nav-button" onClick={() => {navClicked(3); navigate('/ontology');}}>View Ontology</button>
-            <button id="nav-button-4" className="nav-button" onClick={() => {navClicked(4); navigate('/enhanced');}}>Ontology Enhanced PCA Results</button>
+            <button id="nav-button-4" className="nav-button" onClick={() => {navClicked(4); navigate('/enhanced');}}>Ontology Enhanced PCA</button>
             <button id="nav-button-5" className="nav-button" onClick={() => {navClicked(5); navigate('/esg-report');}}>ESG Report</button>
             <button id="nav-button-6" className="nav-button" onClick={() => {navClicked(6); navigate('/DownloadReport');}}>Download Reports</button>
-      </nav>
+        </nav>
     );
 }
 

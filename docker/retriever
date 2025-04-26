@@ -1,0 +1,22 @@
+# Base image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY ./docker/requirements-python.txt ./requirements-python.txt
+RUN pip install --no-cache-dir -r requirements-python.txt
+
+# Copy app code
+COPY ./backend/* ./
+
+# Expose port
+EXPOSE 3902
+
+# Debugging
+# RUN echo "📂 Full directory tree:" && \
+#     find . -type d -print -exec sh -c 'ls -l "{}"' \;
+
+# Run the app
+CMD ["python", "./server.py"]

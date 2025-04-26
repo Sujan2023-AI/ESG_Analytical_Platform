@@ -13,15 +13,17 @@ import json
 from sklearn.decomposition import PCA
 import numpy as np
 import plotly.graph_objects as go
+import math
 
 # Disbale flask cors default logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
-sys.path.append(os.path.abspath('./data/'))
+#sys.path.append(os.path.abspath('./data/'))
 with Notebook():
     import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
+    import Traditional_PCA as TPCA # type: ignore # this points to our ipynb file
 
 # Initialise flask to await for frontend requests
 app = Flask(__name__)
@@ -61,8 +63,13 @@ def get_ontology_scree(industry, year, pillar, model, metric):
     title_x = "Principle Components"
     title_y = "Variance Ratio"
 
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
     results = OPCA.query_esg_observations(
-        industry=industry.lower(),
+        industry=newIndustry,
         year=year,
         pillar_filter=pillar.lower(),
         metric_filter=metric.lower()
@@ -143,6 +150,148 @@ def get_ontology_scree(industry, year, pillar, model, metric):
     # Return figure JSON
     return jsonify(json.loads(fig.to_json()))
 
+@app.route('/traditional/table1/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_table1(industry, year):
+    print("call made to /traditional/table1/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = get_file(newIndustry)
+    #file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    #if (newIndustry == "biotechnology_pharmaceuticals"):
+    #    file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    m_array = top_pc1["Metric Name"]
+    p_array = top_pc1["Loading Value"]
+    rounded = [math.floor(x * 1000) / 1000 for x in p_array]
+    
+    new_combined = list(zip(m_array, rounded))
+    return jsonify(new_combined)
+
+@app.route('/traditional/table2/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_table2(industry, year):
+    print("call made to /traditional/table1/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    if (newIndustry == "biotechnology_pharmaceuticals"):
+        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    m_array = top_pc2["Metric Name"]
+    p_array = top_pc2["Loading Value"]
+    rounded = [math.floor(x * 1000) / 1000 for x in p_array]
+    
+    new_combined = list(zip(m_array, rounded))
+    return jsonify(new_combined)
+
+@app.route('/traditional/scree/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_scree(industry, year):
+    print("call made to /traditional/scree/<string:industry>/<int:year>")
+
+    title_graph = "PCA Explained Variance"
+    title_x = "Principle Components"
+    title_y = "Variance Ratio"
+
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
+    file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
+    if (newIndustry == "biotechnology_pharmaceuticals"):
+        file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
+
+    filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
+    pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
+    pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
+    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
+
+    pca_full = PCA()
+    pca_full.fit(scaled_data)
+
+    explained_variance = pca_full.explained_variance_ratio_
+    cumulative_variance = np.cumsum(explained_variance)
+    components = [f"PC{i+1}" for i in range(len(explained_variance))]
+    threshold = 0.7
+    threshold_text = f"{int(threshold * 100)}% Threshold"
+ 
+    # Build the Plotly figure
+    fig = go.Figure()
+ 
+    # Explained variance bar chart
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=explained_variance,
+        mode='lines+markers',
+        name='Explained Variance',
+        marker=dict(color='rgba(55, 128, 191, 0.7)')
+    ))
+ 
+    # Cumulative variance line plot
+    fig.add_trace(go.Scatter(
+        x=components,
+        y=cumulative_variance,
+        mode='lines+markers',
+        name='Cumulative Variance',
+        line=dict(color='rgba(255, 100, 102, 0.7)')
+    ))
+ 
+
+
+    fig.update_layout(
+        legend=dict(
+            x=1.05,          # move legend outside to the right
+            y=1.05,             # align legend top with the plot
+            traceorder='normal',
+            bgcolor='rgba(0,0,0,0)',  # transparent background
+            bordercolor='Black',
+            borderwidth=1
+        ),
+        margin=dict(r=100),  # add space on the right
+    )
+ 
+    # Layout
+    fig.update_layout(
+        title=title_graph,
+        xaxis_title=title_x,
+        yaxis_title=title_y,
+        template='plotly_white',
+        legend=dict(x=0.01, y=0.99),
+        margin=dict(t=60, b=40, l=50, r=20)
+    )
+ 
+    # Return figure JSON
+    return jsonify(json.loads(fig.to_json()))
+
 # return dummy scree plot
 @app.route('/plot/scree/dummy')
 def scree_plot():
@@ -187,8 +336,13 @@ def scree_plot():
 def get_ontology_table(industry, year, pillar, model, metric):
     print("call made to GET/ontology/table/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>")
 
+    # TODO: this is incorrect, but good for demo
+    newIndustry = industry.lower()
+    if (newIndustry == "biotechnology & pharmaceuticals"):
+        newIndustry = "biotechnology_pharmaceuticals"
+
     results = OPCA.query_esg_observations(
-        industry=industry.lower(),
+        industry=newIndustry,
         year=year,
         pillar_filter=pillar.lower(),
         metric_filter=metric.lower()
@@ -211,11 +365,16 @@ def get_ontology_table(industry, year, pillar, model, metric):
 ## API DATA HELPERS
 
 def get_file(industry):
+    file_name = ""
     match industry:
         case "Biotechnology & Pharmaceuticals":
-            return "./data/biopharma_model_frontend.csv"
+            file_name = "biopharma_model_frontend.csv"
         case "Semiconductors":
-            return "./data/semiconductors_model_frontend.csv"
+            file_name = "semiconductors_model_frontend.csv"
+        
+    current_folder = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(current_folder, file_name)
+    return csv_path
         
 def filter_by_company(df, company):
     return df[df["company_name"] == company]
@@ -290,4 +449,4 @@ def get_metrics_all(industry, company, year):
 
 # Run server app
 if __name__ == '__main__':
-    app.run(port=3902, debug=True)
+    app.run(host="0.0.0.0", port=3902, debug=True)
