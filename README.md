@@ -21,6 +21,22 @@ Go to this url in your web browser:
 
 http://localhost:3000/
 
-# (Optional) View Jupyter Notebooks
+# Go to GraphDB website
 
-Navigate to the "notebooks" folder, and to view the full logic and results from our traditional PCA and ontology enhanced PCA
+Go to this url in your web browser:
+
+http://localhost:7200/
+
+Explore the ESG knowledge graph, view the loaded repository, and run sample SPARQL queries from the SPARQL tab.
+
+# View Jupyter Notebooks
+
+## Navigate to the "notebooks" folder-
+
+1) EDA.ipynb - EDA.ipynb performs industry-specific exploratory data analysis on the Eurofidai ESG dataset by cleaning, matching industries, splitting metrics into ESG pillars, and preparing the data for ontology-enhanced PCA modeling.
+
+2) Onotology_RDF.ipynb -Ontology_RDF.ipynb generates RDF/TTL files and SHACL shapes to define ESG ontologies and validate ESG metric structures for the knowledge graph.
+
+3) Traditional_PCA.ipynb - Traditional_PCA.ipynb applies year,indutry, metric-based filtering on ESG data and performs traditional PCA analysis to extract and visualize principal components.
+
+4) Ontology_PCA.ipynb- performs ontology-enhanced PCA using year, metric, industry, and pillar filters based on ESG data queried from the GraphDB TTL files.
