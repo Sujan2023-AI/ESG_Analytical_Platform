@@ -29,6 +29,16 @@ http://localhost:7200/
 
 Explore the ESG knowledge graph, view the loaded repository, and run sample SPARQL queries from the SPARQL tab.
 
+There are few queries whioch have been al;ready executed which  shows the foillowing model semantics:
+
+1) 	Path-Based Query: Retrieves ESG data explicitly following the direct hierarchical paths between metrics, categories, and pillars.
+
+2)  Rule-Based Query: Extracts ESG metrics indirectly using inferred relationships between metrics and calculation models in the ontology.
+
+3)  Constraint-Based Query: Filters ESG observations based on specified numeric thresholds to ensure data quality and relevance.
+
+4)  Ontology-Based Query: Leverages ontology-defined semantic classes and relationships directly to query ESG data.
+
 # View Jupyter Notebooks
 
 ## Navigate to the "notebooks" folder-
