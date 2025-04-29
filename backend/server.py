@@ -41,6 +41,7 @@ def get_ontology_scree(industry, year, pillar, model, metric):
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
 
+    # Query traditional pca initial function from Ontology_PCA.py
     results = OPCA.query_esg_observations(
         industry=newIndustry,
         year=year,
@@ -48,65 +49,62 @@ def get_ontology_scree(industry, year, pillar, model, metric):
         metric_filter=metric.lower()
     )
 
+    # Refine traditional pca with functions from Ontology_PCA.py
     records = OPCA.parse_esg_results(results)
     pivot_df = OPCA.prepare_pivot_table(records, model_name=model.lower())
     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
-
     explained_variance = pca.explained_variance_ratio_
     cumulative_variance = np.cumsum(explained_variance)
     components = [f"PC{i+1}" for i in range(len(explained_variance))]
     threshold = 0.7
     threshold_text = f"{int(threshold * 100)}% Threshold"
 
-    # Build the Plotly figure
+    # Create graph figure object
     fig = go.Figure()
 
-    # Explained variance bar chart
+    # Graph explained variance bar chart
     fig.add_trace(go.Scatter(x=components, y=explained_variance, mode='lines+markers', name='Explained Variance', marker=dict(color='rgba(55, 128, 191, 0.7)')))
 
-    # Cumulative variance line plot
+    # Graph cumulative variance line plot
     fig.add_trace(go.Scatter(x=components, y=cumulative_variance, mode='lines+markers', name='Cumulative Variance', line=dict(color='rgba(255, 100, 102, 0.7)')))
 
-    # Add horizontal threshold line
+    # Graph horizontal threshold line
     fig.add_shape(type='line', x0=0, x1=len(components) - 1, y0=threshold, y1=threshold, line=dict(color='red', dash='dash'))
     fig.add_annotation(x=components, y=threshold, text=threshold_text, ax=15, ay=-15)
     fig.update_layout(legend=dict(x=1.05, y=1.05, traceorder='normal', bgcolor='rgba(0,0,0,0)', bordercolor='Black', borderwidth=1), margin=dict(r=100))
 
-    # Layout
+    # Graph layout
     fig.update_layout(title="PCA Explained Variance", xaxis_title="Principle Components", yaxis_title="Variance Ratio", template='plotly_white', legend=dict(x=0.01, y=0.99), margin=dict(t=60, b=40, l=50, r=20))
 
     # Return figure JSON
     return jsonify(json.loads(fig.to_json()))
 
-@app.route('/traditional/table1/<string:industry>/<int:year>', methods=['GET'])
-def get_traditional_table1(industry, year):
-    print("call made to /traditional/table1/<string:industry>/<int:year>")
+@app.route('/traditional/table/<string:pc>/<string:industry>/<int:year>', methods=['GET'])
+def get_traditional_table(industry, pc, year):
+    print("call made to /traditional/table/<string:pca>/<string:industry>/<int:year>")
 
-    title_graph = "PCA Explained Variance"
-    title_x = "Principle Components"
-    title_y = "Variance Ratio"
-
-    # TODO: this is incorrect, but good for demo
+    # Adjust input parametres to match the backend
     newIndustry = industry.lower()
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
-
-    file_path = get_file(newIndustry)
-    #file_path = "../Normalized_Data/semiconductors_esg_consolidated.csv"
-    #if (newIndustry == "biotechnology_pharmaceuticals"):
-    #    file_path = "../Normalized_Data/biotechnology_and_pharmaceuticals_esg_consolidated.csv"
-
+    file_path = get_file(newIndustry, "traditional")
+    
+    # Call traditional PCA setup functions from Ontology_PCA.py
     filtered_df = TPCA.load_and_filter_esg_data(file_path, year)
     pivot_df_clean = TPCA.pivot_and_impute_esg_data(filtered_df)
     pca_model, pca_df, scaled_data = TPCA.perform_pca_on_esg_data(pivot_df_clean)
-    # loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
-
     loadings_df, top_pc1, top_pc2 = TPCA.analyze_pca_loadings(pca_model, pivot_df_clean)
 
-    m_array = top_pc1["Metric Name"]
-    p_array = top_pc1["Loading Value"]
+    # Pull correct pc level values
+    if (pc == "pc2"):
+        m_array = top_pc2["Metric Name"]
+        p_array = top_pc2["Loading Value"]
+    else:
+        m_array = top_pc1["Metric Name"]
+        p_array = top_pc1["Loading Value"]
+
+    # Reformat output and return data JSON
     rounded = [math.floor(x * 1000) / 1000 for x in p_array]
-    
     new_combined = list(zip(m_array, rounded))
     return jsonify(new_combined)
 
@@ -292,14 +290,20 @@ def get_ontology_table(industry, year, pillar, model, metric):
 
 ## API DATA HELPERS
 
-def get_file(industry):
+def get_file(industry, type="model"):
     file_name = ""
-    match industry:
-        case "Biotechnology & Pharmaceuticals":
+    if (type == "model"):
+        if (industry == "Biotechnology & Pharmaceuticals"):
             file_name = "biopharma_model_frontend.csv"
-        case "Semiconductors":
+        else:
             file_name = "semiconductors_model_frontend.csv"
-        
+    if (type == "traditional"):
+        if (industry == "Biotechnology & Pharmaceuticals"):
+            file_name = "biopharma_traditional_frontend.csv"
+        else:
+            file_name = "semiconductors_traditional_frontend.csv"
+
+    # return full file path
     current_folder = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(current_folder, file_name)
     return csv_path

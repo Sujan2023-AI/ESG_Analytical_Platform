@@ -113,7 +113,7 @@ function Enhanced() {
                                 <p>
                                 This step presents the top ESG metric categories that have the strongest influence on the principal components identified through PCA. After analyzing the data, PCA highlights which features contribute most to the variance in ESG performance across companies. The system ranks these features based on their impact, and this output helps end users focus on the most significant sustainability areas—such as emissions, supply chain risks, or governance practices—that drive differences in company behavior. These top categories serve as a data-driven guide for prioritizing metrics in further analysis, reporting, or decision-making.
                                 </p>
-                                <PlotlyTable dataUrl={`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`}/>
+                                <PlotlyTable dataUrl={`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`} />
                                 <button onClick={handleSaveReport}>Save Report</button>
                                 </>
                             )}
