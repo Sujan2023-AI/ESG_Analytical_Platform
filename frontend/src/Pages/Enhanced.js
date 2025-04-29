@@ -26,7 +26,7 @@ function Enhanced() {
         setModel('');
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/${newPillar}`)
             .then(response => response.json())
-            .then(data => {setMetrics(data); console.log("api returned metrics =", data);})
+            .then(data => {setMetrics(data); console.log("Retrieved metrics =", data);})
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
@@ -39,7 +39,7 @@ function Enhanced() {
         setModel('');
         fetch(`http://localhost:3902/models/${industry}/${company}/${year}/${pillar}/${newMetric}`)
             .then(response => response.json())
-            .then(data => {setModels(data); console.log("api returned models =", data);})
+            .then(data => {setModels(data); console.log("Retrieved models =", data);})
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
