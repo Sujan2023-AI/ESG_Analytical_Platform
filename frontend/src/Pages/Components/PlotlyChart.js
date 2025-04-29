@@ -1,7 +1,10 @@
+/* component that renders a chart using plotly based on given api call */
+/* can be seen on Traditional PCA and Ontology Enhanced PCA page */
+
+import Plot from 'react-plotly.js';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import Plot from "react-plotly.js";
 
 const PlotlyChart = ({dataUrl}) => {
     const [plotData, setPlotData] = useState(null);
@@ -14,7 +17,9 @@ const PlotlyChart = ({dataUrl}) => {
                 setPlotData(parsed);
             });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // parametres will be passed in as prop, so eslint warning here will be disabled
   
+    // while waiting for fetch, tell user we are loading
     if (!plotData) return <p><i>(Loading chart...)</i></p>;
   
     return (

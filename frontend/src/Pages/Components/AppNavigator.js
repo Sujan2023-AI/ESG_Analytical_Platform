@@ -1,11 +1,14 @@
+// component that sits on the left hand side of the website and provides navigation around the site
+
+import '../../Css/Global.css';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../Css/Global.css';
 
 function DashboardNavigator() {
     const navigate = useNavigate();
 
+    // tracks the currently selected page
     const [activePage, setActivePage] = useState(() => {
         return localStorage.getItem("currentPage") || "0";
     });
@@ -14,6 +17,7 @@ function DashboardNavigator() {
         setActivePage(id);
     }
 
+    // turns off selection of other buttons
     const deactivateAllButtons = () => {
         var navButtons = document.getElementsByClassName("nav-button");
         for (let button of navButtons) {
@@ -21,6 +25,7 @@ function DashboardNavigator() {
         }
     }
       
+    // updates clicked button when user changes page
     useEffect(() => {
         localStorage.setItem("currentPage", activePage);
         deactivateAllButtons();

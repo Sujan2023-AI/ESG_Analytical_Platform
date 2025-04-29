@@ -1,3 +1,5 @@
+/* component of the user popup that appears when you click on your user icon in the top right corner of the site */
+
 import '../../Css/Popup.css';
 import React from 'react';
 import { useRef } from "react";
@@ -7,6 +9,7 @@ function UserPopup ({ isOpen, onClose }) {
     const popupRef = useRef(null);
     const navigate = useNavigate();
 
+    // Get user information to display
     let otherUserData = JSON.parse(localStorage.getItem('userData'));
     let industry = otherUserData.industry;
     let company = otherUserData.company;

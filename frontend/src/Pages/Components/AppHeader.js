@@ -1,5 +1,7 @@
-import React from 'react';
+// component that sits at the top of every page on the site
+
 import '../../Css/Header.css';
+import React from 'react';
 import UserPopup from './UserPopup';
 import { useNavigate } from "react-router-dom";
 
@@ -15,13 +17,12 @@ function AppHeader() {
     const industry = userData ? userData.industry : 'Industry';
     const name = userData ? userData.name : 'User';
 
-    // Function to get the initials from the user's name
+    // Get the initials from the user's name
     const getInitials = (name) => {
         const nameParts = name.split(' ');
         const initials = nameParts.map(part => part.charAt(0).toUpperCase()).join('');
         return initials;
     };
-
     const userInitials = getInitials(name);
 
     return (
