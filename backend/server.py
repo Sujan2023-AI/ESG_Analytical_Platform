@@ -1,14 +1,10 @@
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 import logging
-#import sys
 import os
 from importnb import Notebook
 import pandas as pd
-#from pathlib import Path
-#import importlib.util
 from flask import Flask, jsonify
-#import plotly.express as px
 import json
 from sklearn.decomposition import PCA
 import numpy as np

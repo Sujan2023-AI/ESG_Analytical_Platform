@@ -1,128 +1,128 @@
+/* stylings for the modal popup component */
+
 .modal {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  backdrop-filter: blur(2px);
-  z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    backdrop-filter: blur(2px);
+    z-index: 10;
 }
 
 .modal-container {
-  width: 70%;
-  max-width: 500px;
-  background: white;
-  border: 1px solid #ccc;
-  transition: 1.1s ease-out;
-  box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
-  filter: blur(0);
-  transform: scale(1);
-  opacity: 1;
-  position: absolute;
-  visibility: visible;
-  padding: 10px;
-  border-radius: 10px;
+    width: 70%;
+    max-width: 500px;
+    background: white;
+    border: 1px solid #ccc;
+    transition: 1.1s ease-out;
+    box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+    position: absolute;
+    visibility: visible;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .modal-content input, .modal-content button {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
 }
 
 .modal-content {
-  padding-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  margin: 20px;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 20px;
 }
 
 .modal-header {
-  padding: 10px;
+    padding: 10px;
 }
 
 .modal-row {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    justify-content: space-around;
 }
 .modal-row input {
-  text-align: left;
-  width: 300px;
+    text-align: left;
+    width: 300px;
 }
 
 .modal-footer {
-  padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: space-between;
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
 .modal-row > p {
-  color: #3d0092;
+    color: #3d0092;
 }
-
-  .modal-row > p:hover {
+.modal-row > p:hover {
     cursor: pointer;
-  }
+}
 
 button {
-  border: 0;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 0.8rem;
-  line-height: 1;
+    border: 0;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    line-height: 1;
 }
 button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 hr {
-  color: grey;
-  background-color: grey;
-  height: 1px;
+    color: grey;
+    background-color: grey;
+    height: 1px;
 }
-
 
 .login-button {
-  padding: 10px 20px;
-  background-color: #6200EE;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 5px;
-  max-width: 300px;
-  width: 80%;
+    padding: 10px 20px;
+    background-color: #6200EE;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+    max-width: 300px;
+    width: 80%;
 }
-  .login-button:hover {
+.login-button:hover {
     background: #33007b;
-  }
+}
 
 .exit-button {
-  width: 30px;
-  height: 30px;
-  margin-top: 10px;
-  margin-right: 10px;
-  font-size: 20px;
-  border: solid 1px grey;
-  border-radius: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    border: solid 1px grey;
+    border-radius: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .exit-button:hover {
-  cursor: pointer;
-  background: grey;
+    cursor: pointer;
+    background: grey;
 }
 
 .display-top-right {
-  position: absolute;
-  right: 0px;
-  top: 0px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
 }

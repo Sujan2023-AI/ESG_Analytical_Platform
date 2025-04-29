@@ -1,28 +1,29 @@
-.popup {
-  position: absolute;
-  top: 70px;
-  right: 20px;
+/* stylings for infomatic popup components */
 
-  width: 230px;
-  height: 300px;
-  background: white;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 2.6px 5.3px 5.3px 2.6px hsl(0deg 0% 0% / 0.42);
+.popup {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    width: 230px;
+    height: 300px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2.6px 5.3px 5.3px 2.6px hsl(0deg 0% 0% / 0.42);
 }
 
 .popup-container {
-  padding: 20px;
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: end;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: end;
 }
 
 .popup-container > button {
-  margin: 0px;
+    margin: 0px;
 }

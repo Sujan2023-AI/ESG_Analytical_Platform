@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Css/Global.css';
-import '../../Css/AppNavigator.css';
 
 function DashboardNavigator() {
     const navigate = useNavigate();

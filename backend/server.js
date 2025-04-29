@@ -7,7 +7,7 @@ const app = express();
 const PORT = 5001;
 
 // Enable CORS for all routes
-app.use(cors());  // This will allow cross-origin requests
+app.use(cors());
 
 // Middleware to parse JSON request body
 app.use(express.json());
@@ -17,9 +17,8 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Backend API! Use /authenticate for login.');
 });
 
-// Path to your CSV file (ensure it's correct relative to the server file location)
+// Path to your CSV file
 const registeredEmailsFile = process.env.CSV_FILE_PATH_AUTH || './data/registered_emails.csv';
-//const registeredEmailsFile = './data/registered_emails.csv';
 
 // Function to authenticate the user
 const authenticateUser = (email, password) => {
@@ -37,8 +36,8 @@ const authenticateUser = (email, password) => {
                     userData = {
                         success: true,
                         industry: row.industry,
-                        name: row.name,        // Assuming 'name' field exists in the CSV
-                        company: row.company,  // Assuming 'company' field exists in the CSV
+                        name: row.name,
+                        company: row.company,
                         email: row.email,
                     };
                     console.log('User found and authenticated'); // Log success

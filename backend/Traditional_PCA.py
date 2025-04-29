@@ -1,3 +1,9 @@
+## NOTE
+# This code has been automatically generated from the "Traditional_PCA.ipynb" file located in the "notebooks" folder. Please view that notebook to understand this code
+## NOTE
+
+
+
 #!/usr/bin/env python
 # coding: utf-8
 

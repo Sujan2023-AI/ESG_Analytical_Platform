@@ -1,5 +1,4 @@
 import '../Css/Global.css';
-import '../Css/DataExploration.css';
 import React from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
@@ -13,7 +12,7 @@ function Exploration() {
                 <div className='Main'>
                     <div className='Content'>
                         <h1 style={{textAlign: "centre"}}>Data Exploration</h1>
-                        <div className="data-summary">
+                        <div style={{display: "flex", flexDirection: "column", justifyContent: "start", gap: "26px"}}>
                             <p>There are four main tiers of metric in the Eurofidai dataset. We have preserved these tiers in our EDA process.</p>
                             <p><b>Pillar</b> - this includes the three main ESG categories of environment, social and risk. Each has been subdivided into two sections for risk and opportunity (e.g. Environment_Opportunity)</p>
                             <p><b>Metric</b> - summary metric for a particular set of measurements (e.g. Water_Management, GHG_Emissions)</p>
