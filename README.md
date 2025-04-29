@@ -21,6 +21,8 @@ Go to this url in your web browser:
 
 http://localhost:3000/
 
+Username and password can be found in the report installation manual
+
 # Go to GraphDB website
 
 Go to this url in your web browser:
