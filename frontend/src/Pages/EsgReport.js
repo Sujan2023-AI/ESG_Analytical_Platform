@@ -78,6 +78,23 @@ function EsgReport() {
             localStorage.setItem('calculatedRows', JSON.stringify(updatedRows));
         }
     };
+
+    // Save current information to report snapshot
+    const saveCalculatedResults = () => {
+        const report = {
+            name: "ESG Metric Summary Report",
+            timestamp: new Date().toLocaleString(),
+            data: calculatedRows,
+        };
+
+        // Save this report in localStorage
+        let savedReports = JSON.parse(localStorage.getItem('savedReports')) || [];
+        savedReports.push(report);
+        localStorage.setItem('savedReports', JSON.stringify(savedReports));
+
+        // Alert user that the report has been saved
+        alert('Report saved successfully!');
+    };
     
     // Load initial options for each pillar's metric dropdown list
     useEffect(() => {
@@ -247,7 +264,7 @@ function EsgReport() {
                                 </tbody>
                             </table>
                         </div>
-                        <button>Save Data</button>
+                        <button onClick={saveCalculatedResults}>Save Data</button>
                     </div>
                 </div>
             </div>

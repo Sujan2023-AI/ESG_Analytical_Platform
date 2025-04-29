@@ -54,6 +54,7 @@ function Enhanced() {
     // Save current information to report snapshot
     const handleSaveReport = () => {
         const report = {
+            name: "Ontology Enhanced PCA Analysis Report",
             pillar,
             metric,
             model,

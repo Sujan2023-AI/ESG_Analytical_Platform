@@ -10,61 +10,78 @@ function DownloadReport() {
     // State to store multiple report files
     const [reports, setReports] = useState([]);
 
+    // Get saved reports data
     useEffect(() => {
         const savedReports = JSON.parse(localStorage.getItem('savedReports')) || [];
         setReports(savedReports);
     }, []);
 
-    // Simulate fetching report data (use actual API or static files if needed)
-    //useEffect(() => {
-    //    const dummyReports = [
-    //        {
-    //            filename: 'dummy_report_1.csv',
-    //            createdAt: new Date().toLocaleString(),
-    //            description: 'Report for 2023 Q1 data analysis.',
-    //        },
-    //        {
-    //            filename: 'dummy_report_2.csv',
-    //            createdAt: new Date().toLocaleString(),
-    //            description: 'Report for 2023 Q2 data analysis.',
-    //        },
-    //        {
-    //            filename: 'dummy_report_3.csv',
-    //            createdAt: new Date().toLocaleString(),
-    //            description: 'Annual report for 2023 fiscal year.',
-    //        },
-    //    ];
-    //    setReports(dummyReports);
-    //}, []);
+    function EsgMetricReportContentRow({ report }) {
+        return (
+            <div className="content-row">
+                <p className="p1"><strong>Name:</strong> {report.name}</p>
+                <p className="p1"><strong>Timestamp:</strong> {report.timestamp}</p>
+            </div>
+        );
+    }
 
-    // Function to handle file download
-    //const handleDownload = (file) => {
-    //    const fileContent = `Filename,Creation Time,Description\n${file.filename},${file.createdAt},${file.description}`;
-    //    const blob = new Blob([fileContent], { type: 'text/csv' });
-    //    const url = window.URL.createObjectURL(blob);
-    //    const link = document.createElement('a');
-    //    link.href = url;
-    //    link.download = file.filename;
-    //    link.click();
-    //    window.URL.revokeObjectURL(url); // Clean up the object URL
-    //};
+    function OntologyReportContentRow({ report }) {
+        return (
+            <div className="content-row">
+                <p className="p1"><strong>Pillar:</strong> {report.pillar}</p>
+                <p className="p1"><strong>Metric:</strong> {report.metric}</p>
+                <p className="p1"><strong>Model:</strong> {report.model}</p>
+                <p className="p1"><strong>Timestamp:</strong> {report.timestamp}</p>
+            </div>
+        );
+    }
+
+    // Generate content for a report saved from the Ontology Enhanced PCA page
+    const generateOntologyReportContent = (report) => {
+        let reportContent = `
+                <h1>Report</h1>
+                <br>
+                <p><strong>Pillar:</strong> ${report.pillar}</p>
+                <br>
+                <p><strong>Metric:</strong> ${report.metric}</p>
+                <br>
+                <p><strong>Model:</strong> ${report.model}</p>
+                <br>
+                <p><strong>Timestamp:</strong> ${report.timestamp}</p>
+            `;
+        return reportContent;
+    }
+
+    // Generate content for a report saved from the ESG Report page
+    const generateEsgReportContent = (report) => {
+        let reportContent = `
+            <h1>${report.name}</h1>
+            <br>
+            <p><strong>Data:</strong> ${report.data}</p>
+            <br>
+            <p><strong>Timestamp:</strong> ${report.timestamp}</p>
+        `;
+        return reportContent
+    }
 
     // Function to generate PDF for a report
     const handleDownloadPDF = (report) => {
-        const reportContent = `
-            <h1>Report</h1>
-            <p><strong>Pillar:</strong> ${report.pillar}</p>
-            <p><strong>Metric:</strong> ${report.metric}</p>
-            <p><strong>Model:</strong> ${report.model}</p>
-            <p><strong>Timestamp:</strong> ${report.timestamp}</p>
-        `;
+        // Create content
+        let reportContent = ""
+        if (report.name === "Ontology Enhanced PCA Analysis Report") {
+            reportContent = generateOntologyReportContent(report);
+        } else if (report.name === "ESG Metric Summary Report") {
+            reportContent = generateEsgReportContent(report);
+        }
         
+        // Add formatting options
         const options = {
             filename: `report_${report.timestamp}.pdf`,
-            margin:       [10, 10, 10, 10],
-            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
+            margin: [10, 10, 10, 10],
+            jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
         };
 
+        // Generate report with python module
         html3pdf()
             .from(reportContent)
             .set(options)
@@ -113,12 +130,10 @@ function DownloadReport() {
                                 {reports.length > 0 ? (
                                     reports.map((report, index) => (
                                         <div key={index} className="report-details">
-                                            <div className="content-row">
-                                                <p className="p1"><strong>Pillar:</strong> {report.pillar}</p>
-                                                <p className="p1"><strong>Metric:</strong> {report.metric}</p>
-                                                <p className="p1"><strong>Model:</strong> {report.model}</p>
-                                                <p className="p1"><strong>Timestamp:</strong> {report.timestamp}</p>
-                                            </div>
+                                            {report.name == "Ontology Enhanced PCA Analysis Report"
+                                                && <OntologyReportContentRow report={report} />}
+                                            {report.name == "ESG Metric Summary Report"
+                                                && <EsgMetricReportContentRow report={report} />}
                                             <button className="download-btn" onClick={() => handleDownloadPDF(report)}>
                                                 Download Report as PDF
                                             </button>
