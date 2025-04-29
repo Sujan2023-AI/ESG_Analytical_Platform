@@ -53,7 +53,7 @@ def query_esg_observations(industry, metric_filter, pillar_filter, year, model_n
 
     ## DEBUGGING LINE
     ## used to run the app locally in dev mode, instead of through docker
-    # endpoint = "http://localhost:7200"
+    endpoint = "http://localhost:7200"
 
     sparql = SPARQLWrapper(f"{endpoint}/repositories/{repository}")
 

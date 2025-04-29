@@ -52,7 +52,7 @@
 }
 
 .report-calculation {
-    height: 40%;
+    height: calc(40% + 26px); /* adds space under final button */
     background-color: #F9FAFC;
     padding: 26px;
     box-sizing: border-box;
