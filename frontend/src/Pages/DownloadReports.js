@@ -54,13 +54,21 @@ function DownloadReport() {
 
     // Generate content for a report saved from the ESG Report page
     const generateEsgReportContent = (report) => {
-        let reportContent = `
-            <h1>${report.name}</h1>
-            <br>
-            <p><strong>Data:</strong> ${report.data}</p>
-            <br>
-            <p><strong>Timestamp:</strong> ${report.timestamp}</p>
-        `;
+        // Display name and time
+        let reportContent = "<h1>" + report.name + "</h1>\n<br>"
+        reportContent += `<p><strong>Timestamp:</strong> ${report.timestamp}</p><br><br><br>`;
+
+        for (let dataRow of report.data) {
+            // Display metric and model
+            reportContent += "<p><b>" + dataRow.subcategory + " - " + dataRow.model + "</b></p><br>"
+
+            // Display average
+            reportContent += "<p><i>Mean</i>:&nbsp;" + dataRow.mean + "</p><br>"
+            
+            // Add list of metrics used to generate this sum
+            reportContent += "<p><i>Metrics Contributing</i>:&nbsp;" + dataRow.metrics.join(", ") + "</p><br><br>"
+        }
+        
         return reportContent
     }
 
@@ -130,9 +138,9 @@ function DownloadReport() {
                                 {reports.length > 0 ? (
                                     reports.map((report, index) => (
                                         <div key={index} className="report-details">
-                                            {report.name == "Ontology Enhanced PCA Analysis Report"
+                                            {report.name === "Ontology Enhanced PCA Analysis Report"
                                                 && <OntologyReportContentRow report={report} />}
-                                            {report.name == "ESG Metric Summary Report"
+                                            {report.name === "ESG Metric Summary Report"
                                                 && <EsgMetricReportContentRow report={report} />}
                                             <button className="download-btn" onClick={() => handleDownloadPDF(report)}>
                                                 Download Report as PDF
