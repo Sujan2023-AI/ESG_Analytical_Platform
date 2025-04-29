@@ -226,14 +226,14 @@ def get_file(industry, type="model"):
     file_name = ""
     if (type == "model"):
         if (industry == "Biotechnology & Pharmaceuticals"):
-            file_name = "./data/biopharma_model_frontend.csv"
+            file_name = "data/biopharma_model_frontend.csv"
         else:
-            file_name = "./data/semiconductors_model_frontend.csv"
+            file_name = "data/semiconductors_model_frontend.csv"
     if (type == "traditional"):
         if (industry == "Biotechnology & Pharmaceuticals"):
-            file_name = "./data/biopharma_traditional_frontend.csv"
+            file_name = "data/biopharma_traditional_frontend.csv"
         else:
-            file_name = "./data/semiconductors_traditional_frontend.csv"
+            file_name = "data/semiconductors_traditional_frontend.csv"
 
     # return full file path
     current_folder = os.path.dirname(os.path.abspath(__file__))
