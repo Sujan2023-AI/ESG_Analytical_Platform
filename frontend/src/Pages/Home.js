@@ -1,5 +1,7 @@
-import React from 'react';
+// Home / Dashboard page for site, the page you land on after logging in
+
 import '../Css/Global.css';
+import React from 'react';
 import AppNavigator from './Components/AppNavigator';
 import AppOptions from './Components/AppOptions';
 import AppHeader from './Components/AppHeader';

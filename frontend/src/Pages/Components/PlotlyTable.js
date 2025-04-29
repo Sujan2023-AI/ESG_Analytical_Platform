@@ -1,3 +1,6 @@
+/* component that renders a chart based on given api call */
+/* can be seen on PCA Analysis and Ontology Enhanced PCA page */
+
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -13,7 +16,9 @@ const PlotlyTable = ({dataUrl}) => {
                 setTableData(parsed);
             });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // parametres will be passed in as prop, so eslint warning here will be disabled
   
+    // while waiting for fetch, tell user we are loading
     if (!tableData) return <p><i>(Loading table...)</i></p>;
   
     return (

@@ -1,3 +1,5 @@
+/* Ontology Enhanced PCA page */
+
 import '../Css/PCA.css';
 import React from 'react';
 import { useState } from 'react';
@@ -8,15 +10,13 @@ import PlotlyTable from './Components/PlotlyTable';
 
 function Enhanced() {
 
-    // const [top5, setTop5] = useState([]);
-    // const [graphData, setGraphData] = useState([]);
-
+    // Get user data and selections
     let UserData = JSON.parse(localStorage.getItem('userData'));
     let industry = UserData.industry;
     let company = UserData.company;
     let year = parseInt(localStorage.getItem("reportingYear"));
 
-    // states for pillar selection
+    // States and handlers for pillar selection dropdown
     const [pillar, setPillar] = useState('');
     const pillars = ['E_risk', 'G_risk', 'S_risk', 'E_opportunity', 'G_opportunity', 'S_opportunity'];
     const handlePillarSelection = (event) => {
@@ -30,7 +30,7 @@ function Enhanced() {
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
-    // states for metric selection
+    // States and handlers for metric selection dropdown
     const [metric, setMetric] = useState('');
     const [metrics, setMetrics] = useState([]);
     const handleMetricSelection = (event) => {
@@ -43,6 +43,7 @@ function Enhanced() {
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
+    // States and handlers for modal selection dropdown
     const [model, setModel] = useState('');
     const [models, setModels] = useState([]);
     const handleModelSelection = (event) => {
@@ -50,6 +51,7 @@ function Enhanced() {
         setModel(newModel);
     }    
     
+    // Save current information to report snapshot
     const handleSaveReport = () => {
         const report = {
             pillar,
@@ -58,7 +60,7 @@ function Enhanced() {
             timestamp: new Date().toLocaleString(),
         };
 
-        // Save this report in localStorage or in the state (here we're saving it in localStorage)
+        // Save this report in localStorage
         let savedReports = JSON.parse(localStorage.getItem('savedReports')) || [];
         savedReports.push(report);
         localStorage.setItem('savedReports', JSON.stringify(savedReports));

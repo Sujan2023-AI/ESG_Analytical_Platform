@@ -1,8 +1,9 @@
+/* Download Reports page */
+
 import '../Css/DownloadReports.css';
 import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
-// @ts-ignore
 import html3pdf from 'html3pdf';
 
 function DownloadReport() {

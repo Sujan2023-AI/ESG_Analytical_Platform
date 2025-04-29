@@ -1,15 +1,19 @@
+// Login page, the first page you see on the website
+
+import '../Css/Landing.css';
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Css/Landing.css';
 import LoginModal from './Components/LoginModal';
 
 const Login = () => {
     const navigate = useNavigate();
 
+    // Handle login modal popup state
     const [showLoginModal, setLoginModal] = useState(false);
     const openLoginModal = () => { setLoginModal(true); }
     const closeLoginModal = () => { setLoginModal(false); }
 
+    // Remove all user data
     const resetState = () => {
         // LocalStorage data
         localStorage.setItem('currentPage', 0)
@@ -20,6 +24,7 @@ const Login = () => {
     };
     resetState();
 
+    // Try logging in with the authenticator server
     const doLogin = (email, password) => {
         //console.log(`Attempting to authenticate with email: ${email}, password: ${password}`); // Log the credentials being sent
         fetch('http://localhost:5001/authenticate', {

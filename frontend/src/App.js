@@ -1,3 +1,7 @@
+// this file handles the navigational structure of the site
+// for the login/landing page see the Pages/Login.js file
+// for the home/dashboard page see the Pages/Home.js file
+// for the rest of the pages and components view the /Pages and /Pages/Components folders
 
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

@@ -1,6 +1,7 @@
+// View Ontology page
+
 import '../Css/Ontology.css';
 import React from 'react';
-
 import AppHeader from './Components/AppHeader';
 import AppNavigator from './Components/AppNavigator';
 

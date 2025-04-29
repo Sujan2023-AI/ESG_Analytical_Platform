@@ -1,7 +1,9 @@
-import React from 'react';
-import { useState, useEffect } from 'react'
+/* content component that dislays all user options, such as name, industry and company */
+/* can be seen on the Home page */
 
 import '../../Css/AppOptions.css';
+import React from 'react';
+import { useState, useEffect } from 'react'
 
 function AppOptions() {
 
@@ -20,6 +22,7 @@ function AppOptions() {
         }
     }, []);
 
+    // Update app variables based on local storage and database
     useEffect(() => {
         localStorage.setItem("reportingYear", reportingYear)
 
@@ -36,6 +39,7 @@ function AppOptions() {
         setReportingYear(event.target.value);
     }
 
+    // list available framewokrs and years
     const reportingFrameworks = ["SASB"]
     const reportingYears = ["2020", "2021", "2022", "2023", "2024"]
 
