@@ -52,18 +52,21 @@
 }
 
 .report-calculation {
-    height: calc(40% + 26px); /* adds space under final button */
     background-color: #F9FAFC;
     padding: 26px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     gap: 26px;
 }
 
 .report-calculation table {
     width: 100%;
     border-collapse: collapse;
+}
+.calculated-table {
+    overflow-x: scroll;
 }
 .report-calculation th {
     background-color: #f4f4f4;
