@@ -26,7 +26,7 @@ function Enhanced() {
         setModel('');
         fetch(`http://localhost:3902/metrics/${industry}/${company}/${year}/${newPillar}`)
             .then(response => response.json())
-            .then(data => {setMetrics(data); console.log("api returned metrics =", data);})
+            .then(data => {setMetrics(data); console.log("Retrieved metrics =", data);})
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
@@ -39,7 +39,7 @@ function Enhanced() {
         setModel('');
         fetch(`http://localhost:3902/models/${industry}/${company}/${year}/${pillar}/${newMetric}`)
             .then(response => response.json())
-            .then(data => {setModels(data); console.log("api returned models =", data);})
+            .then(data => {setModels(data); console.log("Retrieved models =", data);})
             .catch(error => console.error('Error hitting /top_5 endpoint:', error));
     };
 
@@ -108,12 +108,12 @@ function Enhanced() {
                                 <p>
                                 The scree plot visually represents how much variance in the dataset is explained by each principal component (PC) after performing PCA. The blue line shows the explained variance for each individual PC, indicating how much of the original data's variability that component captures. The orange line shows the cumulative variance, which adds up the contribution of PCs sequentially. A red dashed line marks a variance threshold (typically 70%), helping to identify how many components are needed to retain most of the data's information.
                                 </p>
-                                <PlotlyChart industry={industry} year={year} pillar={pillar} model={model} metric={metric}/>
+                                <PlotlyChart dataUrl={`http://localhost:3902/ontology/scree/${industry}/${year}/${pillar}/${model}/${metric}`}/>
                                 <h2>Top ESG Categories</h2>
                                 <p>
                                 This step presents the top ESG metric categories that have the strongest influence on the principal components identified through PCA. After analyzing the data, PCA highlights which features contribute most to the variance in ESG performance across companies. The system ranks these features based on their impact, and this output helps end users focus on the most significant sustainability areas—such as emissions, supply chain risks, or governance practices—that drive differences in company behavior. These top categories serve as a data-driven guide for prioritizing metrics in further analysis, reporting, or decision-making.
                                 </p>
-                                <PlotlyTable industry={industry} year={year} pillar={pillar} model={model} metric={metric}/>
+                                <PlotlyTable dataUrl={`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`} />
                                 <button onClick={handleSaveReport}>Save Report</button>
                                 </>
                             )}

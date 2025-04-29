@@ -1,16 +1,19 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Plot from "react-plotly.js";
 
-const PlotlyChart = ({industry, year, pillar, model, metric}) => {
+const PlotlyChart = ({dataUrl}) => {
     const [plotData, setPlotData] = useState(null);
     
-    fetch(`http://localhost:3902/ontology/scree/${industry}/${year}/${pillar}/${model}/${metric}`)
-        .then((res) => res.json())
-        .then((json) => {
-            const parsed = typeof json === "string" ? JSON.parse(json) : json;
-            setPlotData(parsed);
-        });
+    useEffect(() => {
+        fetch(dataUrl)
+            .then((res) => res.json())
+            .then((json) => {
+                const parsed = typeof json === "string" ? JSON.parse(json) : json;
+                setPlotData(parsed);
+            });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
     if (!plotData) return <p><i>(Loading chart...)</i></p>;
   

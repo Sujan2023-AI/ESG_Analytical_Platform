@@ -9,7 +9,7 @@ COPY ./docker/requirements-python.txt ./requirements-python.txt
 RUN pip install --no-cache-dir -r requirements-python.txt
 
 # Copy app code
-COPY ./backend/* ./
+COPY ./backend/ ./
 
 # Expose port
 EXPOSE 3902
@@ -19,4 +19,4 @@ EXPOSE 3902
 #     find . -type d -print -exec sh -c 'ls -l "{}"' \;
 
 # Run the app
-CMD ["python", "./server.py"]
+CMD ["python", "server.py"]

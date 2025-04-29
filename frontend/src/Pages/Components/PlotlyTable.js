@@ -1,15 +1,18 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
-const PlotlyTable = ({industry, year, pillar, model, metric}) => {
+const PlotlyTable = ({dataUrl}) => {
     const [tableData, setTableData] = useState(null);
     
-    fetch(`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${model}/${metric}`)
-        .then((res) => res.json())
-        .then((json) => {
-            const parsed = typeof json === "string" ? JSON.parse(json) : json;
-            setTableData(parsed);
-        });
+    useEffect(() => {
+        fetch(dataUrl)
+            .then((res) => res.json())
+            .then((json) => {
+                const parsed = typeof json === "string" ? JSON.parse(json) : json;
+                setTableData(parsed);
+            });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
   
     if (!tableData) return <p><i>(Loading table...)</i></p>;
   

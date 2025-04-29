@@ -1,6 +1,3 @@
-console.log("world hello");
-
-// server.js
 const express = require('express');
 const csv = require('csv-parser');
 const fs = require('fs');
@@ -20,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 // Path to your CSV file (ensure it's correct relative to the server file location)
-const registeredEmailsFile = './registered_emails.csv';
+const registeredEmailsFile = './data/registered_emails.csv';
 
 // Function to authenticate the user
 const authenticateUser = (email, password) => {
@@ -64,6 +61,7 @@ app.post('/authenticate', (req, res) => {
         .catch((err) => res.json(err));
 });
 
+// Run the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
