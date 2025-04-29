@@ -49,16 +49,26 @@ function Enhanced() {
     const handleModelSelection = (event) => {
         let newModel = event.target.value;
         setModel(newModel);
+
+        // Query top 5 loading values for a report save
+        fetch(`http://localhost:3902/ontology/table/${industry}/${year}/${pillar}/${newModel}/${metric}`)
+            .then((res) => res.json())
+            .then((json) => {
+                const parsed = typeof json === "string" ? JSON.parse(json) : json;
+                setReportData(parsed);
+            });
     }    
     
     // Save current information to report snapshot
+    const [reportData, setReportData] = useState();
     const handleSaveReport = () => {
         const report = {
             name: "Ontology Enhanced PCA Analysis Report",
+            timestamp: new Date().toLocaleString(),
+            data: reportData,
             pillar,
             metric,
             model,
-            timestamp: new Date().toLocaleString(),
         };
 
         // Save this report in localStorage

@@ -38,17 +38,22 @@ function DownloadReport() {
 
     // Generate content for a report saved from the Ontology Enhanced PCA page
     const generateOntologyReportContent = (report) => {
-        let reportContent = `
-                <h1>Report</h1>
-                <br>
-                <p><strong>Pillar:</strong> ${report.pillar}</p>
-                <br>
-                <p><strong>Metric:</strong> ${report.metric}</p>
-                <br>
-                <p><strong>Model:</strong> ${report.model}</p>
-                <br>
-                <p><strong>Timestamp:</strong> ${report.timestamp}</p>
+        let reportContent = "<h1>" + report.name + "</h1>\n<br>"
+        reportContent += `<p><strong>Timestamp:</strong> ${report.timestamp}</p><br><br><br>`;
+        reportContent += `
+                <p><strong>Pillar:</strong> ${report.pillar}</p><br>
+                <p><strong>Metric:</strong> ${report.metric}</p><br>
+                <p><strong>Model:</strong> ${report.model}</p><br><br>
             `;
+
+        // Add header for csv table
+        reportContent += "<p><b>Top ESG Categories (csv)</b>:</p><br>"
+        reportContent += "<p>metric, percentage</p>"
+        for (let dataRow of report.data) {
+            // Add list of metrics and their loading values
+            reportContent += "<p>" + dataRow.join(", ") + "</p>"
+        }
+        
         return reportContent;
     }
 
@@ -136,7 +141,7 @@ function DownloadReport() {
                             <div className='reportList'>
                                 {/* Display the reports */}
                                 {reports.length > 0 ? (
-                                    reports.map((report, index) => (
+                                    [...reports].reverse().map((report, index) => (
                                         <div key={index} className="report-details">
                                             {report.name === "Ontology Enhanced PCA Analysis Report"
                                                 && <OntologyReportContentRow report={report} />}

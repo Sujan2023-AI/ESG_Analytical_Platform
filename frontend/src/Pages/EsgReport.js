@@ -241,7 +241,7 @@ function EsgReport() {
                     </div>
                     <div className='report-calculation'>
                         {/* calculated results component at the bottom of the page */}
-                        <h3>Calculated Results</h3>
+                        <h3>EGS Metric Summary</h3>
                         <div className="calculated-table" style={{  }}>
                             <table>
                                 <thead>
