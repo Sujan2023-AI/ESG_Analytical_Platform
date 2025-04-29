@@ -37,11 +37,6 @@ function ReportCategorySection({
         // Update the state with the new value
         setSelectedSubcategory(selectedValue);
 
-        // Save the selected value to localStorage for persistence
-        localStorage.setItem(categoryShortCode + 'Subcategory', selectedValue);
-        setModelType(''); // Reset the model selection
-        localStorage.removeItem(categoryShortCode + 'ModelType');
-
         // Query model list to populate next selection options
         fetch(`http://localhost:3902/models/${industry}/${company}/${year}/${categoryCode}/${selectedValue}`)
             .then(response => response.json())
@@ -55,7 +50,6 @@ function ReportCategorySection({
 
         // Update the state with the new value
         setModelType(selectedModel);
-        localStorage.setItem(categoryShortCode + 'modelType', selectedModel);
  
         // Query category list for the next selection options
         fetch(`http://localhost:3902/categories/${industry}/${company}/${year}/${categoryCode}/${selectedSubcategory}/${selectedModel}`)
