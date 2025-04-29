@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const csv = require('csv-parser');
 const fs = require('fs');
@@ -17,7 +18,8 @@ app.get('/', (req, res) => {
 });
 
 // Path to your CSV file (ensure it's correct relative to the server file location)
-const registeredEmailsFile = './data/registered_emails.csv';
+const registeredEmailsFile = process.env.CSV_FILE_PATH_AUTH || './data/registered_emails.csv';
+//const registeredEmailsFile = './data/registered_emails.csv';
 
 // Function to authenticate the user
 const authenticateUser = (email, password) => {
