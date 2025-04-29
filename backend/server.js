@@ -61,6 +61,7 @@ app.post('/authenticate', (req, res) => {
         .catch((err) => res.json(err));
 });
 
+// Run the server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
