@@ -27,7 +27,11 @@ Go to this url in your web browser:
 
 http://localhost:7200/
 
-Explore the ESG knowledge graph, view the loaded repository, and run sample SPARQL queries from the SPARQL tab.
+Once you open the website on the top right corner choose the repository as esg_repo. 
+
+On the left, under SPARQL, you can run the queries already saved by opening the Show Saved Queries tab on the right.
+
+Explore the ESG knowledge graph, view the loaded repository, and run sample SPARQL queries.
 
 There are few queries which have been already executed which  shows the foillowing model semantics:
 
@@ -52,7 +56,7 @@ To view the saved visuals on Graph DB follow this steps
 
 3) Under Saved Grpahs you can see a Graph name called "Visual Graph"
 
-If you want to visualize a differnt view you can search using the Below IRI Format:
+If you want to visualize a differnt view you can paste the below URI structure example in the Easy Graph tab:
 
 -->   " http://example.org/esg#<entity_details> "
 
@@ -70,13 +74,12 @@ Expanded Example Table :
 
 | **Part**        | **Placeholder Example**                                      |
 |-----------------|---------------------------------------------------------------|
-| Company         | `http://example.org/esg#3dfamily_technology_co_ltd`            |
-| Industry        | `http://example.org/esg#semiconductors`                       |
-| Metric          | `http://example.org/esg#scope1_ghg_emissions_semiconductors`   |
-| Category        | `http://example.org/esg#ghg_emissions`                        |
-| Pillar          | `http://example.org/esg#e_risk`                                |
-| Model           | `http://example.org/esg#scope1_ghg_emissions_model`            |
-| Observation     | `http://example.org/esg#3dfamily_technology_co_ltd_semiconductors_scope1_ghg_emissions_ghg_emissions_e_risk_2021` |
+| Company         | http://example.org/esg#3dfamily_technology_co_ltd            |
+| Industry        | http://example.org/esg#semiconductors                     |
+| Metric          | http://example.org/esg#ghg_emissions_semiconductors   |
+| Pillar          | http://example.org/esg#e_risk                               |
+| Model           | http://example.org/esg#ghg_emissions_model           |
+| Observation     | http://example.org/esg#state_grid_yingda_co_ltd_semiconductors_ghg_emissions_co2directscope1_e_risk_2020 |
 
 
 # View Jupyter Notebooks
