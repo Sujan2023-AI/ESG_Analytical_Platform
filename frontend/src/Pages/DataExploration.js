@@ -1,3 +1,5 @@
+/* Data Exploration page */
+
 import '../Css/Global.css';
 import React from 'react';
 import AppHeader from './Components/AppHeader';

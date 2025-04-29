@@ -1,3 +1,5 @@
+// PCA Analysis page
+
 import '../Css/PCA.css';
 import React from 'react';
 import AppHeader from './Components/AppHeader';
@@ -6,9 +8,9 @@ import PlotlyChart from './Components/PlotlyChart';
 import PlotlyTable from './Components/PlotlyTable';
 
 function PCA() {
+    // Get user data
     let UserData = JSON.parse(localStorage.getItem('userData'));
     let industry = UserData.industry;
-
     let year = parseInt(localStorage.getItem("reportingYear"));
 
     return (

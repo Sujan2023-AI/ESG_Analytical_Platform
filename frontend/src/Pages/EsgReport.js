@@ -1,3 +1,5 @@
+/* ESG Report page */
+
 import '../Css/EsgReport.css';
 import React, { useState, useEffect } from 'react';
 import AppHeader from './Components/AppHeader';
@@ -6,56 +8,58 @@ import ReportCategorySection from './Components/ReportCategorySection';
 
 function EsgReport() {
 
-    // states for calculated component
+    // States for calculated results component (can be seen at the bottom of the page)
     const [calculatedRows, setCalculatedRows] = useState([]);
 
-    // states for environment risk
+    // States for environment risk
     const [erSubcategories, setErSubcategories] = useState([]);
     const [selectedErSubcategory, setSelectedErSubcategory] = useState('');
     const [erModels, setErModels] = useState([]);
     const [erModelType, setErModelType] = useState('');
     const [erMetrics, setErMetrics] = useState([]);
 
-    // states for social risk
+    // States for social risk
     const [srSubcategories, setSrSubcategories] = useState([]);
     const [selectedSrSubcategory, setSelectedSrSubcategory] = useState('');
     const [srModels, setSrModels] = useState([]);
     const [srModelType, setSrModelType] = useState('');
     const [srMetrics, setSrMetrics] = useState([]);
 
-    // states for governance risk
+    // States for governance risk
     const [grSubcategories, setGrSubcategories] = useState([]);
     const [selectedGrSubcategory, setSelectedGrSubcategory] = useState('');
     const [grModels, setGrModels] = useState([]);
     const [grModelType, setGrModelType] = useState('');
     const [grMetrics, setGrMetrics] = useState([]);
 
-    // states for environment opportunity
+    // States for environment opportunity
     const [eoSubcategories, setEoSubcategories] = useState([]);
     const [selectedEoSubcategory, setSelectedEoSubcategory] = useState('');
     const [eoModels, setEoModels] = useState([]);
     const [eoModelType, setEoModelType] = useState('');
     const [eoMetrics, setEoMetrics] = useState([]);
 
-    // states for social opportunity
+    // States for social opportunity
     const [soSubcategories, setSoSubcategories] = useState([]);
     const [selectedSoSubcategory, setSelectedSoSubcategory] = useState('');
     const [soModels, setSoModels] = useState([]);
     const [soModelType, setSoModelType] = useState('');
     const [soMetrics, setSoMetrics] = useState([]);
 
-    // states for governance opportunity
+    // States for governance opportunity
     const [goSubcategories, setGoSubcategories] = useState([]);
     const [selectedGoSubcategory, setSelectedGoSubcategory] = useState('');
     const [goModels, setGoModels] = useState([]);
     const [goModelType, setGoModelType] = useState('');
     const [goMetrics, setGoMetrics] = useState([]);
 
+    // Reload page when data is added to calculated results component
     useEffect(() => {
         const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
         setCalculatedRows(savedRows);
     }, []);
 
+    // Handler for when calculate button at of each pillar box is clicked
     const handleCalculate = (subcategory, model, metrics, mean) => {
         const newRow = {subcategory, model,metrics, mean};
 
@@ -64,20 +68,18 @@ function EsgReport() {
             (row) => row.subcategory === subcategory && row.model === model && JSON.stringify(row.metrics) === JSON.stringify(metrics)
         );
 
+        // Don't add duplicate records
         if (isDuplicate) {
             alert('Record already exists');
         } else {
+            // Add new record
             const updatedRows = [...calculatedRows, newRow];
             setCalculatedRows(updatedRows);
             localStorage.setItem('calculatedRows', JSON.stringify(updatedRows));
         }
     };
-
-    useEffect(() => {
-        const savedRows = JSON.parse(localStorage.getItem('calculatedRows')) || [];
-        setCalculatedRows(savedRows);
-    }, []);
     
+    // Load initial options for each pillar's metric dropdown list
     useEffect(() => {
         const userData = JSON.parse(localStorage.getItem("userData"));
         let industry = userData.industry;
@@ -122,6 +124,7 @@ function EsgReport() {
                 <AppNavigator />
                 <div className='Main'>
                     <div className='report-selection'>
+                        {/* metric selection component at the top of the page */}
                         <div className="mainMetrics">
                             <div className='metricRow1'>
                                 <ReportCategorySection
@@ -220,6 +223,7 @@ function EsgReport() {
                         </div>
                     </div>
                     <div className='report-calculation'>
+                        {/* calculated results component at the bottom of the page */}
                         <h3>Calculated Results</h3>
                         <div className="calculated-table" style={{  }}>
                             <table>

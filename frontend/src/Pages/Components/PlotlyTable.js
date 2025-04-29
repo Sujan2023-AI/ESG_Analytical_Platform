@@ -1,5 +1,5 @@
 /* component that renders a chart based on given api call */
-/* can be seen on Traditional PCA and Ontology Enhanced PCA page */
+/* can be seen on PCA Analysis and Ontology Enhanced PCA page */
 
 import React from 'react';
 import { useEffect } from 'react';

@@ -1,5 +1,5 @@
 /* component that renders a chart using plotly based on given api call */
-/* can be seen on Traditional PCA and Ontology Enhanced PCA page */
+/* can be seen on PCA Analysis and Ontology Enhanced PCA page */
 
 import Plot from 'react-plotly.js';
 import React from 'react';
