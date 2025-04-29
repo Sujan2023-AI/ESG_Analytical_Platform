@@ -196,6 +196,8 @@ def get_traditional_table(industry, pc, year):
     newIndustry = industry.lower()
     if (newIndustry == "biotechnology & pharmaceuticals"):
         newIndustry = "biotechnology_pharmaceuticals"
+
+    # Get data file
     file_path = get_file(newIndustry, "traditional")
     
     # Call traditional PCA setup functions from Ontology_PCA.py
@@ -225,12 +227,12 @@ def get_traditional_table(industry, pc, year):
 def get_file(industry, type="model"):
     file_name = ""
     if (type == "model"):
-        if (industry == "Biotechnology & Pharmaceuticals"):
+        if (industry == "biotechnology_pharmaceuticals"):
             file_name = "data/biopharma_model_frontend.csv"
         else:
             file_name = "data/semiconductors_model_frontend.csv"
     if (type == "traditional"):
-        if (industry == "Biotechnology & Pharmaceuticals"):
+        if (industry == "biotechnology_pharmaceuticals"):
             file_name = "data/biopharma_traditional_frontend.csv"
         else:
             file_name = "data/semiconductors_traditional_frontend.csv"
