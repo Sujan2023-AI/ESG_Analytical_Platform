@@ -20,7 +20,6 @@ log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
 # Import ontology result notebook
-#sys.path.append(os.path.abspath('./data/'))
 with Notebook():
     import Ontology_PCA as OPCA # type: ignore # this points to our ipynb file
     import Traditional_PCA as TPCA # type: ignore # this points to our ipynb file
@@ -32,36 +31,10 @@ CORS(app)
 
 ## STAT APP ROUTES
 
-# returns a dummy biplot graph
-@app.route("/plot/biplot/dummy")
-def get_plot_dummy_data():
-    fig = px.line(x=[1, 2, 3], y=[4, 5, 6], title="My Plotly Line Chart")
-    return jsonify(json.loads(fig.to_json()))
-
-# @app.route("/plot/scree/image")
-# def get_plot_data_image():
-
-#     results = OPCA.query_esg_observations(
-#         industry="semiconductors",
-#         year="2022",
-#         pillar_filter="e_risk",
-#         metric_filter="ghg_emissions"
-#     )
- 
-#     records = OPCA.parse_esg_results(results)
-#     pivot_df = OPCA.prepare_pivot_table(records, model_name='ghg_emissions_model', missing_threshold=0.7)
-#     pca, scores, imputed_df = OPCA.pca_workflow(pivot_df)
- 
-#     img_buf = OPCA.plot_scree_image(pca)
-#     return OPCA.send_file(img_buf, mimetype='image/png')
-
-# returns Vinanti's first graph
+# returns the ontology scree graph from ontology enhanced pca analysis
 @app.route("/ontology/scree/<string:industry>/<int:year>/<string:pillar>/<string:model>/<string:metric>", methods=['GET'])
 def get_ontology_scree(industry, year, pillar, model, metric):
     print("call made to /ontology/scree/<string:industry>/<int:y${tesear>/<string:pillar>/<string:model>/<string:metric>")
-    title_graph = "PCA Explained Variance"
-    title_x = "Principle Components"
-    title_y = "Variance Ratio"
 
     # TODO: this is incorrect, but good for demo
     newIndustry = industry.lower()
@@ -84,69 +57,24 @@ def get_ontology_scree(industry, year, pillar, model, metric):
     components = [f"PC{i+1}" for i in range(len(explained_variance))]
     threshold = 0.7
     threshold_text = f"{int(threshold * 100)}% Threshold"
- 
+
     # Build the Plotly figure
     fig = go.Figure()
- 
+
     # Explained variance bar chart
-    fig.add_trace(go.Scatter(
-        x=components,
-        y=explained_variance,
-        mode='lines+markers',
-        name='Explained Variance',
-        marker=dict(color='rgba(55, 128, 191, 0.7)')
-    ))
- 
+    fig.add_trace(go.Scatter(x=components, y=explained_variance, mode='lines+markers', name='Explained Variance', marker=dict(color='rgba(55, 128, 191, 0.7)')))
+
     # Cumulative variance line plot
-    fig.add_trace(go.Scatter(
-        x=components,
-        y=cumulative_variance,
-        mode='lines+markers',
-        name='Cumulative Variance',
-        line=dict(color='rgba(255, 100, 102, 0.7)')
-    ))
- 
+    fig.add_trace(go.Scatter(x=components, y=cumulative_variance, mode='lines+markers', name='Cumulative Variance', line=dict(color='rgba(255, 100, 102, 0.7)')))
+
     # Add horizontal threshold line
-    fig.add_shape(
-        type='line',
-        x0=0,
-        x1=len(components) - 1,
-        y0=threshold,
-        y1=threshold,
-        line=dict(color='red', dash='dash')
-    )
- 
-    fig.add_annotation(
-        x=components,
-        y=threshold,
-        text=threshold_text,
+    fig.add_shape(type='line', x0=0, x1=len(components) - 1, y0=threshold, y1=threshold, line=dict(color='red', dash='dash'))
+    fig.add_annotation(x=components, y=threshold, text=threshold_text, ax=15, ay=-15)
+    fig.update_layout(legend=dict(x=1.05, y=1.05, traceorder='normal', bgcolor='rgba(0,0,0,0)', bordercolor='Black', borderwidth=1), margin=dict(r=100))
 
-
-        ax=15,
-        ay=-15
-    )
-    fig.update_layout(
-        legend=dict(
-            x=1.05,          # move legend outside to the right
-            y=1.05,             # align legend top with the plot
-            traceorder='normal',
-            bgcolor='rgba(0,0,0,0)',  # transparent background
-            bordercolor='Black',
-            borderwidth=1
-        ),
-        margin=dict(r=100),  # add space on the right
-    )
- 
     # Layout
-    fig.update_layout(
-        title=title_graph,
-        xaxis_title=title_x,
-        yaxis_title=title_y,
-        template='plotly_white',
-        legend=dict(x=0.01, y=0.99),
-        margin=dict(t=60, b=40, l=50, r=20)
-    )
- 
+    fig.update_layout(title="PCA Explained Variance", xaxis_title="Principle Components", yaxis_title="Variance Ratio", template='plotly_white', legend=dict(x=0.01, y=0.99), margin=dict(t=60, b=40, l=50, r=20))
+
     # Return figure JSON
     return jsonify(json.loads(fig.to_json()))
 

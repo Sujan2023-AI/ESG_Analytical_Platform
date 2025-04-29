@@ -9,7 +9,7 @@ COPY ./backend/package.json ./
 RUN npm install
 
 # Copy the rest of your app's code
-COPY ./backend/* ./
+COPY ./backend/ ./
 
 # Expose the port your app runs on (example: 3000)
 EXPOSE 5001

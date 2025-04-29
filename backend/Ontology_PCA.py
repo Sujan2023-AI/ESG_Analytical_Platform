@@ -45,6 +45,10 @@ dict: SPARQL query results in JSON format.
 
 def query_esg_observations(industry, metric_filter, pillar_filter, year, model_name=None, endpoint="http://host.docker.internal:7200", repository="esg_repo"):
 
+    # DEBUGGING LINE
+    # used to run the app locally in dev mode, instead of through docker
+    endpoint = "http://localhost:7200"
+
     sparql = SPARQLWrapper(f"{endpoint}/repositories/{repository}")
 
     query = """
