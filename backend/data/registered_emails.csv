@@ -1,7 +1,9 @@
 name,email,password,industry,company
-John Doe,john.doe@amlogic.com.au,password123,Semiconductors,Amlogic Shanghai Co Ltd
-Jane Smith,jane.smith@summittherapeutics.com.au,password456,Biotechnology & Pharmaceuticals,Summit Therapeutics Inc
-Mark Jones,mark.jones@starpower.com.au,password789,Semiconductors,StarPower Semiconductor Ltd
-Jordan Cubbin,jordan.cubbin@starpower.com,password,Semiconductors,StarPower Semiconductor Ltd
 Jordan Cubbin,j,c,Semiconductors,StarPower Semiconductor Ltd
 Priya Shah,p,s,Biotechnology & Pharmaceuticals,Summit Therapeutics Inc
+Mark Jones,mark.jones@starpower.com,password789,Semiconductors,StarPower Semiconductor Ltd
+Jane Smith,jane.smith@summittherapeutics.com,password456,Biotechnology & Pharmaceuticals,Summit Therapeutics Inc
+Test User,test.user@starpower.com,password1,Semiconductors,StarPower Semiconductor Ltd
+Test User,test.user@amlogic.com,password2,Semiconductors,Amlogic Shanghai Co Ltd
+Test User,test.user@summittherapeutics.com,password3,Biotechnology & Pharmaceuticals,Summit Therapeutics Inc
+Test User,test.user@summittherapeutics.com,password4,Biotechnology & Pharmaceuticals,Summit Therapeutics Inc
