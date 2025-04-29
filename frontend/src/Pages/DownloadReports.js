@@ -113,31 +113,6 @@ function DownloadReport() {
                                 <h1>Download Reports</h1>
                                 <p className="p1">Here are the available reports for download:</p>
                             </div>
-                            {/*
-                            <div className='reportList'>
-                                {reports.length > 0 ? (
-                                    reports.map((file, index) => (
-                                        <div key={index} className="report-details">
-                                            <div className="content-row">
-                                                <p className="p1"><strong>File Name:</strong> {file.filename}</p>
-                                            </div>
-                                            <div className="content-row">
-                                                <p className="p1"><strong>Created At:</strong> {file.createdAt}</p>
-                                            </div>
-                                            <div className="content-row">
-                                                <p className="p1"><strong>Description:</strong> {file.description}</p>
-                                            </div>
-                                            <div className="content-row">
-                                                <button className="download-btn" onClick={() => handleDownload(file)}>
-                                                    Export {file.filename}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <p className="p1">No reports available to download.</p>
-                                )}
-                            </div>*/}
                             <div className='reportList'>
                                 {/* Display the reports */}
                                 {reports.length > 0 ? (
